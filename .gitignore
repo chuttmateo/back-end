@@ -1,3 +1,6 @@
+#VARIABLES DE ENTORNO PARA LAS CREDENCIALES DE MYSQL#
+.env
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
