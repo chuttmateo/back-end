@@ -1,0 +1,19 @@
+.ProductCard {
+    background-color: #1e1e1e;
+  color: white;
+  border:solid rgb(0, 137, 254);
+}
+.button {
+  margin: 5px;
+  background: rgba(0, 137, 254, 1) 100%;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #53a6ff;
+}

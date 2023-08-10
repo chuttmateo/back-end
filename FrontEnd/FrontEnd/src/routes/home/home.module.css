@@ -1,0 +1,138 @@
+.Categories {
+  padding: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.Categories h2 {
+  margin-bottom: 10px;
+  color: #cecccc;
+}
+
+.CategoryButtons {
+  display: flex;
+  gap: 10px;
+}
+
+
+.CategoryButtons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: medium;
+}
+.CategoryButtons button:hover {
+  background-color: #53a6ff;
+}
+
+.SectionProductCard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  gap: 30px;
+}
+
+.contenedor{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.SectionProductCard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 550px) {
+  .SectionProductCard {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.SearchBar {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.SearchBar input {
+  background-color: rebeccapurple;
+  width: 50%;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.NavigateButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 25px 0px;
+}
+
+.NavigateButtons button {
+  padding: 5px 5px;
+  margin: 0 5px;
+  font-size: 8px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.NavigateButtons button:hover {
+  background-color: #0056b3;
+}
+
+.NavigateButtons strong {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #007bff;
+}
+
+@media (max-width: 550px) {
+  .Categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Categories h2 {
+    font-size: medium;
+  }
+
+  .CategoryButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .CategoryButtons button {
+    min-width: 80px;
+  }
+}
+@media (max-width: 360px) {
+  .Categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Categories h2 {
+    font-size: medium;
+  }
+
+  .CategoryButtons {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+} 
