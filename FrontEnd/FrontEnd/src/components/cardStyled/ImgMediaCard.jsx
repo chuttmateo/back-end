@@ -11,7 +11,8 @@ export default function ImgMediaCard({ item }) {
   return (
     <Card
       sx={{
-        maxWidth: 345,
+        // maxWidth: 345,
+        maxWidth:700,
         backgroundColor: "#1e1e1e",
         color: "white",
         border: "4px solid rgb(0, 137, 254)",
