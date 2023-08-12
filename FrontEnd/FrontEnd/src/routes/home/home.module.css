@@ -15,24 +15,14 @@
 }
 
 
-.CategoryButtons button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: medium;
-}
-.CategoryButtons button:hover {
-  background-color: #53a6ff;
-}
 
-.SectionProductCard {
+
+/* .SectionProductCard {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
   gap: 30px;
-}
+} */
 
 .contenedor{
   display: flex;
@@ -40,9 +30,11 @@
   align-items: center;
 }
 .SectionProductCard {
+  width: 90%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  gap: 20px;
+  column-gap: 30px;
 }
 
 @media (max-width: 550px) {
@@ -75,9 +67,14 @@
   align-items: center;
   justify-content: center;
   margin: 25px 0px;
+  gap: 5px;
+}
+.NavigateButtons button{
+  padding: 5px 10px;
+  font-size: small;
 }
 
-.NavigateButtons button {
+/* .NavigateButtons button {
   padding: 5px 5px;
   margin: 0 5px;
   font-size: 8px;
@@ -86,17 +83,17 @@
   border: none;
   border-radius: 2px;
   cursor: pointer;
-}
+} */
 
-.NavigateButtons button:hover {
+/* .NavigateButtons button:hover {
   background-color: #0056b3;
-}
+} */
 
-.NavigateButtons strong {
+/* .NavigateButtons strong {
   padding: 10px 15px;
   font-size: 16px;
   color: #007bff;
-}
+} */
 
 @media (max-width: 550px) {
   .Categories {
@@ -115,9 +112,9 @@
     justify-content: center;
   }
 
-  .CategoryButtons button {
+  /* .CategoryButtons button {
     min-width: 80px;
-  }
+  } */
 }
 @media (max-width: 360px) {
   .Categories {

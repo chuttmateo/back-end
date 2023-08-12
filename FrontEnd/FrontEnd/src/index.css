@@ -8,3 +8,18 @@ body{
 .main{
   padding-top: 95px;
 }
+
+
+/* Botones Primarios */
+.button-primary {
+  text-decoration: none;
+  background: rgba(0, 137, 254, 1) 100%;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: medium;
+}
+.button-primary:hover {
+  background-color: #53a6ff;
+}

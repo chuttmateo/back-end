@@ -19,8 +19,8 @@ const Header = () => {
         </div>
       </Link>
       <div className={styles.contenedor}>
-        <button className={styles.btn}>Crear cuenta</button>
-        <button className={styles.btn}>Iniciar sesión</button>
+        <button className="button-primary">Crear cuenta</button>
+        <button className="button-primary">Iniciar sesión</button>
       </div>
     </div>
   );

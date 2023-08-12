@@ -29,6 +29,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    gap: 2px;
   }
 }
 @media (max-width: 550px) {
@@ -60,6 +61,7 @@
     text-decoration: none;
     display: flex;
     justify-content: space-between;
+    gap: 2px;
   }
 }
 @media (max-width: 430px) {
@@ -96,12 +98,6 @@
   text-decoration: none;
 }
 
-.btn {
-  margin: 5px;
-  background: rgba(0, 137, 254, 1) 100%;
-  color: white;
-  border: none;
+.contenedor button{
   padding: 5px 10px;
-  border-radius: 20px;
-  cursor: pointer;
 }

@@ -4,7 +4,7 @@ import styles from './product_Card.module.css'
 const Product_Card = ({item}) => {
   return (
     <article className={styles.ProductCard}>
-        <Link to={"/products/detail/" + item.id}>
+        <Link to={"/productos/" + item.id}>
         <img className={styles.ProductCardImg} src={item.imagen} alt={`product N ${item.id}`} style={{ width: '150px' }} />
         <h1 className={styles.ProductCardTitle}>{item.nombre}</h1>
         {/* <h2 className="Product-Card-Subtitle">{item.id}</h2> */}

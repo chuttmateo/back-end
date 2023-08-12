@@ -6,7 +6,7 @@ const Product_Card_List = ({ item, onEliminar }) => {
   return (
     <>
       <article className="Product-Card-List-Item">
-        <Link className="link" to={"/products/detail/" + item.id}>
+        <Link className="link" to={"/productos/" + item.id}>
           <div className="column-list">
             <img src={item.imagen} alt={`Product N ${item.id}`} />
           </div>

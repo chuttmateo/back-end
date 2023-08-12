@@ -15,8 +15,10 @@ function ListaProductos() {
   }, []);
 
   function eliminar(id) {
-        axios.delete(`http://3.144.46.39:8080/productos/${id}`);
-        setListProductState(listProductState.filter(p => p.id != id))
+    if(confirm(`Está seguro que desea eliminar el producto ${listProductState.nombre}`)) {
+      axios.delete(`http://3.144.46.39:8080/productos/${id}`);
+      setListProductState(listProductState.filter(p => p.id != id))
+    }
   }
 
   return (

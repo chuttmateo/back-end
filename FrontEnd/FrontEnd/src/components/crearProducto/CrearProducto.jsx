@@ -108,6 +108,7 @@ function CrearProducto(){
             <div className="form-group">
               <label htmlFor="nombre">Nombre:</label>
               <input
+                required
                 type="text"
                 id="nombre"
                 name="nombre"
@@ -123,6 +124,7 @@ function CrearProducto(){
                 <div key={index}>
                   <label>Descripción:</label>
                   <input
+                    required
                     type="text"
                     placeholder="Descripción"
                     value={detalle.descripcion}
@@ -130,6 +132,7 @@ function CrearProducto(){
                   />
                   <label>Precio:</label>
                   <input
+                    required
                     type="number"
                     placeholder="Valor"
                     value={detalle.value}

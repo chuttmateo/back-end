@@ -69,10 +69,10 @@ const Home = () => {
       <section className={styles.Categories}>
         <h2>Categorías</h2>
         <div className={styles.CategoryButtons}>
-          <button>Licencias</button>
-          <button>Uniforme</button>
-          <button>Merchandising</button>
-          <button>Horas libres</button>
+          <button className="button-primary">Licencias</button>
+          <button className="button-primary">Uniforme</button>
+          <button className="button-primary">Merchandising</button>
+          <button className="button-primary">Horas libres</button>
         </div>
       </section>
 
@@ -85,11 +85,11 @@ const Home = () => {
       </div>
 
       <section className={styles.NavigateButtons}>
-        <button onClick={handleStartClick}>Inicio</button>
-        <button onClick={handlePrevClick}>Prev</button>
+        <button onClick={handleStartClick} className="button-primary">Inicio</button>
+        <button onClick={handlePrevClick} className="button-primary">Prev</button>
         <strong>{startIndex}</strong>
-        <button onClick={handleNextClick}>Next</button>
-        <button onClick={handleFinishClick}>Final</button>
+        <button onClick={handleNextClick} className="button-primary">Next</button>
+        <button onClick={handleFinishClick} className="button-primary">Final</button>
       </section>
     </main>
   );
