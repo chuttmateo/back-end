@@ -46,5 +46,6 @@
   align-items: center;
 }
 .contenedor p{
+  margin-top: 19px;
   font-weight: 300;
 }

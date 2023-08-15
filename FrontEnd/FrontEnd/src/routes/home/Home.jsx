@@ -2,10 +2,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./home.module.css";
 import ImgMediaCard from "../../components/cardStyled/ImgMediaCard";
+import {useTheme } from "@mui/material";
 
 const apiUrl = "http://3.144.46.39:8080/productos";
 
 const Home = () => {
+
+  const theme = useTheme();
+  console.log(theme.palette.mode);
+
   const [productState, setProductState] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [isRandomized, setIsRandomized] = useState(false);

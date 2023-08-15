@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import './crearProducto.css'
+import { Button, FormControl, TextField } from '@mui/material';
+
 
 function CrearProducto(){
       const [formData, setFormData] = useState({
@@ -104,10 +105,12 @@ function CrearProducto(){
         <div className="form">
           
           <h2>Agregar Producto</h2>
-          <form onSubmit={handleSubmit}>
+          <FormControl onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="nombre">Nombre:</label>
-              <input
+              <TextField 
+                multiline
+                label = "Nombre:"
+                variant="outlined"
                 required
                 type="text"
                 id="nombre"
@@ -122,23 +125,31 @@ function CrearProducto(){
               
               {formData.detalles.map((detalle, index) => (
                 <div key={index}>
-                  <label>Descripción:</label>
-                  <input
+
+                  <TextField 
+                    multiline
+                    label="Descripción"
+                    variant="outlined"
                     required
                     type="text"
                     placeholder="Descripción"
+                    name={'desc'+index}
                     value={detalle.descripcion}
                     onChange={(e) => handleItemChange(index, 'descripcion', e.target.value)}
                   />
-                  <label>Precio:</label>
-                  <input
+
+                  <TextField 
+                    label = "Precio"
+                    variant="outlined"
                     required
                     type="number"
                     placeholder="Valor"
+                    name={'valor'+index}
                     value={detalle.value}
                     onChange={(e) => handleItemChange(index, 'precio', e.target.value)}
                   />
-                  <button
+                  <Button
+                    className="button-primary"
                     type="button"
                     onClick={() => {
                       const newDetalles = [...formData.detalles];
@@ -147,15 +158,15 @@ function CrearProducto(){
                     }}
                   >
                     Quitar detalle
-                  </button>
+                  </Button>
                 </div>
               ))}
-              <button
+              <Button
                 type="button"
                 onClick={() => setFormData({ ...formData, detalles: [...formData.detalles, { descripcion: '', precio: '' }] })}
               >
                 Agregar detalle
-              </button>
+              </Button>
             </div>
             <div className="form-group">
               <label>Imagenes:</label>
@@ -170,15 +181,15 @@ function CrearProducto(){
                   <input type="file" onChange={(e) => handleImageChange(e, index)} />
                 </div>
               ))}
-              <button
+              <Button
                 type="button"
                 onClick={() => setFormData({ ...formData, images: [...formData.images, null] })}
               >
                 Agregar imagen
-              </button>
+              </Button>
             </div>
-            <button type="submit">Enviar</button>
-          </form>
+            <Button type="button" onClick={handleSubmit}>Enviar</Button>
+          </FormControl>
         </div>
       );
 

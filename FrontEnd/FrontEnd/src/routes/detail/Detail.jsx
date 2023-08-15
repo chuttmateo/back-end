@@ -131,7 +131,7 @@ const Detail = () => {
       </div>
 
       {
-        presupuesto? <div> <h5 className='presupuesto'>Presupuesto Total: <span>{presupuesto}</span> USD </h5></div> : <p>Cargando presupuesto</p>
+        presupuesto? <div> <h5 className='presupuesto'>Presupuesto Total : <span>{presupuesto}</span> USD </h5></div> : <p>Cargando presupuesto</p>
       }
       
         <button onClick={() => navigate(-1)} className='detail-back-button-mobile'>↩atrás</button>

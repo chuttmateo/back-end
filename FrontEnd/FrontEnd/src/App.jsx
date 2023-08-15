@@ -6,19 +6,27 @@ import Footer from "./components/footer/Footer";
 import Administracion from "./routes/administracion/Administracion";
 import Detail from "./routes/detail/Detail";
 import PaginaNoEncontrada from "./routes/paginaNoEncontrada/PaginaNoEncontrada";
+import { ThemeProvider, createTheme } from "@mui/material";
 
 function App() {
+  const theme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
   return (
     <>
-      <Header />
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path={`/productos/:id`} element={<Detail />} />
-        <Route path="/administracion" element={<Administracion />} />
-        <Route path="*" element={<PaginaNoEncontrada />} />
-      </Routes>
-      <Footer />
+      <ThemeProvider theme={theme}>
+        <Header />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path={`/productos/:id`} element={<Detail />} />
+          <Route path="/administracion" element={<Administracion />} />
+          <Route path="*" element={<PaginaNoEncontrada />} />
+        </Routes>
+        <Footer />
+      </ThemeProvider>
     </>
   );
 }

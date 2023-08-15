@@ -7,7 +7,7 @@ font-family: 'Open Sans', sans-serif; */
 
 
 .detail-contenedor{
-    padding-top: 8%;
+    padding-top: 90px;
     color: #F0F0F1 ;
     margin: auto;
     align-items: center;
@@ -27,6 +27,8 @@ font-family: 'Open Sans', sans-serif; */
     padding-bottom: 15px;
     font-size: 32px;
 }
+
+
 
 .detail-contenedor img{
     border-radius: 15px;
@@ -144,8 +146,17 @@ h4 span{
     flex-wrap: wrap;
 }
 
+.presupuesto{
+    margin: 20px;
+}
+.presupuesto span{
+    color: #0089FE;
+}
 
 @media only screen and (min-width: 629px){
+
+   
+
     .detail-contenedor-principal img{
         width: 80%;
     }
@@ -202,9 +213,6 @@ h4 span{
         width: 650px;
         height: 250px;
     }
-   /*  .detail-contenedor-title{
-        align-self: flex-start;
-    } */
     .detail-button{
         width: 300px;
     }
@@ -285,10 +293,9 @@ h4 span{
     }
 
     .presupuesto{
+        margin: 10% auto;
         font-size: 42px;
     }
-    .presupuesto span{
-        color: #0089FE;
-    }
+    
     
 }

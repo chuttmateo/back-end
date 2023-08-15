@@ -17,8 +17,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   .isologotipo {
-    max-height: 115px;
-    margin: 3px;
+    max-width: 115px;
+    /* arreglado */
   }
   .logoazul {
     display: none;
@@ -53,8 +53,7 @@
     display: none;
   }
   .logoazul {
-    max-height: 105px;
-    margin: 3px;
+    max-width: 55px;
   }
   .contenedor {
     margin: 0px 15px;
@@ -83,9 +82,7 @@
     display: none;
   }
   .logoazul {
-    height: auto;
-    width: 75px;
-    /* display: none; */
+    max-width: 50px;
   }
   .contenedor {
     margin: 0px;

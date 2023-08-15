@@ -10,25 +10,24 @@ export default function ImgMediaCard({ item }) {
   return (
     <Card
       sx={{
-        /*maxWidth: 345,*/
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        maxWidth: 800,
+        maxWidth: 500,
         backgroundColor: "#1e1e1e",
         color: "white",
         border: "1px solid rgb(0, 137, 254)",
         borderRadius: "0px",
       }}
     >
-      <CardMedia sx={{ height: 300 }} image={item.imagen} title={item.nombre} />
+      <CardMedia sx={{ height: 250 }} image={item.imagen} title={item.nombre} />
       <CardContent>
         <Typography variant="h5" component="div">
           {item.nombre}
         </Typography>
         <Typography>{item.descripcion}</Typography>
       </CardContent>
-      <CardActions sx={{margin: "5px"}}>
+      <CardActions sx={{ margin: "5px" }}>
         <Link className="button-primary" to={"/productos/" + item.id}>
           Ver detalles
         </Link>

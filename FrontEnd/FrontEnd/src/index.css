@@ -23,3 +23,28 @@ body{
 .button-primary:hover {
   background-color: #53a6ff;
 }
+
+.eliminate-btn{
+  text-decoration: none;
+  background: rgb(255, 48, 48);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: medium;
+}
+.eliminate-btn:hover{
+  background: rgb(253, 69, 69);
+}
+.edit-btn:hover{
+  background: rgb(47, 158, 255) 100%;
+}
+.edit-btn{
+  text-decoration: none;
+  background: rgba(0, 137, 254, 1) 100%;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: medium;
+}
