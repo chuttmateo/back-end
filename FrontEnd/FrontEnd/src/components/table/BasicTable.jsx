@@ -13,6 +13,7 @@ import { ThemeProvider, createTheme, useTheme } from "@mui/material";
 
 export default function BasicTable() {
   const apiUrl = "http://3.144.46.39:8080/productos";
+  //const apiUrl = "http://127.0.0.1:8080/productos";
 
   const [listProductState, setListProductState] = useState([]);
 
@@ -45,7 +46,8 @@ export default function BasicTable() {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell align="center">Nombre</TableCell>
+              <TableCell align="left">Nombre</TableCell>
+              <TableCell align="left">Categoria</TableCell>
               <TableCell align="right">Acciones</TableCell>
             </TableRow>
           </TableHead>
@@ -58,7 +60,8 @@ export default function BasicTable() {
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="center">{row.nombre}</TableCell>
+                <TableCell align="left">{row.nombre}</TableCell>
+                <TableCell align="left">{row.categoria}</TableCell>
                 <TableCell align="right" sx={{ display: "flex", gap: "3px" }}>
                   <button
                     className="eliminate-btn"

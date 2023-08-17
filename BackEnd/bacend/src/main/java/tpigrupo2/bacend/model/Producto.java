@@ -25,10 +25,14 @@ public class Producto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
+    private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_producto")
     private List<Detalle_Producto> detalles = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_producto")
     private List<Imagenes> imagenes = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "categoria")
+    private Categoria categoria;
 }

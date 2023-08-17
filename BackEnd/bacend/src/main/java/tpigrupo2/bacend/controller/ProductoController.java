@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tpigrupo2.bacend.dto.ProductoDTO;
+import tpigrupo2.bacend.model.Categoria;
 import tpigrupo2.bacend.model.Detalle_Producto;
 import tpigrupo2.bacend.model.Imagenes;
 import tpigrupo2.bacend.model.Producto;
+import tpigrupo2.bacend.service.ICategoriaService;
 import tpigrupo2.bacend.service.IProductoService;
 
 import java.io.File;
@@ -25,6 +27,9 @@ public class ProductoController {
     @Autowired
     IProductoService productoService;
 
+    @Autowired
+    ICategoriaService categoriaService;
+
     @CrossOrigin("*")
     @GetMapping
     public List<ProductoDTO> listarProductos(){
@@ -36,15 +41,16 @@ public class ProductoController {
                     .map(Imagenes::getRuta)
                     .findFirst();
 
-            Optional<String> primerDetalle = producto.getDetalles().stream()
+/*            Optional<String> primerDetalle = producto.getDetalles().stream()
                     .map(Detalle_Producto::getDescripcion)
-                    .findFirst();
+                    .findFirst();*/
 
             return new ProductoDTO(
                     producto.getId(),
                     producto.getNombre(),
                     primeraImagen.orElse("NO HAY IMAGEN"),
-                    primerDetalle.orElse("NO HAY DETALLE")
+                    producto.getDescripcion(),
+                    producto.getCategoria() !=null ? producto.getCategoria().getNombre():""
             );
         }).toList();
 
@@ -77,8 +83,10 @@ public class ProductoController {
             return ResponseEntity.badRequest().body("Nombre de Producto existente");
         }
         try {
+            System.out.println("Tratando de crear un producto");
             Producto nuevoProducto = new Producto();
             nuevoProducto.setNombre(productoRequest.getNombre());
+            nuevoProducto.setCategoria(productoRequest.getCategoria());
 
             for (Detalle_Producto detalleRequest : productoRequest.getDetalles()) {
                 Detalle_Producto detalleProducto = new Detalle_Producto();
