@@ -39,7 +39,7 @@ public class ProductoService implements IProductoService {
 
     @Override
     public Producto editarProducto(Producto producto) {
-        return null;
+        return productoRepository.save(producto);
     }
 
     @Override

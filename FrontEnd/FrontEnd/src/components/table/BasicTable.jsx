@@ -9,11 +9,43 @@ import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { ThemeProvider, createTheme, useTheme } from "@mui/material";
+import {
+  FormControl,
+  MenuItem,
+  Select,
+  ThemeProvider,
+  createTheme,
+  useTheme,
+} from "@mui/material";
 
 export default function BasicTable() {
+  const apiUrlCat = "http://3.144.46.39:8080/categorias";
+  const [listCategoriaState, setListCategoriaState] = useState([]);
+
+  useEffect(() => {
+    axios.get(apiUrlCat).then((res) => setListCategoriaState(res.data));
+  }, []);
+
+  function handleInputChange(idx, value, itemAnt) {
+    const index = listProductState.indexOf(itemAnt);
+    const id_cat = listCategoriaState.find((i) => i.nombre == value).id;
+    const modcat = { id: idx, categoria: { id: id_cat } };
+
+    axios
+      .put(apiUrl + "/modcat", modcat)
+      .then((res) => {
+        if (res.status == 200) {
+          let new_list = [...listProductState];
+          new_list[index].categoria = value;
+          setListProductState(new_list);
+        }
+      })
+      .catch((error) => {
+        alert("Error al actualizar la categoria" + error);
+      });
+  }
+
   const apiUrl = "http://3.144.46.39:8080/productos";
-  //const apiUrl = "http://127.0.0.1:8080/productos";
 
   const [listProductState, setListProductState] = useState([]);
 
@@ -31,52 +63,76 @@ export default function BasicTable() {
       setListProductState(listProductState.filter((p) => p.id != id));
     }
   }
-  // const darkTheme = createTheme({
-  //   palette: {
-  //     mode: "dark",
-  //   },
-  // });
 
   return (
-      <TableContainer component={Paper}>
-        <Table
-          sx={{ minWidth: 650 }}
-          aria-label="simple table"
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell align="left">Nombre</TableCell>
-              <TableCell align="left">Categoria</TableCell>
-              <TableCell align="right">Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {listProductState.map((row) => (
-              <TableRow
-                key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.id}
-                </TableCell>
-                <TableCell align="left">{row.nombre}</TableCell>
-                <TableCell align="left">{row.categoria}</TableCell>
-                <TableCell align="right" sx={{ display: "flex", gap: "3px" }}>
-                  <button
-                    className="eliminate-btn"
-                    onClick={() => {
-                      eliminar(row.id);
-                    }}
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell align="left">Nombre</TableCell>
+            <TableCell align="left">Categoria</TableCell>
+            <TableCell align="right">Acciones</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {listProductState.map((row) => (
+            <TableRow
+              key={row.id}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.id}
+              </TableCell>
+              <TableCell align="left">{row.nombre}</TableCell>
+              <TableCell align="left">
+                {
+                  <FormControl
+                    variant="standard"
+                    sx={{ minWidth: 100 }}
+                    size="small"
                   >
-                    Eliminar
-                  </button>
-                  <button className="edit-btn">Editar</button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                    <Select
+                      displayEmpty
+                      inputProps={{ "aria-label": "Without label" }}
+                      key={row.id + "-" + "categoria"}
+                      name={row.id + "-" + "categoria"}
+                      id={row.id + "-" + "categoria"}
+                      value={row.categoria}
+                      onChange={(e) =>
+                        handleInputChange(row.id, e.target.value, row)
+                      }
+                    >
+                      <MenuItem value="">
+                        <em>Sin Categoria</em>
+                      </MenuItem>
+                      {listCategoriaState.map((cat) => (
+                        <MenuItem
+                          key={row.id + "-" + cat.id}
+                          value={cat.nombre}
+                        >
+                          {cat.nombre}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                }
+              </TableCell>
+              <TableCell align="right" sx={{ display: "flex", gap: "3px" }}>
+                <button
+                  className="eliminate-btn"
+                  onClick={() => {
+                    eliminar(row.id);
+                  }}
+                >
+                  Eliminar
+                </button>
+                <button className="edit-btn">Editar</button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

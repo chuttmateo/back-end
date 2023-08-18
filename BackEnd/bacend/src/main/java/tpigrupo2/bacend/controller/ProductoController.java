@@ -120,7 +120,21 @@ public class ProductoController {
         }
 
     }
-
+    @CrossOrigin("*")
+    @PutMapping("/modcat")
+    public ResponseEntity<String> ModificarProducto(@RequestBody Producto productoRequest) {
+        Producto p = productoService.buscarProducto(productoRequest.getId());
+        if(p == null){
+            return ResponseEntity.badRequest().body("El Producto no existe");
+        }
+        try {
+            p.setCategoria(productoRequest.getCategoria());
+            productoService.editarProducto(p);
+            return ResponseEntity.ok("Producto modificado correctamente.");
+        }catch (Exception e){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al modificar el producto."+ e.getMessage());
+        }
+    }
 
 
 }

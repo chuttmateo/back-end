@@ -165,7 +165,7 @@ function CrearProducto() {
               <em>Sin Categoria</em>
             </MenuItem>
             {listCategoriaState.map((cat) => (
-              <MenuItem key={cat.id} value={cat.id}>
+              <MenuItem key={cat.id} value={cat.nombre}>
                 {cat.nombre}
               </MenuItem>
             ))}
