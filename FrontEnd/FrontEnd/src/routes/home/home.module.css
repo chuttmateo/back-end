@@ -20,15 +20,42 @@
   align-items: center;
 }
 .SectionProductCard {
-  width: 90%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   column-gap: 30px;
 }
 
+.defaultButton{
+  align-items: center;
+  text-decoration: none;
+  border: none;
+  /* padding: 8px 16px; */
+  padding: 0 auto;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 6px;
+  background: #343838;
+  color: #FFFFFF;
+  width: 120px;
+  height: 45px;
+}
+
+
+.selectedButton{
+  background: #0089FE  ;
+}
+
+.results{
+  align-self: flex-start;
+  font-size: 26px;
+  font-weight: 600;
+  margin-left: 1%;
+}
+
 @media (max-width: 550px) {
   .SectionProductCard {
+    width: 90%;
     display: flex;
     flex-direction: column;
   }
@@ -78,7 +105,7 @@
     justify-content: center;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 416px) {
   .Categories {
     display: flex;
     flex-direction: column;
@@ -86,12 +113,12 @@
   }
 
   .Categories h2 {
-    font-size: medium;
+    font-size: 21px;
   }
 
   .CategoryButtons {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    /* width: 50%; */
   }
 } 

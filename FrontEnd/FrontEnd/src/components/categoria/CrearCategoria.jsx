@@ -39,7 +39,7 @@ function CrearCategoria() {
     const categoriaData = {
       nombre: formData.nombre,
       descripcion: formData.descripcion,
-      image: imageToBase64(formData.image)
+      image: await imageToBase64(formData.image)
     };
 
     try {

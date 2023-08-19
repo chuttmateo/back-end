@@ -1,6 +1,5 @@
 package tpigrupo2.bacend.service;
 
-import org.springframework.stereotype.Service;
 import tpigrupo2.bacend.model.Producto;
 
 import java.util.Collection;

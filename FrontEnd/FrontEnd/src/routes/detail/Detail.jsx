@@ -19,6 +19,8 @@ const Detail = () => {
   const [detallesSinDescripcion, setDetallesSinDescripcion] = useState([])
   const [presupuesto, setPresupuesto] = useState(0)
 
+  const [category, setCategory] = useState("")
+
 
   const eliminarDescripcion = () => {
     setDetallesSinDescripcion(detalles.splice(0, 1))
@@ -51,25 +53,6 @@ const Detail = () => {
       calcularPresupuesto()
   }, [detallesSinDescripcion])
 
- /*  useEffect(() =>{
-    if (presupuesto != 0) {
-      setEstadoPresupuesto(true)
-    }
-    
-  },[presupuesto]) */
-
-
-/*   useEffect(() => {
-    console.log('Licencia:', licencia);
-    console.log('Detalles:', detalles);
-    console.log('Imagenes:', imagenes);
-    console.log('Descripcion:', descripcion);
-    console.log('Detalles sin descripcion:', detallesSinDescripcion);
-    console.log('Presupuesto: ', presupuesto);
-    eliminarDescripcion()
-    calcularPresupuesto()
-  }, [licencia, imagenes, descripcion, presupuesto]);
-   */
   useEffect(() =>{
   }, [detallesSinDescripcion])
 
@@ -119,7 +102,7 @@ const Detail = () => {
 
       </div>
       
-          <h5 className='detalles'>Detalles:</h5>
+          <h5 className='detalles'>Características: </h5>
 
       <div className='detail-characteristics'>
 

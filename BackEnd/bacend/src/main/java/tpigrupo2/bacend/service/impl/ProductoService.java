@@ -3,8 +3,6 @@ package tpigrupo2.bacend.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tpigrupo2.bacend.model.Producto;
-import tpigrupo2.bacend.repository.iDetalle_ProductoRepository;
-import tpigrupo2.bacend.repository.iImagenesRepository;
 import tpigrupo2.bacend.repository.iProductoRepository;
 import tpigrupo2.bacend.service.IProductoService;
 

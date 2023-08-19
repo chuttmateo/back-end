@@ -5,11 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tpigrupo2.bacend.dto.ProductoDTO;
-import tpigrupo2.bacend.model.Categoria;
 import tpigrupo2.bacend.model.Detalle_Producto;
 import tpigrupo2.bacend.model.Imagenes;
 import tpigrupo2.bacend.model.Producto;
-import tpigrupo2.bacend.service.ICategoriaService;
 import tpigrupo2.bacend.service.IProductoService;
 
 import java.io.File;
@@ -26,9 +24,6 @@ import java.util.UUID;
 public class ProductoController {
     @Autowired
     IProductoService productoService;
-
-    @Autowired
-    ICategoriaService categoriaService;
 
     @CrossOrigin("*")
     @GetMapping

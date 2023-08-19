@@ -4,17 +4,22 @@ import styles from "./home.module.css";
 import ImgMediaCard from "../../components/cardStyled/ImgMediaCard";
 import {useTheme } from "@mui/material";
 import Banner from "../../components/banner/Banner";
+import { useGlobalState } from "../../utils/Context";
 
 const apiUrl = "http://3.144.46.39:8080/productos";
 
 const Home = () => {
 
+  const {categorySelected, setCategorySelected} = useGlobalState()
+  
   const theme = useTheme();
   console.log(theme.palette.mode);
 
   const [productState, setProductState] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
+  const [filtrado, setFiltrado] = useState([])
   const [imagen, setImagen] = useState("");
+  const [categories, setCategories] = useState([])
 
   const aleatorizeProducts = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -30,6 +35,18 @@ const Home = () => {
     return arrayLimitedViewProducts;
   };
 
+  const handleCategoryButton = (e) => {
+    setCategorySelected(e.target.value)
+    setFiltrado(e.target.value === 'Todos' ? productState : productState.filter((item) => item.categoria === e.target.value));
+  }
+
+  const findCategories = (data) =>{
+    const datos = data.map(item => item.categoria)
+    const actualCategories = [...new Set(datos)]
+    /* etCategories(...new Set(data.map(item => item.categoria))) */
+    setCategories(actualCategories)
+  }
+
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get(apiUrl);
@@ -37,6 +54,7 @@ const Home = () => {
       setProductState(data);
       aleatorizeProducts(data);
       setImagen(getRandomImage())
+      findCategories(data)
 }
 
     fetchData();
@@ -69,6 +87,8 @@ const Home = () => {
     const randomIndex = Math.floor(Math.random() * aviones.length);
     return aviones[randomIndex];
   }
+
+
   return (
     <main className="main">
       <Banner img={imagen}/>
@@ -82,19 +102,35 @@ const Home = () => {
       <section className={styles.Categories}>
         <h2>Categorías</h2>
         <div className={styles.CategoryButtons}>
-          <button className="button-primary">Licencias</button>
-          <button className="button-primary">Uniforme</button>
-          <button className="button-primary">Merchandising</button>
-          <button className="button-primary">Horas libres</button>
+          {/* {categories?.map(item => <button key={item.id} onClick={handleCategoryButton} value= {item.categoria}className= {`${styles.defaultButton} ${category === item.categoria && styles.selectedButton }`} >{item.categoria}</button>)} */}
+
+          {categories?.map((item, index) => <button key={index} onClick={handleCategoryButton} value= {item}className= {`${styles.defaultButton} ${categorySelected === item && styles.selectedButton }`} >{item}</button>)} 
+
+          {/* <button onClick={handleCategoryButton} value= "Licencias" className= {`${styles.defaultButton} ${categorySelected === "Licencias" && styles.selectedButton }`} >Licencias y habilitaciones</button>
+          <button onClick={handleCategoryButton} value= "Uniforme" className={`${styles.defaultButton} ${categorySelected === "Uniforme" && styles.selectedButton}`}>Uniforme</button>
+          <button onClick={handleCategoryButton} value= "Merchandising" className={`${styles.defaultButton} ${categorySelected === "Merchandising" && styles.selectedButton}`}>Merchandising</button> */}
+          {/* <button onClick={handleCategoryButton} value= "Licencias" className="button-primary">Horas libres</button> */}
         </div>
       </section>
 
+      
+
       <div className={styles.contenedor}>
-        <div className={styles.SectionProductCard}>
+      {categorySelected === 'Licencias' && <p className={styles.results}>Licencias y habilitaciones ({filtrado.length})</p>}
+      {categorySelected === 'Uniforme' && <p className={styles.results} >Uniformes ({filtrado.length})</p>}
+      {categorySelected === 'Merchandising' && <p className={styles.results} >Merchandising ({filtrado.length})</p>}
+
+        {categorySelected === 'Todos' ? <div className={styles.SectionProductCard}>
           {limitedViewProducts[startIndex]?.map((item) => (
             <ImgMediaCard item={item} key={item.id} />
           ))}
-        </div>
+        </div> : <div className={styles.SectionProductCard}>
+          {filtrado?.map((item) => (
+            <ImgMediaCard item={item} key={item.id} />
+          ))}
+        </div>  }
+
+        
       </div>
 
       <section className={styles.NavigateButtons}>
