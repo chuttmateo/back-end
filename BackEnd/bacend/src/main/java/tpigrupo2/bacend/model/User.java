@@ -13,28 +13,16 @@ import java.util.Set;
 @Table(name ="users")
 public class User {
     @Id
-
-    @GeneratedValue
-
+    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
-
     private String name;
-
+    private String apellido;
     private String password;
+    private String email;
 
 
+    private boolean admin;
 
-    @ManyToMany(fetch=FetchType.EAGER)
 
-    @JoinTable(
-
-            name="UserRoles",
-
-            joinColumns = @JoinColumn(name ="id_user"),
-
-            inverseJoinColumns = @JoinColumn(name="id_rol")
-
-    )
-
-    private Set<Rol> roles;
 }

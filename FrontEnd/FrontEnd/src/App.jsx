@@ -7,6 +7,7 @@ import Administracion from "./routes/administracion/Administracion";
 import Detail from "./routes/detail/Detail";
 import PaginaNoEncontrada from "./routes/paginaNoEncontrada/PaginaNoEncontrada";
 import { ThemeProvider, createTheme } from "@mui/material";
+import Register from "./routes/register/Register";
 
 function App() {
   const theme = createTheme({
@@ -14,6 +15,7 @@ function App() {
       mode: 'dark',
     },
   });
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -23,6 +25,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path={`/productos/:id`} element={<Detail />} />
           <Route path="/administracion" element={<Administracion />} />
+          <Route path="/register" element={<Register/>}/>
           <Route path="*" element={<PaginaNoEncontrada />} />
         </Routes>
         <Footer />

@@ -19,7 +19,7 @@ const Header = () => {
         </div>
       </Link>
       <div className={styles.contenedor}>
-        <button className="button-primary">Crear cuenta</button>
+        <Link className="button-primary" to={"/register"}>Crear cuenta</Link>
         <button className="button-primary">Iniciar sesión</button>
       </div>
     </div>

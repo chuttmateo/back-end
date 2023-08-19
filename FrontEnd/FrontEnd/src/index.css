@@ -6,9 +6,9 @@ body{
   color: #cecccc;
 }
 .main{
-  padding-top: 95px;
+  padding-top: 65px;
+  min-height: 100vh;
 }
-
 
 /* Botones Primarios */
 .button-primary {
@@ -16,6 +16,7 @@ body{
   background: rgba(0, 137, 254, 1) 100%;
   color: white;
   border: none;
+  border-radius: 15px;
   padding: 8px 16px;
   cursor: pointer;
   font-size: medium;

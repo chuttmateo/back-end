@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./home.module.css";
 import ImgMediaCard from "../../components/cardStyled/ImgMediaCard";
 import {useTheme } from "@mui/material";
+import Banner from "../../components/banner/Banner";
 
 const apiUrl = "http://3.144.46.39:8080/productos";
 
@@ -13,7 +14,7 @@ const Home = () => {
 
   const [productState, setProductState] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
-  const [isRandomized, setIsRandomized] = useState(false);
+  const [imagen, setImagen] = useState("");
 
   const aleatorizeProducts = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -35,6 +36,7 @@ const Home = () => {
       const data = response.data;
       setProductState(data);
       aleatorizeProducts(data);
+      setImagen(getRandomImage())
 }
 
     fetchData();
@@ -62,14 +64,20 @@ const Home = () => {
     setStartIndex(limitedViewProducts.length - 1);
     window.scrollTo(0, 0);
   };
-
+  const aviones = ["avion-pequena.jpg", "avion-pequena-2.jpg"]
+  function getRandomImage() {
+    const randomIndex = Math.floor(Math.random() * aviones.length);
+    return aviones[randomIndex];
+  }
   return (
     <main className="main">
-      <section className={styles.SearchBar}>
-        <input
+      <Banner img={imagen}/>
+        {/* <input
           type="text"
           placeholder="Ej: Piloto Privado, uniforme, hospedaje.."
-        />
+        /> */}
+
+      <section className={styles.SearchBar}>
       </section>
       <section className={styles.Categories}>
         <h2>Categorías</h2>
@@ -95,7 +103,7 @@ const Home = () => {
         <strong>{startIndex}</strong>
         <button onClick={handleNextClick} className="button-primary">Next</button>
         <button onClick={handleFinishClick} className="button-primary">Final</button>
-      </section>
+      </section>      
     </main>
   );
 };

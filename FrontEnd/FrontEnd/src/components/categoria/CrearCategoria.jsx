@@ -5,6 +5,7 @@ function CrearCategoria() {
   const [formData, setFormData] = useState({
     nombre: "",
     descripcion: "",
+    image:""
   });
 
   const handleInputChange = (event) => {
@@ -15,13 +16,30 @@ function CrearCategoria() {
     });
   };
 
+
+  const handleImageChange = (event) => {
+    setFormData({
+      ...formData,
+      image: event.target.files[0],
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Form data submitted:", formData);
+    const imageToBase64 = (image) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = (error) => reject(error);
+        reader.readAsDataURL(image);
+      });
+    };
 
     const categoriaData = {
       nombre: formData.nombre,
       descripcion: formData.descripcion,
+      image: imageToBase64(formData.image)
     };
 
     try {
@@ -84,6 +102,27 @@ function CrearCategoria() {
           onChange={handleInputChange}
         />
       </FormControl>
+
+      <FormControl sx={{ m: 1, minWidth: 850 }}>
+
+      <div>
+              {formData.image && (
+                <div>
+                  <img
+                    className="uploadimg"
+                    src={URL.createObjectURL(formData.image)}
+                    alt={`Imagen`}
+                  />
+                  
+                </div>
+              )}
+              <input
+                type="file"
+                onChange={(e) => handleImageChange(e)}
+              />
+            </div>
+      </FormControl>
+
       <FormControl sx={{ m: 1, minWidth: 850 }}>
         <Button
           sx={{ minWidth: 850 }}

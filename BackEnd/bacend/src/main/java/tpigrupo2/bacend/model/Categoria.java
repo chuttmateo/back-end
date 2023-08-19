@@ -20,5 +20,6 @@ public class Categoria implements Serializable {
     private int id;
     private String nombre;
     private String descripcion;
+    private String image;
 }
 

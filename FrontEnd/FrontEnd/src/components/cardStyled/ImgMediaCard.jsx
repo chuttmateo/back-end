@@ -1,4 +1,3 @@
-import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -13,11 +12,10 @@ export default function ImgMediaCard({ item }) {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        maxWidth: 500,
-        backgroundColor: "#1e1e1e",
+        maxWidth: 450,
+        // backgroundColor: "#1E1E1E",
         color: "white",
-        border: "1px solid rgb(0, 137, 254)",
-        borderRadius: "0px",
+        borderRadius: "20px",
       }}
     >
       <CardMedia sx={{ height: 250 }} image={item.imagen} title={item.nombre} />
@@ -27,7 +25,7 @@ export default function ImgMediaCard({ item }) {
         </Typography>
         <Typography>{item.descripcion}</Typography>
       </CardContent>
-      <CardActions sx={{ margin: "5px" }}>
+      <CardActions sx={{ margin: "5px", display:'flex', justifyContent: 'center' }}>
         <Link className="button-primary" to={"/productos/" + item.id}>
           Ver detalles
         </Link>
