@@ -1,8 +1,10 @@
 import { Box, TextField } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -66,10 +68,22 @@ function Register() {
         password,
       })
       .then(function (response) {
+       
+        
+        if(response.status == 200){
+          alert("Usuario creado correctamente")
+          navigate("/login");
+        }
+        
         console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
+        if(error?.response?.status == 403){
+          setEmailError("Este email ya se encuentra regitrado")
+        }else{
+          alert("Error al intentar crear el usuario", error.message )
+        }
+        
       });
   }
 
@@ -96,7 +110,7 @@ function Register() {
         <TextField
           id="username"
           label="Email"
-          variant="standard"
+          //variant="standard"
           value={username}
           error={emailError !== ""}
           helperText={emailError}
@@ -108,7 +122,7 @@ function Register() {
         <TextField
           id="firstname"
           label="Nombre"
-          variant="standard"
+          //variant="standard"
           value={firstname}
           error={firstnameError !== ""}
           helperText={firstnameError}
@@ -120,7 +134,7 @@ function Register() {
         <TextField
           id="lastname"
           label="Apellido"
-          variant="standard"
+          //variant="standard"
           value={lastname}
           error={lastnameError !== ""}
           helperText={lastnameError}
@@ -139,7 +153,7 @@ function Register() {
             setPassword(e.target.value);
           }}
           label="Contraseña"
-          variant="standard"
+          //variant="standard"
           type="password"
         />
         <button type="submit" className="button-primary">

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import './Detail.css'
+import { Box, Grid, Card, CardMedia } from '@mui/material';
+import { Galeria } from './Galeria';
+
 
 
 const Detail = () => {
@@ -67,9 +70,13 @@ const Detail = () => {
         <div className="container d-flex">
           <div className="row">
             <div className="col-6">
-              <img src={imagenes[0]?.ruta}  alt=""  className='img-fluid img-thumbnail'/>
+              <img src={imagenes[0]?.ruta}  alt=""  className='img-fluid h-100'/>
             </div>
-            <div className="galeria col-6" style={{gap:"3px"}}>
+            <div className='col-6'>
+              <Galeria  imagenes={imagenes}/>
+
+            </div>
+            {/* <div className="galeria col-6" style={{gap:"3px"}}>
               <div style={{display:"flex", height:"125px", gap:"3px"}}>
                 <div>
                   <img src={imagenes[1]?.ruta}  alt=""  className='img-thumbnail' style={{height:"125px"}}/>
@@ -94,7 +101,7 @@ const Detail = () => {
 
 
 
-            </div>
+            </div> */}
           </div>
 
 

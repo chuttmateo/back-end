@@ -7,6 +7,8 @@ import Administracion from "./routes/administracion/Administracion";
 import Detail from "./routes/detail/Detail";
 import PaginaNoEncontrada from "./routes/paginaNoEncontrada/PaginaNoEncontrada";
 import { ThemeProvider, createTheme } from "@mui/material";
+import Login from "./routes/login/Login";
+import ProfileDetail from "./routes/profileDetail/ProfileDetail";
 import Register from "./routes/register/Register";
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path={`/productos/:id`} element={<Detail />} />
           <Route path="/administracion" element={<Administracion />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile/:username" element={<ProfileDetail/>} />
           <Route path="/register" element={<Register/>}/>
           <Route path="*" element={<PaginaNoEncontrada />} />
         </Routes>

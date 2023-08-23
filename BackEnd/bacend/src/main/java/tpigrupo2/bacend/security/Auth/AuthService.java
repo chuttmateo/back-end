@@ -13,6 +13,12 @@ import tpigrupo2.bacend.security.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -21,13 +27,22 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
+    //private final User user;
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         UserDetails user=userRepository.findByUsername(request.getUsername()).orElseThrow();
+        Optional<User> u = userRepository.findByUsername(request.getUsername());
+        User data=new User();
+        if(u.isPresent()){
+            data = u.get();
+        }
         String token=jwtService.getToken(user);
         return AuthResponse.builder()
             .token(token)
+                .username(data.getUsername())
+                .firstname(data.getFirstname())
+                .lastname(data.getLastname())
+                .role(data.getRole().toString())
             .build();
 
     }
@@ -37,7 +52,7 @@ public class AuthService {
             .username(request.getUsername())
             .password(passwordEncoder.encode( request.getPassword()))
             .firstname(request.getFirstname())
-            .lastname(request.lastname)
+            .lastname(request.getLastname())
             .role(Role.USER)
             .build();
 
@@ -45,6 +60,10 @@ public class AuthService {
 
         return AuthResponse.builder()
             .token(jwtService.getToken(user))
+                .username(request.getUsername())
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .role(Role.USER.toString())
             .build();
         
     }

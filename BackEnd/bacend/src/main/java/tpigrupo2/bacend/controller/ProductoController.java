@@ -87,6 +87,7 @@ public class ProductoController {
                 Detalle_Producto detalleProducto = new Detalle_Producto();
                 detalleProducto.setDescripcion(detalleRequest.getDescripcion());
                 detalleProducto.setPrecio(detalleRequest.getPrecio());
+                detalleProducto.setCantidad(detalleRequest.getCantidad());
                 nuevoProducto.getDetalles().add(detalleProducto);
             }
 

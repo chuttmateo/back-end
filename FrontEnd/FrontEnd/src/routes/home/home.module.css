@@ -22,8 +22,7 @@
 .SectionProductCard {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  column-gap: 30px;
+  gap: 40px;
 }
 
 .defaultButton{
@@ -33,12 +32,16 @@
   /* padding: 8px 16px; */
   padding: 0 auto;
   cursor: pointer;
-  font-size: 14px;
+  font-size: small;
   border-radius: 6px;
   background: #343838;
   color: #FFFFFF;
   width: 120px;
-  height: 45px;
+  height: 34px;
+  transition: 0.3s;
+}
+.defaultButton:hover{
+  background-color: #0089FE;
 }
 
 

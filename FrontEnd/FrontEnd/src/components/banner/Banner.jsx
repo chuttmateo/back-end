@@ -1,6 +1,22 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
 
-export default function BannerWithInput(props) {
+export default function BannerWithInput() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = ["avion-pequena.jpg", "avion-pequena-2.jpg"]; // Agrega aquí las URL de las imágenes
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
     <Box
       sx={{
@@ -21,7 +37,7 @@ export default function BannerWithInput(props) {
           objectFit: "cover",
         }}
         alt="avion"
-        src={props.img}
+        src={images[currentImageIndex]} // Mostrar la imagen actual
       />
       <div
         style={{
@@ -63,6 +79,46 @@ export default function BannerWithInput(props) {
           ¡Iniciar Curso!
         </button>
       </div>
+      
+      {/* Botones para cambiar entre imágenes */}
+      <button
+        onClick={handlePrevImage}
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "10px",
+          transform: "translateY(-50%)",
+          padding: "5px 10px",
+          background: "transparent",
+          color: "rgba(0, 137, 254, 1)",
+          cursor: "pointer",
+          fontSize: "50px",
+          border: "none"
+          //border: "2px solid white",
+          //borderRadius: "5px",
+        }}
+      >
+        &#8249;
+      </button>
+      <button
+        onClick={handleNextImage}
+        style={{
+          position: "absolute",
+          top: "50%",
+          right: "10px",
+          transform: "translateY(-50%)",
+          padding: "5px 10px",
+          background: "transparent",
+          color: "rgba(0, 137, 254, 1)",
+          cursor: "pointer",
+          fontSize: "50px",
+          border: "none"
+          //borderRadius: "5px",
+          //border: "2px solid white",
+        }}
+      >
+        &#8250;
+      </button>
     </Box>
   );
 }

@@ -6,10 +6,10 @@ const GlobalState = createContext();
 const Context = ({children}) => {
 
     const [categorySelected, setCategorySelected] = useState("Todos");
-
+    const [loggedState,setLoggedState] = useState(false)
 
     return (
-        <GlobalState.Provider value={{categorySelected, setCategorySelected}}>
+        <GlobalState.Provider value={{categorySelected, setCategorySelected,loggedState, setLoggedState}}>
             {children}
         </GlobalState.Provider>
   )
