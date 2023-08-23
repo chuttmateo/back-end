@@ -20,5 +20,6 @@ public class Detalle_Producto implements Serializable {
     private String descripcion;
     private Double cantidad;
     private Double precio;
+    private String image;
 }
 

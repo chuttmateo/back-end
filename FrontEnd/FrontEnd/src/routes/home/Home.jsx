@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./home.module.css";
 import ImgMediaCard from "../../components/cardStyled/ImgMediaCard";
-import { Card, CardContent, CardMedia, Skeleton, useTheme } from "@mui/material";
 import Banner from "../../components/banner/Banner";
 import { useGlobalState } from "../../utils/Context";
 import ImgMediaSkeleton from '../../components/cardStyled/ImgMediaSkeleton'
@@ -13,7 +12,7 @@ const apiUrlCat = "http://3.144.46.39:8080/categorias";
 const Home = () => {
   const { categorySelected, setCategorySelected } = useGlobalState();
 
-  const theme = useTheme();
+  /*const theme = useTheme();*/
   /* console.log(theme.palette.mode); */
 
   const [productState, setProductState] = useState([]);
@@ -59,7 +58,6 @@ const Home = () => {
         const data = response.data;
         setProductState(data);
         aleatorizeProducts(data);
-        setImagen(getRandomImage());
       }
       findCategories();
       fetchData();
@@ -95,11 +93,6 @@ const Home = () => {
     setStartIndex(limitedViewProducts.length - 1);
     window.scrollTo(0, 0);
   };
-  const aviones = ["avion-pequena.jpg", "avion-pequena-2.jpg"];
-  function getRandomImage() {
-    const randomIndex = Math.floor(Math.random() * aviones.length);
-    return aviones[randomIndex];
-  }
 
   return (
     <main className="main">

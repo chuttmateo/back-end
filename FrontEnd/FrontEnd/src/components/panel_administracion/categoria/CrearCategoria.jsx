@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { Button, FormControl, TextField } from "@mui/material";
+import { Box, Button, FormControl, TextField } from "@mui/material";
 
 function CrearCategoria() {
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
   const [formData, setFormData] = useState({
     nombre: "",
     descripcion: "",
-    image:""
+    image: "",
   });
-  
+
   useEffect(() => {
-    setToken(JSON.parse(localStorage.getItem("userData")).token)
+    setToken(JSON.parse(localStorage.getItem("userData")).token);
   }, []);
 
   const handleInputChange = (event) => {
@@ -20,7 +20,6 @@ function CrearCategoria() {
       [name]: value,
     });
   };
-
 
   const handleImageChange = (event) => {
     setFormData({
@@ -44,7 +43,7 @@ function CrearCategoria() {
     const categoriaData = {
       nombre: formData.nombre,
       descripcion: formData.descripcion,
-      image: await imageToBase64(formData.image)
+      image: await imageToBase64(formData.image),
     };
 
     try {
@@ -52,7 +51,7 @@ function CrearCategoria() {
         method: "POST",
         headers: {
           authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(categoriaData),
       });
@@ -83,61 +82,54 @@ function CrearCategoria() {
 
   return (
     <div className="form">
-      <h2>Agregar Categoria</h2>
-      <FormControl sx={{ m: 1, minWidth: 850 }}>
-        <TextField
-          label="Nombre:"
-          variant="outlined"
-          required
-          type="text"
-          id="nombre"
-          name="nombre"
-          value={formData.nombre}
-          onChange={handleInputChange}
-        />
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 850 }}>
-        <TextField
-          label="Descripcion:"
-          variant="outlined"
-          required
-          type="text"
-          id="descripcion"
-          name="descripcion"
-          value={formData.descripcion}
-          onChange={handleInputChange}
-        />
-      </FormControl>
+      <Box component="form" onSubmit={handleSubmit}>
+        <h2>Agregar Categoria</h2>
+        <FormControl sx={{ m: 1, minWidth: 850 }}>
+          <TextField
+            label="Nombre:"
+            variant="outlined"
+            required
+            type="text"
+            id="nombre"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleInputChange}
+          />
+        </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 850 }}>
+          <TextField
+            label="Descripcion:"
+            variant="outlined"
+            required
+            type="text"
+            id="descripcion"
+            name="descripcion"
+            value={formData.descripcion}
+            onChange={handleInputChange}
+          />
+        </FormControl>
 
-      <FormControl sx={{ m: 1, minWidth: 850 }}>
+        <FormControl sx={{ m: 1, minWidth: 850 }}>
+          <div>
+            {formData.image && (
+              <div>
+                <img
+                  className="uploadimg"
+                  src={URL.createObjectURL(formData.image)}
+                  alt={`Imagen`}
+                />
+              </div>
+            )}
+            <input type="file" onChange={(e) => handleImageChange(e)} />
+          </div>
+        </FormControl>
 
-      <div>
-              {formData.image && (
-                <div>
-                  <img
-                    className="uploadimg"
-                    src={URL.createObjectURL(formData.image)}
-                    alt={`Imagen`}
-                  />
-                  
-                </div>
-              )}
-              <input
-                type="file"
-                onChange={(e) => handleImageChange(e)}
-              />
-            </div>
-      </FormControl>
-
-      <FormControl sx={{ m: 1, minWidth: 850 }}>
-        <Button
-          sx={{ minWidth: 850 }}
-          type="button"
-          onClick={handleSubmit}
-        >
-          Enviar
-        </Button>
-      </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 850 }}>
+          <Button sx={{ minWidth: 850 }} type="submit">
+            Enviar
+          </Button>
+        </FormControl>
+      </Box>
     </div>
   );
 }

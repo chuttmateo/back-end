@@ -1,10 +1,22 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
 
 export default function BannerWithInput() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = ["avion-pequena.jpg", "avion-pequena-2.jpg"]; // Agrega aquí las URL de las imágenes
-
+  const images = [
+    {
+      image: "airbus-a320.jpg",
+      title: "HABILITACIÓN AIRBUS A320",
+      button: "¡Iniciar Curso!",
+      url: "/productos/4"
+    },
+    {
+      image: "avion-pequena.jpg",
+      title: "HORAS DE VUELO",
+      button: "¡Sumar Horas!",
+      url: "/productos/19"
+    }];  // Agrega aquí las URL de las imágenes
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
@@ -37,7 +49,7 @@ export default function BannerWithInput() {
           objectFit: "cover",
         }}
         alt="avion"
-        src={images[currentImageIndex]} // Mostrar la imagen actual
+        src={images[currentImageIndex].image} // Mostrar la imagen actual
       />
       <div
         style={{
@@ -63,23 +75,36 @@ export default function BannerWithInput() {
             fontSize: "50px",
           }}
         >
-          HABILITACIÓN AIRBUS A320
+          {images[currentImageIndex].title.toUpperCase()}
         </h1>
-        <button
+        {/*<button
           style={{
             padding: "10px 20px",
             background: "transparent",
-            border: "2px solid white",
+            border: "2px solid rgb(0, 137, 254)",
             color: "white",
             borderRadius: "5px",
             cursor: "pointer",
             fontSize: "16px",
           }}
         >
-          ¡Iniciar Curso!
-        </button>
+          {images[currentImageIndex].button}
+        </button>*/}
+        <Link to={images[currentImageIndex].url}
+          style={{
+            padding: "10px 20px",
+            background: "transparent",
+            border: "2px solid rgb(0, 137, 254)",
+            color: "white",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontSize: "16px",
+            textDecoration: "none"
+          }}>
+          {images[currentImageIndex].button}
+        </Link>
       </div>
-      
+
       {/* Botones para cambiar entre imágenes */}
       <button
         onClick={handlePrevImage}

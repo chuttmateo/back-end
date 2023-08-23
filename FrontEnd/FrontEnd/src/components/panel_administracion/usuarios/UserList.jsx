@@ -67,7 +67,7 @@ export default function UserList() {
             <TableCell align="left">Apellido</TableCell>
             <TableCell align="left">Email</TableCell>
             <TableCell align="left">Rol</TableCell>
-            <TableCell align="left">Acciones</TableCell>
+            <TableCell align="right">Acciones</TableCell>
           </TableRow>
         </TableHead>
         

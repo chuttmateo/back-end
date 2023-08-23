@@ -1,7 +1,7 @@
-import { Box, TextField } from "@mui/material";
+import { Box, Container, TextField } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
@@ -68,22 +68,22 @@ function Register() {
         password,
       })
       .then(function (response) {
-       
-        
-        if(response.status == 200){
+
+
+        if (response.status == 200) {
           alert("Usuario creado correctamente")
           navigate("/login");
         }
-        
+
         console.log(response);
       })
       .catch(function (error) {
-        if(error?.response?.status == 403){
+        if (error?.response?.status == 403) {
           setEmailError("Este email ya se encuentra regitrado")
-        }else{
-          alert("Error al intentar crear el usuario", error.message )
+        } else {
+          alert("Error al intentar crear el usuario", error.message)
         }
-        
+
       });
   }
 
@@ -93,11 +93,10 @@ function Register() {
         component="form"
         onSubmit={submit}
         sx={{
-          width: "100%",
           maxWidth: "400px",
           display: "flex",
           flexDirection: "column",
-          gap: "20px",
+          gap: "15px",
           margin: "20px auto",
           padding: "20px",
           backgroundColor: "#1E1E1E",
@@ -107,6 +106,14 @@ function Register() {
         noValidate
         autoComplete="off"
       >
+        <Container sx={{
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+        }}>
+          <img src="logoazul.png" style={{ width: "50px", height: "auto" }} />
+          <h4>Panel de Registro</h4>
+        </Container>
         <TextField
           id="username"
           label="Email"
@@ -159,6 +166,7 @@ function Register() {
         <button type="submit" className="button-primary">
           Crear cuenta
         </button>
+        <Link to={"/login"}>¿Ya tienes una cuenta? Inicia sesión aquí</Link>
       </Box>
     </div>
   );

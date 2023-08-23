@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, FormControl, TextField } from "@mui/material";
+import { Box, Button, FormControl, TextField } from "@mui/material";
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -130,180 +130,180 @@ function CrearProducto() {
 
   return (
     <div className="form">
-      <h2>Agregar Producto</h2>
-      <FormControl sx={{ m: 1, minWidth: 850 }} required>
-        <TextField
-          fullWidth
-          label="Nombre:"
-          variant="outlined"
-          required
-          type="text"
-          id="nombre"
-          name="nombre"
-          value={formData.nombre}
-          onChange={handleInputChange}
-        />
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 850 }} required>
-        <TextField
-          fullWidth
-          label="Descripcion:"
-          variant="outlined"
-          required
-          type="text"
-          id="descripcion"
-          name="descripcion"
-          value={formData.descripcion}
-          onChange={handleInputChange}
-        />
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 850 }}>
-        <InputLabel id="cat" htmlFor="categoria">
-          Categoria
-        </InputLabel>
-        <Select
-          labelId="cat"
-          name="categoria"
-          id="categoria"
-          value={formData.categoria}
-          label="Categoria"
-          onChange={handleInputChange}
-        >
-          <MenuItem value="">
-            <em>Sin Categoria</em>
-          </MenuItem>
-          {listCategoriaState.map((cat) => (
-            <MenuItem key={cat.id} value={cat.nombre}>
-              {cat.nombre}
+      <Box component="form" onSubmit={handleSubmit}>
+        <h2>Agregar Producto</h2>
+        <FormControl sx={{ m: 1, minWidth: 850 }} required>
+          <TextField
+            fullWidth
+            label="Nombre:"
+            variant="outlined"
+            required
+            type="text"
+            id="nombre"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleInputChange}
+          />
+        </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 850 }} required>
+          <TextField
+            fullWidth
+            label="Descripcion:"
+            variant="outlined"
+            required
+            type="text"
+            id="descripcion"
+            name="descripcion"
+            value={formData.descripcion}
+            onChange={handleInputChange}
+          />
+        </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 850 }}>
+          <InputLabel id="cat" htmlFor="categoria">
+            Categoria
+          </InputLabel>
+          <Select
+            labelId="cat"
+            name="categoria"
+            id="categoria"
+            value={formData.categoria}
+            label="Categoria"
+            onChange={handleInputChange}
+          >
+            <MenuItem value="">
+              <em>Sin Categoria</em>
             </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+            {listCategoriaState.map((cat) => (
+              <MenuItem key={cat.id} value={cat.nombre}>
+                {cat.nombre}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-      <FormControl sx={{ m: 1, minWidth: 850 }}>
-        <div className="form-group">
-          <h3>Caracteristicas</h3>
+        <FormControl sx={{ m: 1, minWidth: 850 }}>
+          <div className="form-group">
+            <h3>Caracteristicas</h3>
 
-          {formData.detalles.map((detalle, index) => (
-            <div key={index}>
-              <FormControl sx={{ m: 1, minWidth: 400 }}>
-                <InputLabel id={"car" + index} htmlFor={"car" + index}>
-                  Caracteristica
-                </InputLabel>
-                <Select
-                  labelId={"car" + index}
-                  name={"car" + index}
-                  id={"car" + index}
-                  value={detalle.descripcion}
-                  label="Caracteristica"
-                  onChange={(e) =>
-                    handleItemChange(index, "descripcion", e.target.value)
-                  }
-                >
-                  <MenuItem value="">
-                    <em>Sin Caracteristica</em>
-                  </MenuItem>
-                  {listCaracteristicas.map((car) => (
-                    <MenuItem key={car.id} value={car.nombre}>
-                      {car.nombre}
+            {formData.detalles.map((detalle, index) => (
+              <div key={index}>
+                <FormControl sx={{ m: 1, minWidth: 400 }}>
+                  <InputLabel id={"car" + index} htmlFor={"car" + index}>
+                    Caracteristica
+                  </InputLabel>
+                  <Select
+                    labelId={"car" + index}
+                    name={"car" + index}
+                    id={"car" + index}
+                    value={detalle.descripcion}
+                    label="Caracteristica"
+                    onChange={(e) =>
+                      handleItemChange(index, "descripcion", e.target.value)
+                    }
+                  >
+                    <MenuItem value="">
+                      <em>Sin Caracteristica</em>
                     </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                    {listCaracteristicas.map((car) => (
+                      <MenuItem key={car.id} value={car.nombre}>
+                        {car.nombre}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-              <TextField
-                sx={{ m: 1, minWidth: 60 }}
-                label="Cantidad"
-                variant="outlined"
-                required
-                type="number"
-                placeholder="Cantidad"
-                name={"cantidad" + index}
-                value={detalle.cantidad}
-                onChange={(e) =>
-                  handleItemChange(index, "cantidad", e.target.value)
-                }
-              />
+                <TextField
+                  sx={{ m: 1, minWidth: 60 }}
+                  label="Cantidad"
+                  variant="outlined"
+                  required
+                  type="number"
+                  placeholder="Cantidad"
+                  name={"cantidad" + index}
+                  value={detalle.cantidad}
+                  onChange={(e) =>
+                    handleItemChange(index, "cantidad", e.target.value)
+                  }
+                />
 
-              <TextField
-                sx={{ m: 1, minWidth: 100 }}
-                label="Precio Unitario"
-                variant="outlined"
-                required
-                type="number"
-                placeholder="Precio Unitario"
-                name={"valor" + index}
-                value={detalle.value}
-                onChange={(e) =>
-                  handleItemChange(index, "precio", e.target.value)
-                }
-              />
-              <Button
-                sx={{ m: 1, minWidth: 120 }}
-                className="button-primary"
-                type="button"
-                onClick={() => {
-                  const newDetalles = [...formData.detalles];
-                  newDetalles.splice(index, 1);
-                  setFormData({ ...formData, detalles: newDetalles });
-                }}
-              >
-                Quitar
-              </Button>
-            </div>
-          ))}
-          <Button
-            type="button"
-            onClick={() =>
-              setFormData({
-                ...formData,
-                detalles: [
-                  ...formData.detalles,
-                  { descripcion: "", precio: "" },
-                ],
-              })
-            }
-          >
-            Agregar Caracteristica
-          </Button>
-        </div>
-        <div className="form-group">
-          <label>Imagenes:</label>
-          {formData.images.map((image, index) => (
-            <div key={index}>
-              {image && (
-                <div>
-                  <img
-                    className="uploadimg"
-                    src={URL.createObjectURL(image)}
-                    alt={`Imagen ${index}`}
-                  />
-                  <button type="button" onClick={() => removeImage(index)}>
-                    Quitar Imagen
-                  </button>
-                </div>
-              )}
-              <input
-                type="file"
-                onChange={(e) => handleImageChange(e, index)}
-              />
-            </div>
-          ))}
-          <Button
-            type="button"
-            onClick={() =>
-              setFormData({ ...formData, images: [...formData.images, null] })
-            }
-          >
-            Agregar imagen
-          </Button>
-        </div>
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 850 }}>
-        <Button type="submit" onClick={handleSubmit}>
-          Crear Producto
-        </Button>
-      </FormControl>
+                <TextField
+                  sx={{ m: 1, minWidth: 100 }}
+                  label="Precio Unitario"
+                  variant="outlined"
+                  required
+                  type="number"
+                  placeholder="Precio Unitario"
+                  name={"valor" + index}
+                  value={detalle.value}
+                  onChange={(e) =>
+                    handleItemChange(index, "precio", e.target.value)
+                  }
+                />
+                <Button
+                  sx={{ m: 1, minWidth: 120 }}
+                  className="button-primary"
+                  type="button"
+                  onClick={() => {
+                    const newDetalles = [...formData.detalles];
+                    newDetalles.splice(index, 1);
+                    setFormData({ ...formData, detalles: newDetalles });
+                  }}
+                >
+                  Quitar
+                </Button>
+              </div>
+            ))}
+            <Button
+              type="button"
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  detalles: [
+                    ...formData.detalles,
+                    { descripcion: "", precio: "" },
+                  ],
+                })
+              }
+            >
+              Agregar Caracteristica
+            </Button>
+          </div>
+          <div className="form-group">
+            <label>Imagenes:</label>
+            {formData.images.map((image, index) => (
+              <div key={index}>
+                {image && (
+                  <div>
+                    <img
+                      className="uploadimg"
+                      src={URL.createObjectURL(image)}
+                      alt={`Imagen ${index}`}
+                    />
+                    <button type="button" onClick={() => removeImage(index)}>
+                      Quitar Imagen
+                    </button>
+                  </div>
+                )}
+                <input
+                  type="file"
+                  onChange={(e) => handleImageChange(e, index)}
+                />
+              </div>
+            ))}
+            <Button
+              type="button"
+              onClick={() =>
+                setFormData({ ...formData, images: [...formData.images, null] })
+              }
+            >
+              Agregar imagen
+            </Button>
+          </div>
+        </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 850 }}>
+          <Button type="submit">Crear Producto</Button>
+        </FormControl>
+      </Box>
     </div>
   );
 }
