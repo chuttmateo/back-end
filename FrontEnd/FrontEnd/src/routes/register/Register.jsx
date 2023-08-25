@@ -22,12 +22,15 @@ function Register() {
   }
 
   function validateName(name) {
-    return name.trim().length >= 3;
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    return regex.test(name) && name.trim().length >=3;
   }
 
   function validateLastName(lastName) {
-    return lastName.trim().length >= 3;
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    return regex.test(lastName) && lastName.trim().length >= 3;
   }
+  
 
   function validatePassword(password) {
     return password.trim().length >= 3;
@@ -43,13 +46,13 @@ function Register() {
     setEmailError("");
 
     if (!validateName(firstname)) {
-      setFirstnameError("El nombre debe tener al menos 3 caracteres.");
+      setFirstnameError("El nombre debe constar de al menos 3 caracteres y estar compuesto exclusivamente por letras.");
       return;
     }
     setFirstnameError("");
 
     if (!validateLastName(lastname)) {
-      setLastnameError("El apellido debe tener al menos 3 caracteres.");
+      setLastnameError("El apellido debe constar de al menos 3 caracteres y estar compuesto exclusivamente por letras.");
       return;
     }
     setLastnameError("");

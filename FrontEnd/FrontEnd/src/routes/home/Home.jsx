@@ -5,6 +5,8 @@ import ImgMediaCard from "../../components/cardStyled/ImgMediaCard";
 import Banner from "../../components/banner/Banner";
 import { useGlobalState } from "../../utils/Context";
 import ImgMediaSkeleton from '../../components/cardStyled/ImgMediaSkeleton'
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import ScrollableTabsButtonAuto from "../../components/scrollableTabsButtonAuto/ScrollableTabsButtonAuto";
 
 const apiUrl = "http://3.144.46.39:8080/productos";
 const apiUrlCat = "http://3.144.46.39:8080/categorias";
@@ -36,23 +38,25 @@ const Home = () => {
   };
 
   const handleCategoryButton = (e) => {
-    setCategorySelected(e.target.value);
+    setCategorySelected(e);
     setFiltrado(
-      e.target.value === "Todos"
+      e === "TODOS"
         ? productState
-        : productState.filter((item) => item.categoria === e.target.value)
+        : productState.filter((item) => item.categoria === e)
     );
   };
 
-  async function findCategories(){
-      const response = await axios.get(apiUrlCat);
-      const data = response.data;
-      const datos = data.map((item) => item.nombre);
-      setCategories(datos);
+  async function findCategories() {
+    const response = await axios.get(apiUrlCat);
+    const data = response.data;
+    /* const datos = data.map((item) => item.nombre); */
+    setCategories(data);
+    categories?.map(item => console.log(item))
   }
 
   useEffect(() => {
-    try{
+    try {
+      // eslint-disable-next-line no-inner-declarations
       async function fetchData() {
         const response = await axios.get(apiUrl);
         const data = response.data;
@@ -62,14 +66,14 @@ const Home = () => {
       findCategories();
       fetchData();
 
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
-      const timeoutId = setTimeout(() => {
-        setLoading(false);
-      }, 2500);
-      
-    return() => clearTimeout(timeoutId);
+    const timeoutId = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const limitedViewProducts = limitViewProducts(productState);
@@ -97,35 +101,9 @@ const Home = () => {
   return (
     <main className="main">
       <Banner />
-      {/* <input
-          type="text"
-          placeholder="Ej: Piloto Privado, uniforme, hospedaje.."
-        /> */}
-
-      <section className={styles.SearchBar}></section>
       <section className={styles.Categories}>
         <h2>Categorías</h2>
-        <div className={styles.CategoryButtons}>
-          {/* {categories?.map(item => <button key={item.id} onClick={handleCategoryButton} value= {item.categoria}className= {`${styles.defaultButton} ${category === item.categoria && styles.selectedButton }`} >{item.categoria}</button>)} */}
-
-          {categories?.map((item, index) => (
-            <button
-              key={index}
-              onClick={handleCategoryButton}
-              value={item}
-              className={`${styles.defaultButton} ${
-                categorySelected === item && styles.selectedButton
-              }`}
-            >
-              {item}
-            </button>
-          ))}
-
-          {/* <button onClick={handleCategoryButton} value= "Licencias" className= {`${styles.defaultButton} ${categorySelected === "Licencias" && styles.selectedButton }`} >Licencias y habilitaciones</button>
-          <button onClick={handleCategoryButton} value= "Uniforme" className={`${styles.defaultButton} ${categorySelected === "Uniforme" && styles.selectedButton}`}>Uniforme</button>
-          <button onClick={handleCategoryButton} value= "Merchandising" className={`${styles.defaultButton} ${categorySelected === "Merchandising" && styles.selectedButton}`}>Merchandising</button> */}
-          {/* <button onClick={handleCategoryButton} value= "Licencias" className="button-primary">Horas libres</button> */}
-        </div>
+        {categories[0]?.id !== null ? <ScrollableTabsButtonAuto categories={categories} styles={styles} handleCategoryButton={handleCategoryButton} categorySelected={categorySelected} /> : <h2>sdf</h2>}
       </section>
 
       <div className={styles.contenedor}>
@@ -136,8 +114,8 @@ const Home = () => {
         )}
 
 
-        
-        
+
+
         {/* {
           if (categorySelected === "Todos" && loading ) {
             [1, 2, 3].map(item => <imgMediaSkeleton key={item}/>)
@@ -145,25 +123,25 @@ const Home = () => {
         } */}
 
         {loading === true && (<div className={styles.SectionProductCard}>
-            {limitedViewProducts[startIndex]?.map((item) => (
-              <ImgMediaSkeleton key={item.id} />
-            ))}
-          </div>)}
+          {limitedViewProducts[startIndex]?.map((item) => (
+            <ImgMediaSkeleton key={item.id} />
+          ))}
+        </div>)}
 
-         {categorySelected === "Todos" && loading === false && <div className={styles.SectionProductCard}>
-            {limitedViewProducts[startIndex]?.map((item) => (
-              <ImgMediaCard item={item} key={item.id} />
-            ))}
-          </div> } 
+        {categorySelected === "Todos" && loading === false && <div className={styles.SectionProductCard}>
+          {limitedViewProducts[startIndex]?.map((item) => (
+            <ImgMediaCard item={item} key={item.id} />
+          ))}
+        </div>}
 
-          {categorySelected != "Todos" && loading === false && (
+        {categorySelected != "Todos" && loading === false && (
           <div className={styles.SectionProductCard}>
             {filtrado?.map((item) => (
               <ImgMediaCard item={item} key={item.id} />
             ))}
           </div>
         )}
-          
+
 
         {/*   <ImgMediaSkeleton />
         {categorySelected === "Todos" ? (
@@ -186,11 +164,11 @@ const Home = () => {
           Inicio
         </button>
         <button onClick={handlePrevClick} className="button-primary">
-          Prev
+          <FiChevronLeft />
         </button>
         <strong>{startIndex}</strong>
         <button onClick={handleNextClick} className="button-primary">
-          Next
+          <FiChevronRight />
         </button>
         <button onClick={handleFinishClick} className="button-primary">
           Final
@@ -201,3 +179,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
+

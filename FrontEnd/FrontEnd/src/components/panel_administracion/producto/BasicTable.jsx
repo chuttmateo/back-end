@@ -55,10 +55,10 @@ export default function BasicTable() {
     axios.get(apiUrl).then((res) => setListProductState(res.data));
   }, []);
 
-  function eliminar(id) {
+  function eliminar(id, nombre) {
     if (
       confirm(
-        `Está seguro que desea eliminar el producto ${listProductState.nombre}`
+        `Está seguro que desea eliminar el producto ${nombre}`
       )
     ) {
       axios.delete(`http://3.144.46.39:8080/productos/${id}`,config);
@@ -124,7 +124,7 @@ export default function BasicTable() {
                 <button
                   className="eliminate-btn"
                   onClick={() => {
-                    eliminar(row.id);
+                    eliminar(row.id, row.nombre);
                   }}
                 >
                   Eliminar

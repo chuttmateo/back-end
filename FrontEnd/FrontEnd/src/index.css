@@ -16,10 +16,23 @@ body{
   background: rgba(0, 137, 254, 1) 100%;
   color: white;
   border: none;
-  border-radius: 15px;
-  padding: 8px 16px;
+  border-radius: 100px;
+  margin: 5px;
+  padding: 8px;
   cursor: pointer;
-  font-size: medium;
+  font-size:small;
+}
+
+.button-primary-distinto {
+  text-decoration: none;
+  background: rgb(129, 130, 130) 100%;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  margin: 5px;
+  padding: 8px;
+  cursor: pointer;
+  font-size:small;
 }
 .button-primary:hover {
   background-color: #53a6ff;

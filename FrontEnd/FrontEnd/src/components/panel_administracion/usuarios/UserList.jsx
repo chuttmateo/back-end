@@ -46,10 +46,10 @@ export default function UserList() {
       });
   }
 
-  function eliminar(id) {
+  function eliminar(id, nombre) {
     if (
       confirm(
-        `Está seguro que desea eliminar el usuario ${listUserState.nombre}`
+        `Está seguro que desea eliminar el usuario ${nombre}`
       )
     ) {
       axios.delete(`http://3.144.46.39:8080/users/${id}`,config);
@@ -114,7 +114,7 @@ export default function UserList() {
                 <button
                   className="eliminate-btn"
                   onClick={() => {
-                    eliminar(row.id);
+                    eliminar(row.id, row.username);
                   }}
                 >
                   Eliminar

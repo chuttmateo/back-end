@@ -20,10 +20,10 @@ export default function ListarCategorias() {
     axios.get(apiUrl).then((res) => setListCategoriaState(res.data));
   }, []);
 
-  function eliminar(id) {
+  function eliminar(id, nombre) {
     if (
       confirm(
-        `Está seguro que desea eliminar la categoria ${listCategoriaState.nombre}`
+        `Está seguro que desea eliminar la categoria ${nombre}`
       )
     ) {
       axios.delete(`http://3.144.46.39:8080/categorias/${id}`);
@@ -62,7 +62,7 @@ export default function ListarCategorias() {
                 <button
                   className="eliminate-btn"
                   onClick={() => {
-                    eliminar(row.id);
+                    eliminar(row.id, row.nombre);
                   }}
                 >
                   Eliminar

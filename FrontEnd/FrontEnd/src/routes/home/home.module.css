@@ -4,6 +4,21 @@
   margin-bottom: 20px;
 }
 
+.contenedorCategorias{
+  display: flex;
+  justify-content:space-evenly;
+  width:100%;
+  align-items:center;
+  margin-top:4px;
+}
+
+.contenedorCategoriaIndividual{
+  display:flex;
+  flex-direction:column; 
+  align-content:center; 
+  align-items:center
+}
+
 .Categories h2 {
   margin-bottom: 10px;
   color: #cecccc;
@@ -22,15 +37,15 @@
 .SectionProductCard {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+  gap: 90px;
 }
 
 .defaultButton{
-  align-items: center;
+/*   align-items: center;
   text-decoration: none;
-  border: none;
+  border: none; */
   /* padding: 8px 16px; */
-  padding: 0 auto;
+  /* padding: 0 auto;
   cursor: pointer;
   font-size: small;
   border-radius: 6px;
@@ -38,10 +53,21 @@
   color: #FFFFFF;
   width: 120px;
   height: 34px;
-  transition: 0.3s;
+  transition: 0.3s; */
+  /* lo de arriba era para los botones comunes */
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background-size:cover; 
+  background-position: center; 
+  border:none;
+  transition: 0.2s;
+
+
 }
 .defaultButton:hover{
-  background-color: #0089FE;
+  /* background-color: #0089FE; */
+  border: 2px solid #0089FE;
 }
 
 
@@ -85,10 +111,12 @@
   justify-content: center;
   margin: 25px 0px;
   gap: 5px;
+  
 }
 .NavigateButtons button{
   padding: 5px 10px;
   font-size: small;
+  background-color: #615e5e;
 }
 
 @media (max-width: 550px) {

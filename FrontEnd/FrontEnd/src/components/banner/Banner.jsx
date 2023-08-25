@@ -1,32 +1,54 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
+import "./BannerWithInput.css";
 
 export default function BannerWithInput() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [transitionDirection, setTransitionDirection] = useState("next");
+
   const images = [
     {
-      image: "airbus-a320.jpg",
+      image: "banner1.png",
       title: "HABILITACIÓN AIRBUS A320",
-      button: "¡Iniciar Curso!",
-      url: "/productos/4"
+      button: "¡Ultimos cupos!",
+      url: "/productos/64"
     },
     {
-      image: "avion-pequena.jpg",
-      title: "HORAS DE VUELO",
-      button: "¡Sumar Horas!",
-      url: "/productos/19"
-    }];  // Agrega aquí las URL de las imágenes
+      image: "banner2.png",
+      title: "Tripulante de cabina de pasajeros",
+      button: "¡Quiero inscribirme!",
+      url: "/productos/63"
+    }
+  ];
+
   const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
+    if (!isTransitioning) {
+      setIsTransitioning(true);
+      setTransitionDirection("prev");
+
+      setTimeout(() => {
+        setCurrentImageIndex((prevIndex) =>
+          prevIndex === 0 ? images.length - 1 : prevIndex - 1
+        );
+        setIsTransitioning(false);
+      }, 500);
+    }
   };
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
+    if (!isTransitioning) {
+      setIsTransitioning(true);
+      setTransitionDirection("next");
+
+      setTimeout(() => {
+        setCurrentImageIndex((prevIndex) =>
+          prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        );
+        setIsTransitioning(false);
+      }, 500);
+    }
   };
 
   return (
@@ -39,17 +61,18 @@ export default function BannerWithInput() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        overflow: "hidden",
+        overflow: "hidden"
       }}
     >
       <img
+        className={isTransitioning ? `image-${transitionDirection}` : "image-active"}
         style={{
           width: "100%",
           height: "100%",
-          objectFit: "cover",
+          objectFit: "cover"
         }}
         alt="avion"
-        src={images[currentImageIndex].image} // Mostrar la imagen actual
+        src={images[currentImageIndex].image}
       />
       <div
         style={{
@@ -61,7 +84,7 @@ export default function BannerWithInput() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "center"
         }}
       >
         <h1
@@ -72,25 +95,13 @@ export default function BannerWithInput() {
             border: "none",
             textAlign: "center",
             marginBottom: "10px",
-            fontSize: "50px",
+            fontSize: "50px"
           }}
         >
           {images[currentImageIndex].title.toUpperCase()}
         </h1>
-        {/*<button
-          style={{
-            padding: "10px 20px",
-            background: "transparent",
-            border: "2px solid rgb(0, 137, 254)",
-            color: "white",
-            borderRadius: "5px",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          {images[currentImageIndex].button}
-        </button>*/}
-        <Link to={images[currentImageIndex].url}
+        <Link
+          to={images[currentImageIndex].url}
           style={{
             padding: "10px 20px",
             background: "transparent",
@@ -100,12 +111,12 @@ export default function BannerWithInput() {
             cursor: "pointer",
             fontSize: "16px",
             textDecoration: "none"
-          }}>
+          }}
+        >
           {images[currentImageIndex].button}
         </Link>
       </div>
 
-      {/* Botones para cambiar entre imágenes */}
       <button
         onClick={handlePrevImage}
         style={{
@@ -119,8 +130,6 @@ export default function BannerWithInput() {
           cursor: "pointer",
           fontSize: "50px",
           border: "none"
-          //border: "2px solid white",
-          //borderRadius: "5px",
         }}
       >
         &#8249;
@@ -138,8 +147,6 @@ export default function BannerWithInput() {
           cursor: "pointer",
           fontSize: "50px",
           border: "none"
-          //borderRadius: "5px",
-          //border: "2px solid white",
         }}
       >
         &#8250;

@@ -10,7 +10,6 @@ import tpigrupo2.bacend.model.Detalle_Producto;
 import tpigrupo2.bacend.model.Imagenes;
 import tpigrupo2.bacend.model.Producto;
 import tpigrupo2.bacend.service.ICaracteristicaService;
-import tpigrupo2.bacend.service.ICategoriaService;
 import tpigrupo2.bacend.service.IProductoService;
 
 import java.io.File;
@@ -42,10 +41,6 @@ public class ProductoController {
                     .map(Imagenes::getRuta)
                     .findFirst();
 
-/*            Optional<String> primerDetalle = producto.getDetalles().stream()
-                    .map(Detalle_Producto::getDescripcion)
-                    .findFirst();*/
-
             return new ProductoDTO(
                     producto.getId(),
                     producto.getNombre(),
@@ -54,8 +49,8 @@ public class ProductoController {
                     producto.getCategoria() !=null ? producto.getCategoria().getNombre():""
             );
         }).toList();
-
     }
+
     @CrossOrigin("*")
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarProducto(@PathVariable Integer id){
@@ -88,13 +83,14 @@ public class ProductoController {
             Producto nuevoProducto = new Producto();
             nuevoProducto.setNombre(productoRequest.getNombre());
             nuevoProducto.setCategoria(productoRequest.getCategoria());
+            nuevoProducto.setDescripcion(productoRequest.getDescripcion());
 
             for (Detalle_Producto detalleRequest : productoRequest.getDetalles()) {
                 Detalle_Producto detalleProducto = new Detalle_Producto();
                 detalleProducto.setDescripcion(detalleRequest.getDescripcion());
                 detalleProducto.setPrecio(detalleRequest.getPrecio());
                 detalleProducto.setCantidad(detalleRequest.getCantidad());
-                Caracteristica car = caracteristicaService.buscarPorNombre(detalleRequest.getImage());
+                Caracteristica car = caracteristicaService.buscarPorNombre(detalleRequest.getDescripcion());
                 if (car != null) {
                     detalleProducto.setImage(car.getImage());
                 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useGlobalState } from "../../utils/Context";
 import styles from "./header.module.css";
 import { Link} from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 
 const Header = () => {
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -58,7 +59,7 @@ const Header = () => {
           <span className={styles.userInitials}>UserName</span>
         </div>
       );
-      }
+    }
     //   return `${firstNameInitial}${lastNameInitial}`
     // } else{
     //   return "UserName"
@@ -118,7 +119,7 @@ const Header = () => {
             className={styles.isologotipo}
             src="/isologotipo1.png"
             alt="iso logotipo"
-          />
+          />          
           <img
             className={styles.logoazul}
             src="/logoazul-degrade.png"
@@ -128,33 +129,45 @@ const Header = () => {
       </Link>
       
       <div className={styles.contenedor}>
-        {loggedState ? 
-          <div className={styles.dropdown}>
-            <div className={styles.dropdownToggle} onClick={toggleDropdown}>
-              <span className={styles.userInitialsCircle}>
-                <span className={styles.userInitials}>{handleInitials()}</span>
+        
+        <div className={styles.searchBar}>
+          <FiSearch className={styles.searchIcon} />
+          <input
+            type="text"
+            className={styles.searchInput}
+            placeholder="¿Qué estás buscando?"
+          />
+        </div>
+      </div>
+
+      <div className={styles.contenedor}>
+      {loggedState ? 
+        <div className={styles.dropdown}>
+        <div className={styles.dropdownToggle} onClick={toggleDropdown}>
+              <span>
+          <span className={styles.userInitials}>{handleInitials()}</span>
               </span>
-            </div>
-            {dropdownVisible && (
-              <ul className="dropdown-content">
-                <li><Link to={`/profile/${userData.username}`}>
-                  Ver perfil
+        </div>
+        {dropdownVisible && (
+          <ul className={styles.dropdownContent}>
+            <li><Link to={`/profile/${userData.username}`}>
+              Ver perfil
                 </Link></li>
-                {userData ? (
-                  userData.role === "ADMIN" && (
-                    <li><Link to="/administracion">Panel de administración</Link></li>)
-                ): null}
-                <li><Link to="/home" onClick={handleLogout}>
-                  Cerrar sesión
+            {userData ? (
+              userData.role === "ADMIN" && (
+              <li><Link to="/administracion">Panel de administración</Link></li>)
+              ): null}
+            <li><Link to="/home" onClick={handleLogout}>
+              Cerrar sesión
                 </Link></li>
-              </ul>
-            )}
-          </div>
-          : <div>
-            <Link className="button-primary" to={"/register"}>Crear cuenta</Link>
-            <Link className="button-primary" to={"/login"}>Iniciar sesión</Link>
-          </div>
-        }
+          </ul>
+        )}
+      </div>
+       : <div>
+        <Link className="button-primary-distinto" to={"/register"}>Crear cuenta</Link>
+        <Link className="button-primary" to={"/login"}>Iniciar sesión</Link>
+        </div>
+      }
       </div>
     </div>
   );

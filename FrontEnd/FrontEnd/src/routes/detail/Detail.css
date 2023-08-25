@@ -12,9 +12,12 @@ font-family: 'Open Sans', sans-serif; */
     margin: auto;
     align-items: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     font-family: 'Archivo', sans-serif;
     width: 90%;
+}
+.detail-back-button-desktop{
+    position: fixed;
 }
 .detail-contenedor-title{
     align-items: start;
@@ -221,8 +224,10 @@ h4 span{
     }
     detail-back-button-desktop{
         display: block;
+        position: fixed;
     }
     .detail-back-button-desktop{
+        position: fixed;
         align-self: flex-end;
         align-items: center;
         background-color: #0089FE;

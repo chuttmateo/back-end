@@ -20,10 +20,10 @@ export default function ListarCaracteristicas() {
     axios.get(apiUrl).then((res) => setListCaracteristicaState(res.data));
   }, []);
 
-  function eliminar(id) {
+  function eliminar(id, nombre) {
     if (
       confirm(
-        `Está seguro que desea eliminar la caracteristica ${listCaracteristicaState.nombre}`
+        `Está seguro que desea eliminar la caracteristica ${nombre}`
       )
     ) {
       axios.delete(`http://3.144.46.39:8080/caracteristicas/${id}`);
@@ -62,7 +62,7 @@ export default function ListarCaracteristicas() {
                 <button
                   className="eliminate-btn"
                   onClick={() => {
-                    eliminar(row.id);
+                    eliminar(row.id, row.nombre);
                   }}
                 >
                   Eliminar
