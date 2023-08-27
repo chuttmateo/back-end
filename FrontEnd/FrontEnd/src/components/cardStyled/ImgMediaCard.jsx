@@ -13,15 +13,21 @@ export default function ImgMediaCard({ item }) {
         flexDirection: "column",
         justifyContent: "space-between",
         maxWidth: 450,
-        // backgroundColor: "#1E1E1E",
+        backgroundColor: "#1E1E1E",
         color: "white",
         borderRadius: "20px",
+        transition: "transform 0.3s ease",
+        overflow: "hidden",
+        "&:hover": {
+          transform: "scale(1.1)",
+          WebkitTransform: "scale(1.1)",
+        },
       }}
     >
       <CardMedia sx={{ height: 250 }} image={item.imagen} title={item.nombre} />
       <CardContent sx={{height: '40%'}}>
         <Typography variant="h5" component="div">
-          {item.nombre}
+          {item.nombre.toUpperCase()}
         </Typography>
         <Typography>{item.descripcion}</Typography>
       </CardContent>

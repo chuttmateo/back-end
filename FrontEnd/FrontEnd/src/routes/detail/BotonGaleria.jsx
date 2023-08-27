@@ -1,39 +1,57 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Galeria from "./Galeria";
 
-import Modal from '@mui/material/Modal';
-import Galeria from './Galeria';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '100%',
-  heigth:'100%',
-  backgroundColor:"#111", 
-  border: '1px solid #1E1E1E',
-
-};
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(2),
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
+  },
+}));
 
 export default function BotonGaleria(props) {
-  const images = props.images
+  const images = props.images;
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div>
-      <Button onClick={handleOpen}>Ver Mas</Button>
-      <Modal
-        open={open}
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Ver mas
+      </Button>
+      <BootstrapDialog
         onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+        fullScreen={true}
       >
-        <Box sx={style}>
-          <Galeria images={images}/>
-        </Box>
-      </Modal>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            zIndex: 99,
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[100],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Galeria images={images} />
+      </BootstrapDialog>
     </div>
   );
 }

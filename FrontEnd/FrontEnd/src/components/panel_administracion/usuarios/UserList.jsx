@@ -13,6 +13,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+import swal from "sweetalert";
 
 export default function UserList() {
   const apiUrl = "http://3.144.46.39:8080/users";
@@ -42,7 +43,14 @@ export default function UserList() {
         }
       })
       .catch((error) => {
-        alert("Error al actualizar la user" + error);
+        swal({
+          icon: "error",
+          title: "Error al actualizar la user",
+          text: error.message,
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
       });
   }
 

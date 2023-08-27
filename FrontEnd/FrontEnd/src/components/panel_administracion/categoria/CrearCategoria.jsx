@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Button, FormControl, TextField } from "@mui/material";
+import swal from "sweetalert";
 
 function CrearCategoria() {
   const [token, setToken] = useState("");
@@ -61,12 +62,23 @@ function CrearCategoria() {
         console.log("Error al crear el categoria: " + res);
         //  mostar cartel de error de acuerdo a la respuesta
         //  la api responde con 400 cuando el nombre ya existe
-        alert("Error al crear el categoria: " + res); // sacar esta chanchada
+        swal({
+          icon: "error",
+          title: "Error al crear el categoria: ",
+          text: res,
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
       }
       if (response.ok) {
-        console.log("Categoria creado correctamente.");
-        // mostrar cartel de categoria agregado
-        alert("Categoria creado correctamente."); // sacar esta chanchada
+        swal({
+          icon: "success",
+          title:"Categoria creada correctamente.",
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
         // limpiar formulario y estados
         setFormData({
           nombre: "",
@@ -76,7 +88,14 @@ function CrearCategoria() {
     } catch (error) {
       console.error("Error en la solicitud.");
       // atajando otros errores para que no explote
-      alert("Error en la solicitud."); // sacar esta chanchada
+      swal({
+        icon: "error",
+        title: "Error en la solicitud.",
+        text: error.message,
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        button: "Aceptar",
+      })
     }
   };
 

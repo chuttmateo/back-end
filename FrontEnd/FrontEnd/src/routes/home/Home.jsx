@@ -22,7 +22,7 @@ const Home = () => {
   const [filtrado, setFiltrado] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const index = startIndex;
   const aleatorizeProducts = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -61,7 +61,12 @@ const Home = () => {
         const response = await axios.get(apiUrl);
         const data = response.data;
         setProductState(data);
+
         aleatorizeProducts(data);
+
+        //EL PROBLEMA DEL TODOS lo solucione seteando el filtrado con la data
+        setFiltrado(data)
+        setCategorySelected("TODOS")
       }
       findCategories();
       fetchData();
@@ -81,37 +86,49 @@ const Home = () => {
   const handleNextClick = () => {
     startIndex + 1 < limitedViewProducts.length &&
       setStartIndex(startIndex + 1);
-    window.scrollTo(0, 0);
+      if(startIndex != limitedViewProducts.length - 1){
+        window.scrollTo(0, 0);
+      }
   };
 
   const handlePrevClick = () => {
     startIndex - 1 >= 0 && setStartIndex(startIndex - 1);
-    window.scrollTo(0, 0);
+    if(startIndex != 0){
+      window.scrollTo(0, 0);
+    }
+    
   };
 
   const handleStartClick = () => {
-    setStartIndex(0);
-    window.scrollTo(0, 0);
+    if(startIndex != 0){
+      setStartIndex(0);
+      window.scrollTo(0, 0);
+    }
   };
   const handleFinishClick = () => {
-    setStartIndex(limitedViewProducts.length - 1);
-    window.scrollTo(0, 0);
+    
+    if(startIndex != limitedViewProducts.length - 1){
+      setStartIndex(limitedViewProducts.length - 1);
+      window.scrollTo(0, 0);
+    }
   };
 
   return (
     <main className="main">
       <Banner />
       <section className={styles.Categories}>
-        <h2>Categorías</h2>
-        {categories[0]?.id !== null ? <ScrollableTabsButtonAuto categories={categories} styles={styles} handleCategoryButton={handleCategoryButton} categorySelected={categorySelected} /> : <h2>sdf</h2>}
+        <h2>CATEGORÍAS</h2>
+        <ScrollableTabsButtonAuto categories={categories} styles={styles} handleCategoryButton={handleCategoryButton} categorySelected={categorySelected} />
       </section>
-
       <div className={styles.contenedor}>
-        {categorySelected != "Todos" && (
+                  <p className={styles.results}>
+            {categorySelected.toUpperCase()} ({filtrado.length})
+          </p>
+                {/*{categorySelected !== "TODOS" && (
           <p className={styles.results}>
             {categorySelected} ({filtrado.length})
           </p>
-        )}
+        )}*/}
 
 
 
@@ -128,13 +145,13 @@ const Home = () => {
           ))}
         </div>)}
 
-        {categorySelected === "Todos" && loading === false && <div className={styles.SectionProductCard}>
+        {categorySelected === "TODOS" && loading === false && <div className={styles.SectionProductCard}>
           {limitedViewProducts[startIndex]?.map((item) => (
             <ImgMediaCard item={item} key={item.id} />
           ))}
         </div>}
 
-        {categorySelected != "Todos" && loading === false && (
+        {categorySelected != "TODOS" && loading === false && (
           <div className={styles.SectionProductCard}>
             {filtrado?.map((item) => (
               <ImgMediaCard item={item} key={item.id} />
@@ -166,7 +183,7 @@ const Home = () => {
         <button onClick={handlePrevClick} className="button-primary">
           <FiChevronLeft />
         </button>
-        <strong>{startIndex}</strong>
+        <strong>{index + 1}</strong>
         <button onClick={handleNextClick} className="button-primary">
           <FiChevronRight />
         </button>

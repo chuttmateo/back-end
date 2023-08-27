@@ -1,22 +1,24 @@
-.Categories {
-  padding: 20px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px;
-}
-
-.contenedorCategorias{
+/*.contenedorCategorias{
   display: flex;
   justify-content:space-evenly;
   width:100%;
   align-items:center;
   margin-top:4px;
-}
+}*/
 
-.contenedorCategoriaIndividual{
+/*.contenedorCategoriaIndividual{
   display:flex;
   flex-direction:column; 
   align-content:center; 
   align-items:center
+}*/
+.Categories {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
 }
 
 .Categories h2 {
@@ -24,24 +26,20 @@
   color: #cecccc;
 }
 
-.CategoryButtons {
-  display: flex;
-  gap: 10px;
-}
-
-.contenedor{
+.contenedor {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .SectionProductCard {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 90px;
 }
 
-.defaultButton{
-/*   align-items: center;
+.defaultButton {
+  /*   align-items: center;
   text-decoration: none;
   border: none; */
   /* padding: 8px 16px; */
@@ -55,29 +53,29 @@
   height: 34px;
   transition: 0.3s; */
   /* lo de arriba era para los botones comunes */
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background-size:cover; 
-  background-position: center; 
-  border:none;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: none;
   transition: 0.2s;
 
 
 }
-.defaultButton:hover{
+
+.defaultButton:hover {
   /* background-color: #0089FE; */
   border: 2px solid #0089FE;
 }
 
 
-.selectedButton{
-  background: #0089FE  ;
+.selectedButton {
+  background: #0089FE;
 }
 
-.results{
-  align-self: flex-start;
-  font-size: 26px;
+.results {
+  font-size: 15px;
   font-weight: 600;
   margin-left: 1%;
 }
@@ -111,9 +109,10 @@
   justify-content: center;
   margin: 25px 0px;
   gap: 5px;
-  
+
 }
-.NavigateButtons button{
+
+.NavigateButtons button {
   padding: 5px 10px;
   font-size: small;
   background-color: #615e5e;
@@ -135,7 +134,14 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .results {
+    font-size: 10px;
+    font-weight: 300;
+    margin-left: 1%;
+  }
 }
+
 @media (max-width: 416px) {
   .Categories {
     display: flex;
@@ -152,4 +158,4 @@
     flex-direction: column;
     /* width: 50%; */
   }
-} 
+}

@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
 import axios from "axios";
+import swal from "sweetalert";
 
 function CrearProducto() {
   const apiUrl = "http://3.144.46.39:8080/categorias";
@@ -106,12 +107,25 @@ function CrearProducto() {
         console.log("Error al crear el producto: " + res);
         //  mostar cartel de error de acuerdo a la respuesta
         //  la api responde con 400 cuando el nombre ya existe
-        alert("Error al crear el producto: " + res); // sacar esta chanchada
+        swal({
+          icon: "error",
+          title: "Error al crear el producto:",
+          text: res,
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
       }
       if (response.ok) {
         console.log("Producto creado correctamente.");
         // mostrar cartel de producto agregado
-        alert("Producto creado correctamente."); // sacar esta chanchada
+        swal({
+          icon: "success",
+          title:"Producto creado correctamente.",
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
         // limpiar formulario y estados
         setFormData({
           nombre: "",
@@ -124,7 +138,15 @@ function CrearProducto() {
     } catch (error) {
       console.error("Error en la solicitud.");
       // atajando otros errores para que no explote
-      alert("Error en la solicitud."); // sacar esta chanchada
+      swal({
+        icon: "error",
+        title: "Error en la solicitud.",
+        text: error.message,
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        button: "Aceptar",
+      })
+       // sacar esta chanchada
     }
   };
 
@@ -169,6 +191,7 @@ function CrearProducto() {
             value={formData.categoria}
             label="Categoria"
             onChange={handleInputChange}
+            required
           >
             <MenuItem value="">
               <em>Sin Categoria</em>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Button, FormControl, TextField } from "@mui/material";
+import swal from "sweetalert";
 
 function CrearCaracteristica() {
   const [token, setToken] = useState("");
@@ -61,12 +62,26 @@ function CrearCaracteristica() {
         console.log("Error al crear el caracteristica: " + res);
         //  mostar cartel de error de acuerdo a la respuesta
         //  la api responde con 400 cuando el nombre ya existe
-        alert("Error al crear el caracteristica: " + res); // sacar esta chanchada
+
+        swal({
+          icon: "error",
+          title:"Error al crear el caracteristica:",
+          text: res,
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
       }
       if (response.ok) {
         console.log("Caracteristica creado correctamente.");
         // mostrar cartel de caracteristica agregado
-        alert("Caracteristica creado correctamente."); // sacar esta chanchada
+        swal({
+          icon: "success",
+          title:"Caracteristica creado correctamente.",
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
         // limpiar formulario y estados
         setFormData({
           nombre: "",
@@ -76,7 +91,14 @@ function CrearCaracteristica() {
     } catch (error) {
       console.error("Error en la solicitud.");
       // atajando otros errores para que no explote
-      alert("Error en la solicitud."); // sacar esta chanchada
+      swal({
+        icon: "error",
+        title: "Error en la solicitud.",
+        text: error.message,
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        button: "Aceptar",
+      })
     }
   };
 

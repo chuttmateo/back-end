@@ -5,7 +5,7 @@ const GlobalState = createContext();
 
 const Context = ({children}) => {
 
-    const [categorySelected, setCategorySelected] = useState("Todos");
+    const [categorySelected, setCategorySelected] = useState("TODOS");
     const [loggedState,setLoggedState] = useState(false)
 
     return (

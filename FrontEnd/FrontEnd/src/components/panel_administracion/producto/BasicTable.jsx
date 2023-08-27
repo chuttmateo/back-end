@@ -13,6 +13,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+import swal from "sweetalert";
 
 export default function BasicTable() {
   const apiUrlCat = "http://3.144.46.39:8080/categorias";
@@ -43,7 +44,15 @@ export default function BasicTable() {
         }
       })
       .catch((error) => {
-        alert("Error al actualizar la categoria" + error);
+        
+        swal({
+          icon: "error",
+          title: "Error al actualizar la categoria",
+          text: error.message,
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
       });
   }
 

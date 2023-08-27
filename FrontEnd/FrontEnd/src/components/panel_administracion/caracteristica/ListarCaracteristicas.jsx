@@ -13,20 +13,26 @@ import axios from "axios";
 
 export default function ListarCaracteristicas() {
   const apiUrl = "http://3.144.46.39:8080/caracteristicas";
-
+  const [token, setToken] = useState("")
   const [listCaracteristicaState, setListCaracteristicaState] = useState([]);
 
   useEffect(() => {
     axios.get(apiUrl).then((res) => setListCaracteristicaState(res.data));
+    setToken(JSON.parse(localStorage.getItem("userData")).token);
   }, []);
-
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
+  }
   function eliminar(id, nombre) {
     if (
       confirm(
         `Está seguro que desea eliminar la caracteristica ${nombre}`
       )
     ) {
-      axios.delete(`http://3.144.46.39:8080/caracteristicas/${id}`);
+      axios.delete(`http://3.144.46.39:8080/caracteristicas/${id}`,config);
       setListCaracteristicaState(listCaracteristicaState.filter((p) => p.id != id));
     }
   }

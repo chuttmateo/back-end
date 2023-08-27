@@ -13,13 +13,13 @@ export default function BannerWithInput() {
       image: "banner1.png",
       title: "HABILITACIÓN AIRBUS A320",
       button: "¡Ultimos cupos!",
-      url: "/productos/64"
+      url: "/productos/81"
     },
     {
       image: "banner2.png",
       title: "Tripulante de cabina de pasajeros",
       button: "¡Quiero inscribirme!",
-      url: "/productos/63"
+      url: "/productos/67"
     }
   ];
 

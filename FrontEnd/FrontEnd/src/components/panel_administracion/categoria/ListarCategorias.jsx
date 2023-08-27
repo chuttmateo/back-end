@@ -13,20 +13,26 @@ import axios from "axios";
 
 export default function ListarCategorias() {
   const apiUrl = "http://3.144.46.39:8080/categorias";
-
+  const [token, setToken] = useState("")
   const [listCategoriaState, setListCategoriaState] = useState([]);
 
   useEffect(() => {
     axios.get(apiUrl).then((res) => setListCategoriaState(res.data));
+    setToken(JSON.parse(localStorage.getItem("userData")).token);
   }, []);
-
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
+  }
   function eliminar(id, nombre) {
     if (
       confirm(
         `Está seguro que desea eliminar la categoria ${nombre}`
       )
     ) {
-      axios.delete(`http://3.144.46.39:8080/categorias/${id}`);
+      axios.delete(`http://3.144.46.39:8080/categorias/${id}`,config);
       setListCategoriaState(listCategoriaState.filter((p) => p.id != id));
     }
   }

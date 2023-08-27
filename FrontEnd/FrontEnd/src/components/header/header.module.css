@@ -44,7 +44,7 @@
   }
   
   .searchIcon {
-    margin-right: 8px;
+    margin-right: 25px;
     margin-left: 5px;
     color: #c3c2c2;
   }
@@ -53,14 +53,15 @@
     border: none;
     outline: none;
     background-color: transparent;
-    width: 200px;
+    border-radius: 0 25px 25px 0;
+    width: 100%;
     font-size: 14px;
     color: white;
   }
   
   .searchInput::placeholder {
     color: rgb(189, 187, 187); /* Cambia el color del placeholder */
-    font-size: 10px;
+    font-size: 14px;
   }
 }
 

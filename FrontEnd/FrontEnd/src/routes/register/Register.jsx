@@ -1,10 +1,12 @@
+import { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import { Box, Container, TextField } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
+import swal from "sweetalert"
+import styles from "./modal.module.css"
 function Register() {
-  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -14,6 +16,21 @@ function Register() {
   const [firstnameError, setFirstnameError] = useState("");
   const [lastnameError, setLastnameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const form = useRef();
+
+  const sendEmail = (serviceId) => {
+    
+    emailjs.sendForm(serviceId, 'template_uqu2sgv', form.current, 'ZGHqjA6dS6ZEt59AV', {
+      user_name: firstname,
+      user_email: username
+    })
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+  };
 
   //Cuando tenga los requerimientos en las cantidad de caracteres, lo voy a modificar acá
   function validateEmail(email) {
@@ -36,7 +53,7 @@ function Register() {
     return password.trim().length >= 3;
   }
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault();
 
     if (!validateEmail(username)) {
@@ -63,37 +80,94 @@ function Register() {
     }
     setLastnameError("");
 
-    axios
-      .post("http://3.144.46.39:8080/auth/register", {
+    try {
+      const response = await axios.post("http://3.144.46.39:8080/auth/register", {
         username,
         firstname,
         lastname,
         password,
-      })
-      .then(function (response) {
-
-
-        if (response.status == 200) {
-          alert("Usuario creado correctamente")
-          navigate("/login");
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
         }
-
-        console.log(response);
-      })
-      .catch(function (error) {
-        if (error?.response?.status == 403) {
-          setEmailError("Este email ya se encuentra regitrado")
-        } else {
-          alert("Error al intentar crear el usuario", error.message)
-        }
-
       });
+  
+      if (response.status === 200) {
+        console.log(response.status === 200);
+        swal({
+          icon: "success",
+          title:"Usuario creado correctamente",
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
+        sendEmail("service_qgdsv24");
+        swal({
+          title: "Confirmación de correo electrónico",
+          icon: "info",
+          text: "¡Bienvenido a bordo!\n\n" +
+          "Muchas gracias por unirte a InFlight, en estos momentos te acabamos de mandar un email con tu información de usuario, por favor, revisa que todo esté correcto.\n\n" +
+          "En caso de no haber recibido el correo haz click en el botón \"Reenviar correo\", si ya lo recibiste haz click en el botón \"Continuar\".\n\n" +
+          "Si hay algún inconveniente o error con el correo de confirmación o con la información de registro, puedes comunicarte con nosotros al siguiente correo: inflight.academy@gmail.com",
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          buttons: {
+            reenviar: {
+              text: "Reenviar correo",
+              value: "false",
+              closeModal: false
+            },
+            continuar: {
+              text: "Continuar",
+              value: "true",
+              className: styles.ContinuarBtn,
+            }
+          },
+        }).then((value) => {
+          console.log("the value is " + value);
+          if(value === "true"){
+            window.location.href = "/login";
+          } else if(value === "false"){
+            sendEmail("service_gh12r4y");
+            swal({
+              icon: "success",
+              text: "Se ha reenviado el correo exitosamente. \n\n" +
+              "Si hay algún inconveniente o error con el correo de confirmación o con la información de registro, puedes comunicarte con nosotros al siguiente correo: inflight.academy@gmail.com",
+              closeOnClickOutside: false,
+              closeOnEsc: false,
+              buttons: {continuar: {
+                text: "Continuar",
+                value: "true",
+              }
+            }}).then((value) => {
+              if(value === "true"){
+                window.location.href = "/login";
+          }})
+          }
+        })
+      }
+    } catch (error) {
+      if (error?.response?.status === 403) {
+        setEmailError("Este email ya se encuentra registrado");
+      } else {
+        console.log(error);
+        swal({
+          icon: "error",
+          title: "Error al intentar crear el usuario: ",
+          text: error.message,
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
+      }
+    }
   }
 
   return (
     <div className="main">
       <Box
         component="form"
+        ref={form}
         onSubmit={submit}
         sx={{
           maxWidth: "400px",
@@ -121,6 +195,7 @@ function Register() {
           id="username"
           label="Email"
           //variant="standard"
+          name='user_email'
           value={username}
           error={emailError !== ""}
           helperText={emailError}
@@ -133,6 +208,7 @@ function Register() {
           id="firstname"
           label="Nombre"
           //variant="standard"
+          name='user_name'
           value={firstname}
           error={firstnameError !== ""}
           helperText={firstnameError}
