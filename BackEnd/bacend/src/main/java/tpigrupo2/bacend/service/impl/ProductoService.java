@@ -64,4 +64,9 @@ public class ProductoService implements IProductoService {
         }
         return null;
     }
+    public Optional<List<String>> autoCompletarNombre(String nombre) {
+        System.out.println(nombre);
+        return Optional.of(productoRepository.findByNombreLike(nombre));
+
+    }
 }

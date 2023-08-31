@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tpigrupo2.bacend.dto.CursoDTO;
 import tpigrupo2.bacend.dto.ProductoDTO;
-import tpigrupo2.bacend.model.Caracteristica;
-import tpigrupo2.bacend.model.Detalle_Producto;
-import tpigrupo2.bacend.model.Imagenes;
-import tpigrupo2.bacend.model.Producto;
+import tpigrupo2.bacend.model.*;
 import tpigrupo2.bacend.service.ICaracteristicaService;
 import tpigrupo2.bacend.service.IProductoService;
 
@@ -46,7 +44,18 @@ public class ProductoController {
                     producto.getNombre(),
                     primeraImagen.orElse("NO HAY IMAGEN"),
                     producto.getDescripcion(),
-                    producto.getCategoria() !=null ? producto.getCategoria().getNombre():""
+                    producto.getCategoria() !=null ? producto.getCategoria().getNombre():"",
+                    producto.getCursos().size() != 0 ?
+                            producto.getCursos().stream()
+                                    .map(curso -> new CursoDTO(
+                                    curso.getFechaInicio(),
+                                    curso.getFechaFin(),
+                                    curso.getCupos(),
+                                    curso.getReservas().size(),
+                                    curso.getCupos() - curso.getReservas().size()))
+                                    .filter(cursoDTO -> cursoDTO.getDisponibles() > 0)
+                                    .toList() :
+                            List.of()
             );
         }).toList();
     }

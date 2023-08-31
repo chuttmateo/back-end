@@ -1,7 +1,7 @@
 package tpigrupo2.bacend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tpigrupo2.bacend.dto.CursoDTO;
 import tpigrupo2.bacend.dto.ProductoDTO;
 import tpigrupo2.bacend.model.Imagenes;
 import tpigrupo2.bacend.model.Producto;
@@ -23,13 +23,21 @@ public class SearchController {
     }
 
     @CrossOrigin("*")
+    @GetMapping("/{busqueda}")
+    public List<String> autoCompletarNombre(@PathVariable String busqueda){
+        Optional<List<String>> nombres = productoService.autoCompletarNombre(busqueda + "%");
+        if (nombres.isPresent()){
+            return nombres.get();
+        }return List.of();
+    }
+
+    @CrossOrigin("*")
     @GetMapping
     public List<ProductoDTO> search(@RequestParam HashMap<String, String> params){
 
         String nombre = params.getOrDefault("nombre", "_");
 
         Collection<Producto> productos = productoService.listarProductos();
-
         return productos.stream()
                 .filter(producto -> producto.getNombre().startsWith(nombre))
                 .map(producto -> {
@@ -42,7 +50,19 @@ public class SearchController {
                     producto.getNombre(),
                     primeraImagen.orElse("NO HAY IMAGEN"),
                     producto.getDescripcion(),
-                    producto.getCategoria() !=null ? producto.getCategoria().getNombre():""
+                    producto.getCategoria() !=null ? producto.getCategoria().getNombre():"",
+                    producto.getCursos().size() != 0 ?
+                            producto.getCursos().stream()
+                                    .map(curso -> new CursoDTO(
+                                            curso.getFechaInicio(),
+                                            curso.getFechaFin(),
+                                            curso.getCupos(),
+                                            curso.getReservas().size(),
+                                            curso.getCupos() - curso.getReservas().size()
+                                    ))
+                                    .filter(cursoDTO -> cursoDTO.getDisponibles() > 0)
+                                    .toList() :
+                            List.of()
             );
         }).toList();
     }

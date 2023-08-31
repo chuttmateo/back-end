@@ -31,4 +31,7 @@ public class Producto implements Serializable {
     @OneToOne
     @JoinColumn(name = "categoria")
     private Categoria categoria;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_producto")
+    private List<Curso> cursos;
 }
