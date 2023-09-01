@@ -1,6 +1,6 @@
 @media (min-width: 551px) {
   .div {
-    position: fixed;
+    position: sticky;
     z-index: 100;
     top: 0;
     left: 0;
@@ -80,7 +80,7 @@
 }
 @media (max-width: 550px) {
   .div {
-    position: fixed;
+    position: sticky;
     z-index: 100;
     top: 0;
     left: 0;
@@ -116,7 +116,7 @@
 }
 @media (max-width: 430px) {
   .div {
-    position: fixed;
+    position: sticky;
     z-index: 100;
     top: 0;
     left: 0;

@@ -13,10 +13,8 @@ import tpigrupo2.bacend.service.IProductoService;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 
 
 @RestController
@@ -106,7 +104,6 @@ public class ProductoController {
 
                 nuevoProducto.getDetalles().add(detalleProducto);
             }
-
             for (Imagenes imagenRequest : productoRequest.getImagenes()) {
                 byte[] imageBytes = java.util.Base64.getDecoder().decode(imagenRequest.getImage());
                 Imagenes imagen = new Imagenes();
@@ -123,10 +120,22 @@ public class ProductoController {
                     e.printStackTrace(); // para agregar a Logs
                 }
             }
-
+            String cursoMsj = "";
+            if (productoRequest.getCursos() != null) {
+                List<Curso> cursos;
+                cursos = productoRequest.getCursos().stream()
+                        .map(curso -> {
+                            Curso c = new Curso();
+                            c.setFechaInicio(curso.getFechaInicio());
+                            c.setFechaFin(curso.getFechaFin());
+                            c.setCupos(curso.getCupos());
+                            return c;
+                        }).toList();
+                nuevoProducto.setCursos(cursos);
+                cursoMsj="Curso creado correctamente";
+            }
             productoService.crearProducto(nuevoProducto);
-
-            return ResponseEntity.ok("Producto creado correctamente.");
+            return ResponseEntity.ok("Producto creado correctamente." + cursoMsj);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el producto.");
         }

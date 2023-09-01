@@ -24,6 +24,16 @@ export default function ScrollableTabsButtonAuto({
         aria-label="scrollable auto tabs example"
       >
         <Tab
+              sx={{padding:'10px 30px'}}
+              icon={
+                <Avatar
+                  sx={{ width: 120, height: 120}}
+                  alt="logo"
+                  src='./logoazul.png'
+                 
+                />
+              }
+
           value={0}
           label="TODOS"
           onClick={() => handleCategoryButton("TODOS")}

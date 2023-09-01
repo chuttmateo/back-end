@@ -181,24 +181,24 @@ const Login = () => {
 
   return (
   <>
+  <div className="container-general" style={{
+    display: "flex",
+    justifyContent: "flex-end",
+        backgroundImage: 'url("/public/avion1.jpeg")', // Reemplaza con la ruta de tu imagen
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+  }}>
     <div
       className="login-container"
       style={{
-        background: "#333",
+        background: "#3A3A3A",
         padding: "20px",
-        borderRadius: "5px",
         boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
         maxWidth: "400px",
-        margin: "0 auto",
-        marginTop: "150px",
-        marginBottom: "300px",
-        // Agregar borde gris claro
-
-        // border: "1px solid #ccc", 
-        // boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+        height: "750px",       
       }}
     >
-      <h2 style={{ marginBottom: "10px", fontSize: "26px", color: "#fff", textAlign: 'center'}}>
+      <h2 style={{ marginBottom: "10px", fontSize: "26px", color: "white", textAlign: 'center'}}>
         Iniciar Sesión
       </h2>
       {loginStates.credentialError && (
@@ -219,7 +219,7 @@ const Login = () => {
           
           <label
             htmlFor="username"
-            style={{ display: "block", marginBottom: "5px", color: "#fff", fontSize:"13px" }}
+            style={{ display: "block", marginBottom: "5px", color: "white", fontSize:"13px" }}
           >
             Ingrese su Email:
           </label>
@@ -230,7 +230,15 @@ const Login = () => {
             onChange={(e) =>
               dispatch({ type: "SET_USERNAME", payload: e.target.value })
             }
-            style={{ width: "100%", padding: "10px", borderRadius: "10px" }}
+            style={{ 
+              width: "100%",
+              padding: "10px",
+              borderRadius: "8px",
+              border: "1px solid #e0e0e0",
+              backgroundColor: "#f7f7f7",
+              fontSize: "14px",
+              color: "#333",
+              transition: "border-color 0.3s, box-shadow 0.3s", }}
           />
         </div>
         <div className="form-group" style={{ marginBottom: "15px" }}>
@@ -238,7 +246,7 @@ const Login = () => {
 
           <label
             htmlFor="password"
-            style={{ display: "block", marginBottom: "5px", color: "#fff", fontSize: "13px" }}
+            style={{ display: "block", marginBottom: "5px", color: "white", fontSize: "13px" }}
           >
             Contraseña:
           </label>
@@ -250,7 +258,15 @@ const Login = () => {
             onChange={(e) =>
               dispatch({ type: "SET_PASSWORD", payload: e.target.value })
             }
-            style={{ width: "100%", padding: "10px", borderRadius: "10px" }}
+            style={{ 
+              width: "100%",
+              padding: "10px",
+              borderRadius: "8px",
+              border: "1px solid #e0e0e0",
+              backgroundColor: "#f7f7f7",
+              fontSize: "14px",
+              color: "#333",
+              transition: "border-color 0.3s, box-shadow 0.3s", }}
           />
         </div>
         <button
@@ -270,7 +286,10 @@ const Login = () => {
           Iniciar Sesión
         </button>
       </form>
-      <Link to={"/register"}>¿No tienes una cuenta? Regístrate aquí</Link>
+      <Link to={"/register"} 
+      
+      >¿No tienes una cuenta? Regístrate aquí</Link>
+    </div>
     </div>
   </>
 );
