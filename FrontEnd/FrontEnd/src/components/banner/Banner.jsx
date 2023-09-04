@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
 import "./BannerWithInput.css";
@@ -50,6 +50,30 @@ export default function BannerWithInput() {
       }, 500);
     }
   };
+
+
+  const tiempoIntervalo = 4000;
+
+  useEffect(() => {
+    const cambiarImagenAutomaticamente = () => {
+      if (!isTransitioning) {
+        setIsTransitioning(true);
+        setTransitionDirection("next");
+
+        setTimeout(() => {
+          setCurrentImageIndex((prevIndex) =>
+            prevIndex === images.length - 1 ? 0 : prevIndex + 1
+          );
+          setIsTransitioning(false);
+        }, 500);
+      }
+    };
+
+    
+    const intervalo = setInterval(cambiarImagenAutomaticamente, tiempoIntervalo);
+
+    return () => clearInterval(intervalo);
+  }, [currentImageIndex, isTransitioning]);
 
   return (
     <Box
@@ -112,6 +136,8 @@ export default function BannerWithInput() {
             fontSize: "16px",
             textDecoration: "none"
           }}
+          
+
         >
           {images[currentImageIndex].button}
         </Link>
@@ -126,11 +152,16 @@ export default function BannerWithInput() {
           transform: "translateY(-50%)",
           padding: "5px 10px",
           background: "transparent",
+          height: "90%",
           color: "rgba(0, 137, 254, 1)",
           cursor: "pointer",
           fontSize: "50px",
-          border: "none"
+          border: "none",
+          transition: "background-color 0.3s ease"
         }}
+        onMouseEnter={(e) => (e.target.style.backgroundColor = "rgba(0, 137, 254, 0.05)")} // Cambiar el color de fondo al hacer hover
+        onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")} // Restaurar el color de fondo al salir del hover
+
       >
         &#8249;
       </button>
@@ -143,11 +174,15 @@ export default function BannerWithInput() {
           transform: "translateY(-50%)",
           padding: "5px 10px",
           background: "transparent",
+          height: "90%",
           color: "rgba(0, 137, 254, 1)",
           cursor: "pointer",
           fontSize: "50px",
-          border: "none"
+          border: "none",
+          transition: "background-color 0.3s ease"
         }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "rgba(0, 137, 254, 0.05)")} // Cambiar el color de fondo al hacer hover
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")} // Restaurar el color de fondo al salir del hover
       >
         &#8250;
       </button>

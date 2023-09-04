@@ -14,20 +14,21 @@ export default function ScrollableTabsButtonAuto({
     setValue(newValue);
   };
   return (
-    <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+    <Box sx={{ width: "90%", display: "flex", justifyContent: "center", backgroundColor: "rgba(30, 30, 30, 1)", borderRadius: "120% 10% 10% 0%"}}>
       <Tabs
-        sx={{ display: "flex", justifyContent: "space-evenly"}}
+        sx={{ display: "flex", justifyContent: "space-evenly", borderRadius: "10px 10px 10px 10px"}}
         value={value}
         onChange={handleChange}
         variant="scrollable"
-        scrollButtons="auto"
-        aria-label="scrollable auto tabs example"
+        scrollButtons
+        allowScrollButtonsMobile
+        aria-label="scrollable force tabs example"
       >
         <Tab
-              sx={{padding:'10px 30px'}}
+              sx={{}}
               icon={
                 <Avatar
-                  sx={{ width: 120, height: 120}}
+                  sx={{ width: 100, height: 100}}
                   alt="logo"
                   src='./logoazul.png'
                  
@@ -44,7 +45,7 @@ export default function ScrollableTabsButtonAuto({
               sx={{padding:'10px 30px'}}
               icon={
                 <Avatar
-                  sx={{ width: 120, height: 120}}
+                  sx={{ width: 100, height: 100}}
                   alt={item.nombre}
                   src={item.image}
                  

@@ -19,6 +19,7 @@ public class SearchController {
     private final IProductoService productoService;
 
     public SearchController(IProductoService productoService) {
+
         this.productoService = productoService;
     }
 

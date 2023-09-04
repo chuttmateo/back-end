@@ -1,14 +1,27 @@
 import { useEffect, useState } from "react";
-import { Box, Button, FormControl, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
 import swal from "sweetalert";
 
 function CrearCategoria() {
+  const [checked, setChecked] = useState(false);
   const [token, setToken] = useState("");
   const [formData, setFormData] = useState({
     nombre: "",
     descripcion: "",
     image: "",
+    reservable: checked
   });
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   useEffect(() => {
     setToken(JSON.parse(localStorage.getItem("userData")).token);
@@ -45,6 +58,7 @@ function CrearCategoria() {
       nombre: formData.nombre,
       descripcion: formData.descripcion,
       image: await imageToBase64(formData.image),
+      reservable: checked
     };
 
     try {
@@ -69,16 +83,16 @@ function CrearCategoria() {
           closeOnClickOutside: false,
           closeOnEsc: false,
           button: "Aceptar",
-        })
+        });
       }
       if (response.ok) {
         swal({
           icon: "success",
-          title:"Categoria creada correctamente.",
+          title: "Categoria creada correctamente.",
           closeOnClickOutside: false,
           closeOnEsc: false,
           button: "Aceptar",
-        })
+        });
         // limpiar formulario y estados
         setFormData({
           nombre: "",
@@ -95,7 +109,7 @@ function CrearCategoria() {
         closeOnClickOutside: false,
         closeOnEsc: false,
         button: "Aceptar",
-      })
+      });
     }
   };
 
@@ -127,7 +141,14 @@ function CrearCategoria() {
             onChange={handleInputChange}
           />
         </FormControl>
-
+        <FormControlLabel
+          sx={{ m: 1, minWidth: 850 }}
+          required
+          control={<Checkbox 
+            onChange={handleChange}
+            inputProps={{ 'aria-label': 'controlled' }}/>}
+          label="Incluye Reservas? (Ej: Cursos, Hospedajes)"
+        />
         <FormControl sx={{ m: 1, minWidth: 850 }}>
           <div>
             {formData.image && (

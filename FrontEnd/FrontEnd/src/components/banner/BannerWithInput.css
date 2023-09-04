@@ -25,3 +25,17 @@
     transform: translateX(0);
     transition: opacity 0.5s, transform 0.5s;
 }
+
+.bannerButton{
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    padding: 5px 10px;
+    background: transparent;
+    height: 90%;
+    color: rgba(0, 137, 254, 1);
+    cursor: pointer;
+    fontSize: 50px;
+    border: none;
+}

@@ -120,22 +120,9 @@ public class ProductoController {
                     e.printStackTrace(); // para agregar a Logs
                 }
             }
-            String cursoMsj = "";
-            if (productoRequest.getCursos() != null) {
-                List<Curso> cursos;
-                cursos = productoRequest.getCursos().stream()
-                        .map(curso -> {
-                            Curso c = new Curso();
-                            c.setFechaInicio(curso.getFechaInicio());
-                            c.setFechaFin(curso.getFechaFin());
-                            c.setCupos(curso.getCupos());
-                            return c;
-                        }).toList();
-                nuevoProducto.setCursos(cursos);
-                cursoMsj="Curso creado correctamente";
-            }
+
             productoService.crearProducto(nuevoProducto);
-            return ResponseEntity.ok("Producto creado correctamente." + cursoMsj);
+            return ResponseEntity.ok("Producto creado correctamente.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el producto.");
         }
@@ -156,6 +143,28 @@ public class ProductoController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al modificar el producto."+ e.getMessage());
         }
     }
-
+    @CrossOrigin("*")
+    @PutMapping("/add_curso")
+    public ResponseEntity<String> AgregarCurso(@RequestBody Curso cursoRequest) {
+        Producto p = productoService.buscarProducto(cursoRequest.getId());
+        if(p == null){
+            return ResponseEntity.badRequest().body("El Producto no existe");
+        }
+        try
+        {
+            Curso c = new Curso();
+            c.setFechaInicio(cursoRequest.getFechaInicio());
+            c.setFechaFin(cursoRequest.getFechaFin());
+            c.setCupos(cursoRequest.getCupos());
+            c.setHoraInicio(cursoRequest.getHoraInicio());
+            c.setHoraFin(cursoRequest.getHoraFin());
+            c.setModalidad(cursoRequest.getModalidad());
+            p.getCursos().add(c);
+            productoService.editarProducto(p);
+            return ResponseEntity.ok("Curso agregado correctamente.");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al modificar el producto."+ e.getMessage());
+        }
+    }
 
 }

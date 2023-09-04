@@ -73,7 +73,8 @@ public class CategoriaController {
                     e.printStackTrace(); // para agregar a Logs
                 }
             }
-            Categoria nueva = new Categoria(0,categoriaRequest.getNombre(),categoriaRequest.getDescripcion(), ruta);
+            Categoria nueva = new Categoria(0,categoriaRequest.getNombre(),categoriaRequest.getDescripcion(), ruta,
+                    categoriaRequest.getReservable());
 
             categoriaService.crearCategoria(nueva);
 

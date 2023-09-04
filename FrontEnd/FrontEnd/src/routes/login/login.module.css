@@ -1,3 +1,7 @@
+.ContinuarBtn{
+    background-color: grey;
+}
 
-
-  
+.input-hover:hover {
+    border-color: white; /* Cambia el color del borde a blanco cuando se hace hover */
+  }

@@ -164,20 +164,23 @@ function Register() {
   }
 
   return (
-    <div className="main">
+    <div className="main" style={{
+      display: "flex",
+      justifyContent: "flex-end",
+      backgroundImage: 'url("/avion1.jpeg")',// Reemplaza con la ruta de tu imagen
+      height: "100vh" 
+    }}>
       <Box
         component="form"
         ref={form}
         onSubmit={submit}
         sx={{
-          maxWidth: "400px",
+          width: "35vw",
           display: "flex",
           flexDirection: "column",
           gap: "15px",
-          margin: "20px auto",
           padding: "20px",
-          backgroundColor: "#1E1E1E",
-          borderRadius: "8px",
+          backgroundColor: "#3A3A3A",
           boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
         }}
         noValidate
@@ -188,8 +191,8 @@ function Register() {
           justifyContent: "center",
           textAlign: "center",
         }}>
-          <img src="logoazul.png" style={{ width: "50px", height: "auto" }} />
-          <h4>Panel de Registro</h4>
+          <img src="logoazul-degrade.png" style={{ width: "50px", height: "auto", marginTop: "35px" }} />
+          <h4 style={{ fontSize: "40px"}}>Panel de Registro</h4>
         </Container>
         <TextField
           id="username"
@@ -245,10 +248,13 @@ function Register() {
         <button type="submit" className="button-primary">
           Crear cuenta
         </button>
-        <Link to={"/login"}>¿Ya tienes una cuenta? Inicia sesión aquí</Link>
+        <Link to={"/login"} style={{
+          fontSize: "13px"
+        }}>¿Ya tienes una cuenta? Inicia sesión aquí</Link>
       </Box>
     </div>
   );
 }
 
 export default Register;
+

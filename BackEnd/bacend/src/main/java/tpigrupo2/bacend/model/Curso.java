@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -23,6 +24,9 @@ public class Curso implements Serializable{
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private int cupos;
+    private String modalidad;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_curso")
     private List<Reserva> reservas;

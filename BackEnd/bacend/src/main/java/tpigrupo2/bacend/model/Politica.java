@@ -7,21 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name ="categorias")
-public class Categoria implements Serializable {
+@Table(name ="politicas")
+public class Politica implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String nombre;
+    private String titulo;
     private String descripcion;
-    private String image;
-    @Column(columnDefinition="tinyint(1) default 0")
-    private Boolean reservable;
 }
-

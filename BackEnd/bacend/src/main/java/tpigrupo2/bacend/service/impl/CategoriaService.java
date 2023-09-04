@@ -17,6 +17,7 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     public Categoria crearCategoria(Categoria categoria) {
+
         return iCategoriaRepository.save(categoria);
     }
 
@@ -56,6 +57,7 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     public Collection<Categoria> listarCategorias() {
+
         return iCategoriaRepository.findAll();
     }
 

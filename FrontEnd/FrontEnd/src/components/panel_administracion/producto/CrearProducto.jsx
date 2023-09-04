@@ -4,9 +4,13 @@ import { Box, Button, FormControl, TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
 import axios from "axios";
 import swal from "sweetalert";
+import dayjs from "dayjs";
 
 function CrearProducto() {
   const apiUrl = "http://3.144.46.39:8080/categorias";
@@ -23,13 +27,19 @@ function CrearProducto() {
     setToken(JSON.parse(localStorage.getItem("userData")).token);
   }, []);
 
+  
   const [formData, setFormData] = useState({
     nombre: "",
     descripcion: "",
     categoria: "",
     detalles: [{ descripcion: "", cantidad: "", precio: "" }],
     images: [],
+ //   cursos:[{ fechaInicio: "", fechaFin: "", cupos: ""}]
   });
+  useEffect(() =>{
+    console.log(formData?.cursadas);
+    /* console.log(formData?.detalles); */
+  }, [formData?.cursos])
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -46,6 +56,37 @@ function CrearProducto() {
       ...formData,
       detalles: newDetalles,
     });
+  };
+
+  const handleCupoChange = (event) => {
+    const { name, value } = event.target;
+    const newCupos = [...formData.cursos];
+    newCupos[0][name] = value;
+    /* const newCursada = [...formData.cursadas];
+    newCursada[field] = value; */
+    setFormData({...formData, cursos: newCupos });
+  };
+
+  const handleInicioCursadaChange = (event) => {
+    let name = 'fechaInicio'
+    let value = dayjs(event).format('YYYY-MM-DD');
+    
+    const newCursada = [...formData.cursos];
+    newCursada[0][name] = value;
+
+    setFormData({...formData, cursos: newCursada})
+    
+  };
+
+  const handleFinCursadaChange = (event) => {
+
+    let name = 'fechaFin'
+    let value = dayjs(event).format('YYYY-MM-DD');
+    
+    const newCursada = [...formData.cursos];
+    newCursada[0][name] = value;
+
+    setFormData({...formData, cursos: newCursada})
   };
 
   const handleImageChange = (event, index) => {
@@ -68,7 +109,7 @@ function CrearProducto() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form data submitted:", formData);
+    //console.log("Form data submitted:", formData);
     const imageToBase64 = (image) => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -89,6 +130,7 @@ function CrearProducto() {
         id: listCategoriaState.find((i) => i.nombre == formData.categoria).id,
       },
       detalles: formData.detalles,
+      cursos: formData.cursos,
       imagenes: imgs,
     };
 
@@ -116,8 +158,21 @@ function CrearProducto() {
           button: "Aceptar",
         })
       }
+      if (response.status === 403) {
+        console.log(response);
+        //  mostar cartel de error de acuerdo a la respuesta
+        //  la api responde con 403 cuando el token expira
+        swal({
+          icon: "error",
+          title: "Error al crear el producto:",
+          text: "Intenta cerrando sesión y volviendo a entrar.",
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          button: "Aceptar",
+        })
+      }
       if (response.ok) {
-        console.log("Producto creado correctamente.");
+        //console.log("Producto creado correctamente.");
         // mostrar cartel de producto agregado
         swal({
           icon: "success",
@@ -132,6 +187,7 @@ function CrearProducto() {
           descripcion: "",
           categoria: "",
           detalles: [{ descripcion: "", cantidad: "", precio: "" }],
+          cursos:[{ fechaInicio: "", fechaFin: "", cupos: ""}],
           images: [],
         });
       }
@@ -146,13 +202,13 @@ function CrearProducto() {
         closeOnEsc: false,
         button: "Aceptar",
       })
-       // sacar esta chanchada
+      // sacar esta chanchada
     }
   };
-
+  
   return (
     <div className="form">
-      <Box component="form" onSubmit={handleSubmit}>
+      <Box sx={{maxWidth:860, margin: '0 auto'}} component="form" onSubmit={handleSubmit}>
         <h2>Agregar Producto</h2>
         <FormControl sx={{ m: 1, minWidth: 850 }} required>
           <TextField
@@ -210,7 +266,7 @@ function CrearProducto() {
 
             {formData.detalles.map((detalle, index) => (
               <div key={index}>
-                <FormControl sx={{ m: 1, minWidth: 400 }}>
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
                   <InputLabel id={"car" + index} htmlFor={"car" + index}>
                     Caracteristica
                   </InputLabel>
@@ -236,7 +292,7 @@ function CrearProducto() {
                 </FormControl>
 
                 <TextField
-                  sx={{ m: 1, minWidth: 60 }}
+                  sx={{ m: 1, minWidth: 55 }}
                   label="Cantidad"
                   variant="outlined"
                   required
@@ -250,7 +306,7 @@ function CrearProducto() {
                 />
 
                 <TextField
-                  sx={{ m: 1, minWidth: 100 }}
+                  sx={{ m: 1, minWidth: 80 }}
                   label="Precio Unitario"
                   variant="outlined"
                   required
@@ -263,7 +319,7 @@ function CrearProducto() {
                   }
                 />
                 <Button
-                  sx={{ m: 1, minWidth: 120 }}
+                  sx={{ m: 1, maxWidth: 60}}
                   className="button-primary"
                   type="button"
                   onClick={() => {
@@ -291,6 +347,31 @@ function CrearProducto() {
               Agregar Caracteristica
             </Button>
           </div>
+{/* 
+          <div className="form-group">
+            <h3>Cursada</h3>
+
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DesktopDatePicker sx={{width:'30%'}}  label='Fecha de inicio' name="fechaInicio" value={formData.cursadas?.fechaInicio} onChange={(event) => handleInicioCursadaChange(event)} />
+            <DesktopDatePicker sx={{ml:1, width:'30%'}} label='Fecha de fin' name="fechaFin" value={formData.cursadas?.fechaInicio} onChange={(event) => handleFinCursadaChange(event)} />
+            <TextField
+                  sx={{ml:1, minWidth: '30%' }}
+                  label="cupos"
+                  variant="outlined"
+                  type="number"
+                  value={formData.cursadas?.cupos}
+
+                  name="cupos"
+                  onChange={(e)=> handleCupoChange(e)}
+
+                />
+            </LocalizationProvider>
+
+
+            
+          </div>
+ */}
           <div className="form-group">
             <label>Imagenes:</label>
             {formData.images.map((image, index) => (

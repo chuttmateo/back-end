@@ -34,4 +34,10 @@ public class Producto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_producto")
     private List<Curso> cursos;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_producto")
+    private List<Politica> politicas;
+
+
 }

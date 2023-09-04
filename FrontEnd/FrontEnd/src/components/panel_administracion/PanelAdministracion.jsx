@@ -8,12 +8,14 @@ import CrearCategoria from "./categoria/CrearCategoria";
 import CrearCaracteristica from "./caracteristica/CrearCaracteristica";
 import ListarCaracteristicas from "./caracteristica/ListarCaracteristicas";
 import UserList from "./usuarios/UserList";
+import ListadoVentas from "./cursos/ListadoVentas";
 
 function PanelAdministracion() {
   const [isProd, setIsProd] = useState([true, false]);
   const [isCat, setIsCat] = useState([false, false]);
   const [isCar, setIsCar] = useState([false, false]);
   const [isUser, setIsUser] = useState([false, false]);
+  const [isSales, setIsSales] = useState(false);
 
   function ShowProd() {
     if (!isProd[0]) {
@@ -21,6 +23,7 @@ function PanelAdministracion() {
       setIsCat([false, false]);
       setIsCar([false, false]);
       setIsUser([false, false]);
+      setIsSales(false);
     }
   }
 
@@ -42,6 +45,7 @@ function PanelAdministracion() {
       setIsCat([true, false]);
       setIsCar([false, false]);
       setIsUser([false, false]);
+      setIsSales(false);
     }
   }
 
@@ -51,6 +55,7 @@ function PanelAdministracion() {
       setIsCat([false, false]);
       setIsCar([true, false]);
       setIsUser([false, false]);
+      setIsSales(false);
     }
   }
 
@@ -60,6 +65,17 @@ function PanelAdministracion() {
       setIsCat([false, false]);
       setIsCar([false, false]);
       setIsUser([true, false]);
+      setIsSales(false);
+    }
+  }
+
+  function ShowSales() {
+    if (!isSales) {
+      setIsProd([false, false]);
+      setIsCat([false, false]);
+      setIsCar([false, false]);
+      setIsUser([false, false]);
+      setIsSales(true);
     }
   }
 
@@ -80,6 +96,9 @@ function PanelAdministracion() {
           <span className={styles.item} onClick={ShowUser}>
             Administrar Usuarios
           </span>
+          <span className={styles.item} onClick={ShowSales}>
+            Reservas
+          </span>
         </nav>
         <div className={styles.contenedor}>
           {isProd[1] && <CrearProducto />}
@@ -97,6 +116,7 @@ function PanelAdministracion() {
           {/* {isUser[1] && <CrearCaracteristica />}
           {isUser[0] && <Button onClick={ShowCarForm} variant="outlined">Nueva Caracteristica</Button>} */}
           {isUser[0] && <UserList />}
+          {isSales && <ListadoVentas />}
         </div>
       </div>
       <div className={styles.nomovil}>

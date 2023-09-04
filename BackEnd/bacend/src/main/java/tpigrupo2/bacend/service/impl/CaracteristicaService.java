@@ -56,6 +56,7 @@ public class CaracteristicaService implements ICaracteristicaService {
 
     @Override
     public Collection<Caracteristica> listarCaracteristicas() {
+
         return iCaracteristicaRepository.findAll();
     }
 

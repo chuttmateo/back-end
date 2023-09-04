@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import tpigrupo2.bacend.security.User.User;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Builder
 @Data
@@ -22,6 +24,9 @@ public class Reserva implements Serializable{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
+    private LocalDate fecha_inicio;
+    private LocalDate fecha_fin;
+    private LocalTime hora_inicio;
+    private LocalTime hora_fin;
     private Double precio;
 }

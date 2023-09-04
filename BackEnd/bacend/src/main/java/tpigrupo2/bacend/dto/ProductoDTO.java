@@ -13,5 +13,5 @@ public class ProductoDTO {
     private String imagen;
     private String descripcion;
     private String categoria;
-    private List<CursoDTO> cursadas;
+    private List<CursoDTO> cursos;
 }

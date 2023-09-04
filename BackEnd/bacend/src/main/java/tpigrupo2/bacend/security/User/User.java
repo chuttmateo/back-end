@@ -3,6 +3,7 @@ package tpigrupo2.bacend.security.User;
 import java.util.Collection;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tpigrupo2.bacend.model.Producto;
+import tpigrupo2.bacend.model.Producto_Favorito;
 
 @Data
 @Builder
@@ -30,6 +33,9 @@ public class User implements UserDetails {
     String lastname;
     String firstname;
     String password;
+    @JsonIgnore
+    @OneToMany( mappedBy = "id_usuario",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Producto_Favorito> favorites;
     @Enumerated(EnumType.STRING) 
     Role role;
 

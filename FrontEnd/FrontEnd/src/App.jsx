@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Home from "./routes/home/Home";
 import Header from "./components/header/Header";
@@ -11,6 +11,7 @@ import Login from "./routes/login/Login";
 import ProfileDetail from "./routes/profileDetail/ProfileDetail";
 import Register from "./routes/register/Register";
 
+
 function App() {
   const theme = createTheme({
     palette: {
@@ -18,10 +19,12 @@ function App() {
     },
   });
 
+  const location = useLocation()
+
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Header />
+        {location.pathname !== '/login' && location.pathname !== '/register' && <Header />}
         <Routes>
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -39,3 +42,5 @@ function App() {
 }
 
 export default App;
+
+

@@ -5,23 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tpigrupo2.bacend.security.User.User;
 
 import java.io.Serializable;
-
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name ="categorias")
-public class Categoria implements Serializable {
+@Table(name ="favoritos")
+public class Producto_Favorito implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String nombre;
-    private String descripcion;
-    private String image;
-    @Column(columnDefinition="tinyint(1) default 0")
-    private Boolean reservable;
+    private int id_usuario;
+    @OneToOne
+    @JoinColumn(name = "id_producto")
+    private Producto producto;
 }
-
