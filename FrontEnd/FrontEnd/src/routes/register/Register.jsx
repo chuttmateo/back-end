@@ -19,6 +19,10 @@ function Register() {
 
   const form = useRef();
 
+  const handleLink = () =>{
+    setCategorySelected("Todos")
+  }
+
   const sendEmail = (serviceId) => {
     
     emailjs.sendForm(serviceId, 'template_uqu2sgv', form.current, 'ZGHqjA6dS6ZEt59AV', {
@@ -167,9 +171,12 @@ function Register() {
     <div className="main" style={{
       display: "flex",
       justifyContent: "flex-end",
-      backgroundImage: 'url("/avion1.jpeg")',// Reemplaza con la ruta de tu imagen
-      height: "100vh" 
+      
     }}>
+      <img src="/avion1.jpeg" alt="avion" style={{
+                height: "100vh",
+                width:"70vw"
+              }}/>
       <Box
         component="form"
         ref={form}
@@ -191,7 +198,9 @@ function Register() {
           justifyContent: "center",
           textAlign: "center",
         }}>
+        <Link to={"/home"} onClick={handleLink}> 
           <img src="logoazul-degrade.png" style={{ width: "50px", height: "auto", marginTop: "35px" }} />
+        </Link>
           <h4 style={{ fontSize: "40px"}}>Panel de Registro</h4>
         </Container>
         <TextField

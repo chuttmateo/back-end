@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import { useGlobalState } from "../../utils/Context";
 import { Box, Container, TextField } from "@mui/material";
-import styles from "./login.module.css"
+
 
 const Login = () => {
   
@@ -97,10 +97,15 @@ const Login = () => {
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
-                backgroundImage: 'url("/avion1.jpeg")',// Reemplaza con la ruta de tu imagen
-                height: "100vh" 
+                // backgroundImage: 'url("/avion1.jpeg")',
+                // backgroundRepeat: "no-repeat",
+                // height: "100vh" 
               }}
             >
+              <img src="/avion1.jpeg" alt="avion" style={{
+                height: "100vh",
+                width:"100%"
+              }}/>
               <div
                 className="login-container"
                 style={{

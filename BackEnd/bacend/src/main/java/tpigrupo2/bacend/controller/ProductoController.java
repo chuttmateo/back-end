@@ -91,7 +91,7 @@ public class ProductoController {
             nuevoProducto.setNombre(productoRequest.getNombre());
             nuevoProducto.setCategoria(productoRequest.getCategoria());
             nuevoProducto.setDescripcion(productoRequest.getDescripcion());
-
+            nuevoProducto.setPoliticas(productoRequest.getPoliticas());
             for (Detalle_Producto detalleRequest : productoRequest.getDetalles()) {
                 Detalle_Producto detalleProducto = new Detalle_Producto();
                 detalleProducto.setDescripcion(detalleRequest.getDescripcion());
@@ -126,7 +126,6 @@ public class ProductoController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el producto.");
         }
-
     }
     @CrossOrigin("*")
     @PutMapping("/modcat")

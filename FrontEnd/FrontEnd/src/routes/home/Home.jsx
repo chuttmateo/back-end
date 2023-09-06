@@ -14,24 +14,29 @@ const apiUrlCat = "http://3.144.46.39:8080/categorias";
 const Home = () => {
   const { categorySelected, setCategorySelected } = useGlobalState();
   const {productState, setProductState} = useGlobalState();
-  const { valueDate } = useGlobalState();
+  const { valueDate} = useGlobalState();
   /*const theme = useTheme();*/
   /* console.log(theme.palette.mode); */
 
   
   const [startIndex, setStartIndex] = useState(0);
-  const [filtrado, setFiltrado] = useState(productState);
+  const [filtrado, setFiltrado] = useState([]);
   const [buscado, setBuscado] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isSearched, setIsSearched] = useState(false)
-  const index = startIndex;
+  const [isSearched, setIsSearched] = useState(false);
+  const [esCategoriaReservable, setCategoriaReservable] = useState(true)
+
   const aleatorizeProducts = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
+    const aleatorizedProducts = [...array];
+    for (let i = aleatorizedProducts.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [aleatorizedProducts[i], aleatorizedProducts[j]] = [aleatorizedProducts[j],aleatorizedProducts[i]];
     }
+    return aleatorizedProducts;
   };
+
+
   const limitViewProducts = (array) => {
     const arrayLimitedViewProducts = [];
     for (let i = 0; i < array.length; i += 10) {
@@ -40,13 +45,14 @@ const Home = () => {
     return arrayLimitedViewProducts;
   };
 
-  const handleCategoryButton = (e) => {
-    setCategorySelected(e);
+  const handleCategoryButton = (categoria) => {
+    setCategoriaReservable(categoria.reservable)
+    setCategorySelected(categoria.nombre);
     setIsSearched(false);
     setFiltrado(
-      e === "TODOS"
+      categoria.nombre === "TODOS"
         ? productState
-        : productState.filter((item) => item.categoria === e)
+        : productState.filter((item) => item.categoria === categoria.nombre)
     );
   };
 
@@ -55,38 +61,53 @@ const Home = () => {
     const data = response.data;
     /* const datos = data.map((item) => item.nombre); */
     setCategories(data);
-    categories?.map(item => console.log(item))
   }
-
   
   const handleSearch = () => {
-    setBuscado(filtrado.filter((item) => {
-      return item.cursos.some((cursada) => {
-        console.log(cursada.fechaInicio);
-        console.log(cursada.fechaFin);
-        return (
-          cursada.fechaInicio >= valueDate[0] &&
-          cursada.fechaFin <= valueDate[1]
-        );
-      });
-    }));
     
-    setIsSearched(true)
-    console.log(buscado);
+    if(valueDate.length === 0){
+        //No deben ocurrir cambios en el código
+    }
+    else if(valueDate.length === 1){
+      setBuscado(filtrado.filter((item) => {
+        return item.cursos.some((cursada) => {
+          return (
+            cursada.fechaInicio >= valueDate[0]
+            
+          );
+        });
+      }));
+      setIsSearched(true)
+    }
+    else {
+      console.log("Esto es el filtrado del buscador: ", filtrado);
+      const filtradoYBuscado = filtrado.filter((item) => {
+        return item.cursos.some((cursada) => {
+          return (
+            cursada.fechaInicio >= valueDate[0] &&
+            cursada.fechaInicio <= valueDate[1]
+            //cursada.fechaFin <= valueDate[1]
+          );
+        });
+      })
+      setBuscado(filtradoYBuscado);
+      setIsSearched(true)
+    }
   }
 
   useEffect(() => {
     try {
+      
       // eslint-disable-next-line no-inner-declarations
       async function fetchData() {
         const response = await axios.get(apiUrl);
         const data = response.data;
-        setProductState(data);
 
-        aleatorizeProducts(data);
+        setProductState(aleatorizeProducts(response.data));
+        setFiltrado(aleatorizeProducts(data));
 
         //EL PROBLEMA DEL TODOS lo solucione seteando el filtrado con la data
-        setFiltrado(data)
+        
         setCategorySelected("TODOS")
       }
       findCategories();
@@ -101,9 +122,19 @@ const Home = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const limitedViewProducts = limitViewProducts(productState);
+  let limitedViewProducts = limitViewProducts(filtrado);
+  if(isSearched){
+    limitedViewProducts = limitViewProducts(buscado);
+  }
+
+  /* console.log("Esto es la lista de productos paginadas ", limitedViewProducts);
+  if(categorySelected != "TODOS"){
+    limitedViewProducts = filtrado;
+    console.log("Esta es la lista de filtrados ", limitedViewProducts);
+  } */
 
   const handleNextClick = () => {
+    
     startIndex + 1 < limitedViewProducts.length &&
       setStartIndex(startIndex + 1);
       if(startIndex != limitedViewProducts.length - 1){
@@ -136,10 +167,10 @@ const Home = () => {
   return (
     <main className="main">
       <Banner />
-      <SearchPanel categories={categories} handleCategoryButton={handleCategoryButton} categorySelected={categorySelected} handleSearch={handleSearch}/>
+      <SearchPanel esCategoriaReservable={esCategoriaReservable} categories={categories} handleCategoryButton={handleCategoryButton} categorySelected={categorySelected} handleSearch={handleSearch} setStartIndex={setStartIndex}/>
       <div className={styles.contenedor}>
                   <p className={styles.results}>
-            {categorySelected.toUpperCase()} ({isSearched ? buscado.length: filtrado.length })
+            {categorySelected.toUpperCase()} ({isSearched ? buscado.length : filtrado.length })
           </p> 
                 {/*{categorySelected !== "TODOS" && (
           <p className={styles.results}>
@@ -158,11 +189,13 @@ const Home = () => {
           ))}
         </div>)}
 
-        {isSearched === true && <div className={styles.SectionProductCard}>
-          {buscado?.map((item) => (
+        {isSearched && (buscado.length === 0 ?  <div className={styles.SectionNothingFind}>
+            <h2> LO SIENTO, NO HEMOS ENCONTRADO NINGÚN RESULTADO : </h2>
+          </div> :  <div className={styles.SectionProductCard}>
+          {limitedViewProducts[startIndex]?.map((item) => (
               <ImgMediaCard item={item} key={item.id} />
             ))}
-          </div>}
+          </div>)}
 
         {categorySelected === "TODOS" && loading === false && isSearched === false && <div className={styles.SectionProductCard}>
           {limitedViewProducts[startIndex]?.map((item) => (
@@ -174,7 +207,7 @@ const Home = () => {
 
         {categorySelected != "TODOS" && loading === false && isSearched === false && (
           <div className={styles.SectionProductCard}>
-            {filtrado?.map((item) => (
+            {limitedViewProducts[startIndex]?.map((item) => (
               <ImgMediaCard item={item} key={item.id} />
             ))}
           </div>
@@ -204,7 +237,7 @@ const Home = () => {
         <button onClick={handlePrevClick} className="button-primary">
           <FiChevronLeft />
         </button>
-        <strong>{index + 1}</strong>
+        <strong>{startIndex + 1}</strong>
         <button onClick={handleNextClick} className="button-primary">
           <FiChevronRight />
         </button>

@@ -8,10 +8,7 @@ const Context = ({children}) => {
     const [categorySelected, setCategorySelected] = useState("TODOS");
     const [loggedState,setLoggedState] = useState(false);
     const [productState, setProductState] = useState([]);
-    const [valueDate, setValueDate] = useState([
-        null,
-        null
-      ]);
+    const [valueDate, setValueDate] = useState([]);
 
     return (
         <GlobalState.Provider value={{categorySelected, setCategorySelected,loggedState, setLoggedState, productState, setProductState, valueDate, setValueDate}}>

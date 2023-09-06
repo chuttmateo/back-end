@@ -35,7 +35,8 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="*" element={<PaginaNoEncontrada />} />
         </Routes>
-        <Footer />
+        {location.pathname !== '/login' && location.pathname !== '/register' && <Footer />}
+        
       </ThemeProvider>
     </>
   );

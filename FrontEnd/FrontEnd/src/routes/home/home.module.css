@@ -38,6 +38,14 @@
   gap: 90px;
 }
 
+.SectionNothingFind{
+  display: flex;
+  justify-content: center;
+}
+.SectionNothingFind h2 {
+  text-align: center;
+}
+
 .defaultButton {
   /*   align-items: center;
   text-decoration: none;
@@ -89,7 +97,7 @@
   }
 }
 
-.SearchBar {
+/* .SearchBar {
   padding: 10px;
   display: flex;
   justify-content: center;
@@ -102,7 +110,7 @@
   padding: 8px;
   border: none;
   border-radius: 50px;
-}
+} */
 
 .NavigateButtons {
   display: flex;

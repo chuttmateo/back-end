@@ -4,13 +4,9 @@ import { Box, Button, FormControl, TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from "@mui/x-date-pickers";
-
 import axios from "axios";
 import swal from "sweetalert";
-import dayjs from "dayjs";
+
 
 function CrearProducto() {
   const apiUrl = "http://3.144.46.39:8080/categorias";
@@ -33,13 +29,10 @@ function CrearProducto() {
     descripcion: "",
     categoria: "",
     detalles: [{ descripcion: "", cantidad: "", precio: "" }],
+    politicas:[{ titulo: "", descripcion: ""}],
     images: [],
- //   cursos:[{ fechaInicio: "", fechaFin: "", cupos: ""}]
   });
-  useEffect(() =>{
-    console.log(formData?.cursadas);
-    /* console.log(formData?.detalles); */
-  }, [formData?.cursos])
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,6 +41,7 @@ function CrearProducto() {
       [name]: value,
     });
   };
+
 
   const handleItemChange = (index, field, value) => {
     const newDetalles = [...formData.detalles];
@@ -58,38 +52,16 @@ function CrearProducto() {
     });
   };
 
-  const handleCupoChange = (event) => {
-    const { name, value } = event.target;
-    const newCupos = [...formData.cursos];
-    newCupos[0][name] = value;
-    /* const newCursada = [...formData.cursadas];
-    newCursada[field] = value; */
-    setFormData({...formData, cursos: newCupos });
+  const handlePoliticaChange = (index, field, value) => {
+    const newPolitica = [...formData.politicas];
+    newPolitica[index][field] = value;
+    setFormData({
+      ...formData,
+      politicas: newPolitica,
+    });
   };
 
-  const handleInicioCursadaChange = (event) => {
-    let name = 'fechaInicio'
-    let value = dayjs(event).format('YYYY-MM-DD');
-    
-    const newCursada = [...formData.cursos];
-    newCursada[0][name] = value;
-
-    setFormData({...formData, cursos: newCursada})
-    
-  };
-
-  const handleFinCursadaChange = (event) => {
-
-    let name = 'fechaFin'
-    let value = dayjs(event).format('YYYY-MM-DD');
-    
-    const newCursada = [...formData.cursos];
-    newCursada[0][name] = value;
-
-    setFormData({...formData, cursos: newCursada})
-  };
-
-  const handleImageChange = (event, index) => {
+   const handleImageChange = (event, index) => {
     const newImages = [...formData.images];
     newImages[index] = event.target.files[0];
     setFormData({
@@ -109,7 +81,7 @@ function CrearProducto() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //console.log("Form data submitted:", formData);
+
     const imageToBase64 = (image) => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -129,8 +101,8 @@ function CrearProducto() {
       categoria: {
         id: listCategoriaState.find((i) => i.nombre == formData.categoria).id,
       },
+      politicas: formData.politicas,
       detalles: formData.detalles,
-      cursos: formData.cursos,
       imagenes: imgs,
     };
 
@@ -143,7 +115,7 @@ function CrearProducto() {
         },
         body: JSON.stringify(productoData),
       });
-
+      
       if (response.status == 400) {
         const res = await response.text();
         console.log("Error al crear el producto: " + res);
@@ -187,7 +159,7 @@ function CrearProducto() {
           descripcion: "",
           categoria: "",
           detalles: [{ descripcion: "", cantidad: "", precio: "" }],
-          cursos:[{ fechaInicio: "", fechaFin: "", cupos: ""}],
+          politicas:[{ titulo: "", descripcion: ""}],
           images: [],
         });
       }
@@ -259,6 +231,9 @@ function CrearProducto() {
             ))}
           </Select>
         </FormControl>
+
+
+
 
         <FormControl sx={{ m: 1, minWidth: 850 }}>
           <div className="form-group">
@@ -347,31 +322,73 @@ function CrearProducto() {
               Agregar Caracteristica
             </Button>
           </div>
-{/* 
+
+         
+
+        <FormControl sx={{ m: 1, minWidth: 850 }}>
           <div className="form-group">
-            <h3>Cursada</h3>
+            <h3>Politicas</h3>
 
-
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker sx={{width:'30%'}}  label='Fecha de inicio' name="fechaInicio" value={formData.cursadas?.fechaInicio} onChange={(event) => handleInicioCursadaChange(event)} />
-            <DesktopDatePicker sx={{ml:1, width:'30%'}} label='Fecha de fin' name="fechaFin" value={formData.cursadas?.fechaInicio} onChange={(event) => handleFinCursadaChange(event)} />
-            <TextField
-                  sx={{ml:1, minWidth: '30%' }}
-                  label="cupos"
+            {formData.politicas.map((politica, index) => (
+              <div key={index}>
+                <TextField
+                  sx={{ m: 1, minWidth: 55 }}
+                  label="Titulo"
                   variant="outlined"
-                  type="number"
-                  value={formData.cursadas?.cupos}
-
-                  name="cupos"
-                  onChange={(e)=> handleCupoChange(e)}
-
+                  required
+                  type="text"
+                  placeholder="Titulo"
+                  name={"titulo" + index}
+                  value={politica.titulo}
+                  onChange={(e) =>
+                    handlePoliticaChange(index, "titulo", e.target.value)
+                  }
                 />
-            </LocalizationProvider>
 
-
-            
+                <TextField
+                  sx={{ m: 1, minWidth: 520 }}
+                  label="Descripcion"
+                  variant="outlined"
+                  required
+                  type="text"
+                  placeholder="Descripcion"
+                  name={"descrpcion" + index}
+                  value={politica.descripcion}
+                  onChange={(e) =>
+                    handlePoliticaChange(index, "descripcion", e.target.value)
+                  }
+                />
+                <Button
+                  sx={{ m: 1, maxWidth: 60}}
+                  className="button-primary"
+                  type="button"
+                  onClick={() => {
+                    const newPoliticas = [...formData.politicas];
+                    newPoliticas.splice(index, 1);
+                    setFormData({ ...formData, politicas: newPoliticas });
+                  }}
+                >
+                  Quitar
+                </Button>
+              </div>
+            ))}
+            <Button
+              type="button"
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  politicas: [
+                    ...formData.politicas,
+                    { titulo:"", descripcion: ""},
+                  ],
+                })
+              }
+            >
+              Agregar Políticas
+            </Button>
           </div>
- */}
+          </FormControl>
+
           <div className="form-group">
             <label>Imagenes:</label>
             {formData.images.map((image, index) => (

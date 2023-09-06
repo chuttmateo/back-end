@@ -28,6 +28,7 @@
   height: 100%;
   z-index: 0;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 90% 100%, 0% 75%);
+  
 }
 .botonGaleria {
   margin-top: -90px;
@@ -41,6 +42,10 @@
   margin-top: 160px;
   height: 600px;
   width: 600px;
+}
+
+.bg_dark{
+  background-color: #212529;
 }
 
 .titulo {
@@ -89,13 +94,60 @@
   width: 900px;
 }
 .presupuesto {
-  font-size: 25px;
-  margin-left: 10px;
+  display:flex;
+  justify-content: space-between;
 }
+
 .montos {
+  display: flex;
+  display: inline-block;
+  margin-left: 20px;
   font-size: 25px;
-  margin-left: 0px;
+
 }
+
+.calendario{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 18px;
+  width: 40%;
+
+}
+
+.contenedorResultados{
+  
+  border: 1px solid gray;
+  display:flex;
+  margin: 10px;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 10px;
+}
+.resultados{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 20px;
+  width: 20%;
+}
+
+.contenedorPoliticas{
+  border: 1px solid gray;
+  display:flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.politica{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 14px;
+  width: 25%;
+}
+
 .boton-abajo {
   position: fixed;
 }

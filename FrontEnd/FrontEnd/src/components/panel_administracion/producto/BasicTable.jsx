@@ -28,7 +28,7 @@ import dayjs from "dayjs";
 
 export default function BasicTable() {
   const apiUrlCat = "http://3.144.46.39:8080/categorias";
-  const urlCursos = "http://localhost:8080/productos/add_curso";
+  const urlCursos = "http://3.144.46.39:8080/productos/add_curso";
   const [listCategoriaState, setListCategoriaState] = useState([]);
   const [token, setToken] = useState("");
   const [open, setOpen] = useState(false);

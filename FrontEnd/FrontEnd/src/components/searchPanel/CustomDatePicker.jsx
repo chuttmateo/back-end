@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import { useGlobalState } from "../../utils/Context";
 
 const CustomDatePicker = () => {
-  const { valueDate, setValueDate } = useGlobalState();
+  const { setValueDate } = useGlobalState();
 
   const formatDateForState = (dateObject) => {
     if (!dateObject) return "";
@@ -20,10 +20,8 @@ const CustomDatePicker = () => {
     });
     setValueDate(formattedDates);
   };
-
-  useEffect(() => {
-    console.log(valueDate);
-  },[valueDate])
+  const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+  const weekDays = ["LU", "MA", "MI", "JU", "VI", "SA", "DO"]
   
 
   return (
@@ -39,10 +37,11 @@ const CustomDatePicker = () => {
       width: "100%",
       padding: "10px"
     }}
+      weekDays={weekDays}
+      months={months}
       placeholder="Seleccionar por rango..."
-      value={valueDate}
       onChange={handleDateChange}
-      format="YYYY/MM/DD"
+      format="DD/MM/YYYY"
       range
       numberOfMonths={2}
       minDate={new Date()}
