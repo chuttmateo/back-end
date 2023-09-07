@@ -210,7 +210,7 @@ function CrearProducto() {
         </FormControl>
         <FormControl sx={{ m: 1, minWidth: 850 }}>
           <InputLabel id="cat" htmlFor="categoria">
-            Categoria
+            Categoría
           </InputLabel>
           <Select
             labelId="cat"
@@ -243,7 +243,7 @@ function CrearProducto() {
               <div key={index}>
                 <FormControl sx={{ m: 1, minWidth: 300 }}>
                   <InputLabel id={"car" + index} htmlFor={"car" + index}>
-                    Caracteristica
+                    Característica
                   </InputLabel>
                   <Select
                     labelId={"car" + index}
@@ -256,7 +256,7 @@ function CrearProducto() {
                     }
                   >
                     <MenuItem value="">
-                      <em>Sin Caracteristica</em>
+                      <em>Sin Característica</em>
                     </MenuItem>
                     {listCaracteristicas.map((car) => (
                       <MenuItem key={car.id} value={car.nombre}>
@@ -319,7 +319,7 @@ function CrearProducto() {
                 })
               }
             >
-              Agregar Caracteristica
+              Agregar Característica
             </Button>
           </div>
 
@@ -327,7 +327,7 @@ function CrearProducto() {
 
         <FormControl sx={{ m: 1, minWidth: 850 }}>
           <div className="form-group">
-            <h3>Politicas</h3>
+            <h3>Políticas</h3>
 
             {formData.politicas.map((politica, index) => (
               <div key={index}>
@@ -390,7 +390,7 @@ function CrearProducto() {
           </FormControl>
 
           <div className="form-group">
-            <label>Imagenes:</label>
+            <label>Imágenes:</label>
             {formData.images.map((image, index) => (
               <div key={index}>
                 {image && (

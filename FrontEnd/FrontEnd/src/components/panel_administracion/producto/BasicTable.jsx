@@ -198,7 +198,7 @@ export default function BasicTable() {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell align="left">Nombre</TableCell>
-              <TableCell align="left">Categoria</TableCell>
+              <TableCell align="left">Categoría</TableCell>
               <TableCell align="right">Acciones</TableCell>
             </TableRow>
           </TableHead>
@@ -231,7 +231,7 @@ export default function BasicTable() {
                         }
                       >
                         <MenuItem value="">
-                          <em>Sin Categoria</em>
+                          <em>Sin Categoría</em>
                         </MenuItem>
                         {listCategoriaState.map((cat) => (
                           <MenuItem

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
 
-
 const GlobalState = createContext();
 
 const Context = ({children}) => {
@@ -10,8 +9,10 @@ const Context = ({children}) => {
     const [productState, setProductState] = useState([]);
     const [valueDate, setValueDate] = useState([]);
 
+    const [allFavorites, setAllFavorites] = useState([]);
+
     return (
-        <GlobalState.Provider value={{categorySelected, setCategorySelected,loggedState, setLoggedState, productState, setProductState, valueDate, setValueDate}}>
+        <GlobalState.Provider value={{categorySelected, setCategorySelected,loggedState, setLoggedState, productState, setProductState, valueDate, setValueDate, allFavorites, setAllFavorites}}>
             {children}
         </GlobalState.Provider>
   )

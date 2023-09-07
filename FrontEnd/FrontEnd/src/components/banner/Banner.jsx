@@ -12,7 +12,7 @@ export default function BannerWithInput() {
     {
       image: "banner1.png",
       title: "HABILITACIÓN AIRBUS A320",
-      button: "¡Ultimos cupos!",
+      button: "¡Últimos cupos!",
       url: "/productos/81"
     },
     {

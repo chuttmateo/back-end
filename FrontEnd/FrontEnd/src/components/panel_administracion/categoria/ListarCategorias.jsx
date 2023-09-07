@@ -49,7 +49,7 @@ export default function ListarCategorias() {
           <TableRow>
             <TableCell>ID</TableCell>
             <TableCell align="left">Nombre</TableCell>
-            <TableCell align="left">Descripcion</TableCell>
+            <TableCell align="left">Descripción</TableCell>
             <TableCell align="right">Acciones</TableCell>
           </TableRow>
         </TableHead>

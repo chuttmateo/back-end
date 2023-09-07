@@ -3,11 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./detail.module.css";
 import BotonGaleria from "./BotonGaleria";
-import DatePicker, { Calendar } from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
-import size from "react-element-popper/animations/size"
+import { Calendar, DateObject } from "react-multi-date-picker";
 import "./bg-dark.css";
 import dayjs from "dayjs";
+import { FormControl, InputLabel, Select } from "@mui/material";
 
 const Detail = () => {
   const params = useParams();
@@ -16,13 +15,34 @@ const Detail = () => {
   const [token, setToken] = useState("");
   const [producto, setProducto] = useState([]);
   const [cursos, setCursos] = useState([]);
+  const [cursosf, setCursosf] = useState([]);
   const [imagenes, setImagenes] = useState([]);
   const [descripcion, setDescripcion] = useState([]);
   const [detalles, setDetalles] = useState([]);
   const [politicas, setPoliticas] = useState([]);
-  const [cursosf, setCursosf] = useState([]);
+  const [categoria, setCategoria] = useState("");
+  const [horas, setHoras] = useState([]);
   const [presupuesto, setPresupuesto] = useState(0);
 
+  const horasDisp = ["09:00", "10:00", "11:00", "12:00"];
+
+  const reserved = [
+    [
+      new DateObject("2023-09-18").format(),
+      new DateObject("2023-09-21").format(),
+    ],
+    [
+      new DateObject("2023-10-08").format(),
+      new DateObject("2023-10-14").format(),
+    ],
+  ];
+
+  const initialValue = [...reserved];
+  function isReserved(strDate) {
+    return reserved.some(([start, end]) => strDate >= start && strDate <= end);
+  }
+
+  const [valores, setValores] = useState(initialValue);
   const months = [
     "Enero",
     "Febrero",
@@ -39,6 +59,10 @@ const Detail = () => {
   ];
   const weekDays = ["LU", "MA", "MI", "JU", "VI", "SA", "DO"];
 
+  const [mesSeleccionado, setMes] = useState(
+    months[new Date().getMonth()].toUpperCase()
+  );
+
   const calcularPresupuesto = () => {
     let precio = 0;
     detalles.forEach((detalle) => {
@@ -48,7 +72,11 @@ const Detail = () => {
   };
   useEffect(() => {
     const c = cursos.filter((curso) => dayjs(curso.fechaInicio) >= values);
-    setCursosf(c);
+    if (categoria === "Licencias") {
+      setMes(months[new Date(values).getMonth()].toUpperCase());
+
+      setCursosf(c);
+    }
   }, [values]);
 
   useEffect(() => {
@@ -58,26 +86,40 @@ const Detail = () => {
       setProducto(res.data);
       setImagenes(res.data.imagenes);
       setDescripcion(res.data.descripcion);
-      //setDescripcion(res.data.detalles[0].descripcion);
       setDetalles(res.data.detalles);
       setPoliticas(res.data.politicas);
       setCursos(res.data.cursos);
-      console.log(producto);
+      setCategoria(res.data.categoria.nombre);
+      setValues(new Date());
     });
   }, []);
 
   useEffect(() => {
     calcularPresupuesto();
   }, [detalles]);
+
+  function selectHora(event) {
+    const { options } = event.target;
+    const value = [];
+    for (let i = 0, l = options.length; i < l; i += 1) {
+      if (options[i].selected) {
+        value.push(options[i].value);
+      }
+    }
+    console.log(value);
+    setHoras(value);
+  }
   /*calendarPosition={"mainPosition: bottom"}*/
   function calendario() {
-    switch (producto?.categoria?.nombre) {
+    switch (categoria) {
       case "Licencias":
         return (
           <>
             <h5> Buscar por mes de inicio:</h5>
             <Calendar
               months={months}
+              month="hide"
+              ma
               className="bg-dark"
               onlyMonthPicker
               value={values}
@@ -86,40 +128,133 @@ const Detail = () => {
             />
           </>
         );
+
       case "Horas Libres":
         return (
           <>
             <h5> Selecciona el día y la hora de comienzo de la práctica:</h5>
-            <DatePicker
-              weekDays={weekDays}
-              months={months}
-              onChange={setValues}
-              className="bg-dark"
-              format="MM/DD/YYYY HH"
-              plugins={[
-                <TimePicker key="hour" position="bottom" hideSeconds />,
-              ]}
-            />
+            <div className={styles.calendarioHoras}>
+              <Calendar
+                weekDays={weekDays}
+                months={months}
+                className="bg-dark"
+                value={values}
+                onChange={setValues}
+                minDate={new DateObject().add(1, "day")}
+              />
+              <FormControl>
+                <InputLabel shrink htmlFor="selecthoras">
+                  Hora
+                </InputLabel>
+                <Select
+                  sx={{ width: 90, backgroundColor: "#212529" }}
+                  multiple
+                  native
+                  value={horas}
+                  onChange={selectHora}
+                  label="Horas disponibles"
+                  inputProps={{
+                    id: "selecthoras",
+                  }}
+                >
+                  {horasDisp.map((h) => (
+                    <option key={h} value={h}>
+                      {h}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
           </>
         );
       case "Hospedajes":
         return (
           <>
             <h5> Selecciona las fechas de inicio y fin del hospedaje:</h5>
-            <DatePicker
+            <Calendar
+              numberOfMonths={2}
               weekDays={weekDays}
               months={months}
               className="bg-dark"
-              value={values}
-              onChange={setValues}
+              value={valores}
+              multiple
               range
               minDate={new Date()}
+              maxDate={new Date(cursos[0].fechaFin)}
+              onChange={(ranges) => {
+                const isClickedOutsideUnAvailbleDates = initialValue.every(
+                  ([start, end]) =>
+                    ranges.some(
+                      (range) =>
+                        range[0]?.format?.() === start &&
+                        range[1]?.format?.() === end
+                    )
+                );
+
+                if (!isClickedOutsideUnAvailbleDates) return false;
+                console.log(ranges.map((x) => x.map((y) => y?.format?.())));
+                setValores(ranges);
+              }}
+              mapDays={({ date }) => {
+                let className;
+                const strDate = date.format();
+
+                if (isReserved(strDate)) className = "reserved";
+                if (className) return { className };
+              }}
             />
           </>
         );
       default:
         break;
     }
+  }
+
+  function montos() {
+    let titulo = "PRECIO:"
+    let precio = "Debes estar logueado para ver el precio."
+    let mostrarBoton = false;
+    let noLogin = "Debes estar logueado para reservar.";
+    if (token) {
+      precio = "$ " + presupuesto;
+      
+      switch (categoria) {
+        case "Licencias":
+          mostrarBoton =true
+          break;
+        case "Horas Libres":
+          mostrarBoton=true
+          titulo = "PRECIO POR HORA:"
+          break;
+        case "Hospedajes":
+          titulo = "PRECIO POR DÍA:"
+          noLogin = "Debes reservar Licencias/horas para poder reservar hospedaje"
+          break;
+        default:
+          break;
+      }
+    } 
+
+    return (
+      <>
+        <p>{titulo}</p>
+        <p>{precio}</p>
+        {mostrarBoton ? (
+          <button className="button-primary">Reservar</button>
+        ) : (
+          noLogin
+        )}
+      </>
+    );
+  }
+
+  function calcularDuracion(fechaInicio, fechaFin) {
+    const inicio = dayjs(fechaInicio);
+    const fin = dayjs(fechaFin);
+
+    return fin.diff(inicio, "M") == 0
+      ? fin.diff(inicio, "d") + " DÍAS"
+      : fin.diff(inicio, "M") + " MESES";
   }
 
   return (
@@ -176,14 +311,7 @@ const Detail = () => {
           </div>
         </div>
         <div className={styles.presupuesto}>
-          <div className={styles.montos}>
-            <p>MONTO TOTAL: </p>
-            <p>
-              {token
-                ? "$ " + presupuesto
-                : "Debes estar logueado para ver el precio."}
-            </p>
-          </div>
+          <div className={styles.montos}>{montos()}</div>
           <div className={styles.calendario}>
             {
               // Seccion calendario
@@ -191,33 +319,33 @@ const Detail = () => {
             }
           </div>
         </div>
-        <div>
-          {cursosf?.map((curso) => (
-            <div key={curso.id} className={styles.contenedorResultados}>
-              <div className={styles.resultados}>
-                <span>FECHA DE INICIO</span>
-                <span>{dayjs(curso.fechaInicio).format("DD/MM/YYYY")}</span>
+
+        <div className={styles.inicioCursos}>
+          {categoria == "Licencias" && (
+            <h4>PROXIMOS INICIOS DESDE {mesSeleccionado}:</h4>
+          )}
+          {categoria == "Licencias" &&
+            cursosf?.map((curso) => (
+              <div key={curso.id} className={styles.contenedorResultados}>
+                <div className={styles.resultados}>
+                  <span>FECHA DE INICIO</span>
+                  <span>{dayjs(curso.fechaInicio).format("DD/MM/YYYY")}</span>
+                </div>
+                <div className={styles.resultados}>
+                  <span>DURACION</span>
+                  <span>
+                    {calcularDuracion(curso.fechaInicio, curso.fechaFin)}
+                  </span>
+                </div>
+                <div className={styles.resultados}>
+                  <span>MODALIDAD</span>
+                  <span>{curso.modalidad}</span>
+                </div>
+                <div className={styles.resultados}>
+                  <button className="button-primary">Inscribirme</button>
+                </div>
               </div>
-              <div className={styles.resultados}>
-                <span>DURACION</span>
-                <span>
-                  {new Date(curso.fechaFin).getMonth() -
-                    new Date(curso.fechaInicio).getMonth() -
-                    12 *
-                      (new Date(curso.fechaInicio).getFullYear() -
-                        new Date(curso.fechaFin).getFullYear()) +
-                    " MESES"}
-                </span>
-              </div>
-              <div className={styles.resultados}>
-                <span>MODALIDAD</span>
-                <span>{curso.modalidad}</span>
-              </div>
-              <div className={styles.resultados}>
-                <button className="button-primary">Inscribirme</button>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         <div className={styles.contenedorPoliticas}>

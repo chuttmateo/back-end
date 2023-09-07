@@ -32,7 +32,7 @@ export default function ScrollableTabsButtonAuto({
                 <Avatar
                   sx={{ width: 90, height: 90}}
                   alt="logo"
-                  src='./logoazul.png'
+                  src='./logoblanco.png'
                  
                 />
               }

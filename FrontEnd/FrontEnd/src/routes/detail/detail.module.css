@@ -28,7 +28,6 @@
   height: 100%;
   z-index: 0;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 90% 100%, 0% 75%);
-  
 }
 .botonGaleria {
   margin-top: -90px;
@@ -108,21 +107,32 @@
 
 .calendario{
   display: flex;
-  align-items: center;
+  
   flex-direction: column;
   font-size: 18px;
   width: 40%;
 
 }
 
+.inicioCursos{
+  padding: 20px;
+  margin: 15px 0px;
+}
+
+
+.calendarioHoras{
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 15px;
+}
 .contenedorResultados{
-  
   border: 1px solid gray;
   display:flex;
-  margin: 10px;
   justify-content: space-between;
   border-radius: 10px;
-  padding: 10px;
+  padding: 20px;
+  margin: 15px 0px;
 }
 .resultados{
   display: flex;
@@ -130,6 +140,7 @@
   flex-direction: column;
   font-size: 20px;
   width: 20%;
+  
 }
 
 .contenedorPoliticas{
@@ -186,6 +197,7 @@ p {
   -moz-box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.75);
 }
 
+
 .cont_min {
   margin: 10px 0px;
   width: 170px;
@@ -198,12 +210,15 @@ p {
   max-width: 100%;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
   .barra {
     width: 130px;
   }
   .cont_min {
     max-width: 130px;
+  }
+  .calendario{
+    width: 60%;
   }
 }
 
@@ -217,6 +232,24 @@ p {
   .imagen {
     border: none;
   }
+  .presupuesto{
+    flex-direction: column;
+    align-items: center;
+  }
+  .calendario{
+    align-items: center;
+    width: 100%;
+  }
+  .caracteristicasdescripcion {
+    flex-direction:column-reverse;
+    width: 100%;
+  }
+  .descripcion, .caracteristicas, .detalles{
+    width: 100%;
+  }
+  
+
+  
 }
 @media (max-width: 580px) {
   .barra {
@@ -232,4 +265,5 @@ p {
   .cont_min {
     display: none;
   }
+
 }

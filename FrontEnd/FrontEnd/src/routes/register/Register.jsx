@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import swal from "sweetalert"
-import styles from "./modal.module.css"
+import styles from "./modal.module.css" 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -67,19 +67,19 @@ function Register() {
     setEmailError("");
 
     if (!validateName(firstname)) {
-      setFirstnameError("El nombre debe constar de al menos 3 caracteres y estar compuesto exclusivamente por letras.");
+      setFirstnameError("El nombre debe constar de al menos 3 carácteres y estar compuesto exclusivamente por letras.");
       return;
     }
     setFirstnameError("");
 
     if (!validateLastName(lastname)) {
-      setLastnameError("El apellido debe constar de al menos 3 caracteres y estar compuesto exclusivamente por letras.");
+      setLastnameError("El apellido debe constar de al menos 3 carácteres y estar compuesto exclusivamente por letras.");
       return;
     }
     setLastnameError("");
 
     if (!validatePassword(password)) {
-      setPasswordError("La contraseña debe tener al menos 3 caracteres.");
+      setPasswordError("La contraseña debe tener al menos 3 carácteres.");
       return;
     }
     setLastnameError("");
@@ -168,27 +168,66 @@ function Register() {
   }
 
   return (
+    // <div className="main" style={{
+    //   display: "flex",
+    //   justifyContent: "flex-end",
+      
+    // }}>
+    //   <div className={styles.imgDiv} style={{
+    //     width: "100%",
+    //     height: "100vh",
+        
+    //   }}>
+    //   <img src="/avion1.jpeg" alt="avion"/>
+    //           </div>
+    //   <Box
+    //     component="form"
+    //     ref={form}
+    //     onSubmit={submit}
+    //     className={styles.form}
+    //     sx={{
+    //       display: "flex",
+    //       flexDirection: "column",
+    //       gap: "15px",
+    //       padding: "20px",
+    //       backgroundColor: "#3A3A3A",
+    //       boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+          
+    //     }}
+    //     noValidate
+    //     autoComplete="off"
+    //   >
+    //     <Container sx={{
+    //       alignItems: "center",
+    //       justifyContent: "center",
+    //       textAlign: "center",
+    //     }}>
+    //     <Link to={"/home"} onClick={handleLink}> 
+    //       <img src="logoazul-degrade.png" style={{ width: "50px", height: "auto", marginTop: "35px" }} />
+    //     </Link>
+    //       <h4 style={{ fontSize: "40px"}}>Panel de Registro</h4>
+    //     </Container>
     <div className="main" style={{
       display: "flex",
       justifyContent: "flex-end",
-      
+      alignItems: "center", // Centrar verticalmente los elementos
     }}>
-      <img src="/avion1.jpeg" alt="avion" style={{
-                height: "100vh",
-                width:"70vw"
-              }}/>
+      <div className={styles.imgDiv} >
+        <img src="/avion1.jpeg" alt="avión" style={{ width: "100%", height: "100vh", objectFit: "cover" }} />
+      </div>
       <Box
         component="form"
         ref={form}
         onSubmit={submit}
+        className={styles.formRegistro}
         sx={{
-          width: "35vw",
           display: "flex",
           flexDirection: "column",
           gap: "15px",
           padding: "20px",
           backgroundColor: "#3A3A3A",
           boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+          height: "100vh",
         }}
         noValidate
         autoComplete="off"
@@ -198,10 +237,10 @@ function Register() {
           justifyContent: "center",
           textAlign: "center",
         }}>
-        <Link to={"/home"} onClick={handleLink}> 
-          <img src="logoazul-degrade.png" style={{ width: "50px", height: "auto", marginTop: "35px" }} />
-        </Link>
-          <h4 style={{ fontSize: "40px"}}>Panel de Registro</h4>
+          <Link to={"/home"} onClick={handleLink}> 
+            <img src="logoazul-degrade.png" style={{ width: "50px", height: "auto", marginTop: "35px" }} alt="logo" />
+          </Link>
+          <h4 style={{ fontSize: "40px"}}>Registrate aqui!</h4>
         </Container>
         <TextField
           id="username"
@@ -267,3 +306,5 @@ function Register() {
 
 export default Register;
 
+
+ 

@@ -2,8 +2,7 @@ import { useEffect} from "react";
 import { useGlobalState } from "../../utils/Context";
 import styles from "./header.module.css";
 import { Link } from "react-router-dom";
-import { FiSearch } from "react-icons/fi";
-import AccountMenu from "../iconMenu/AccountMenu";
+import AccountMenu from "./iconMenu/AccountMenu";
 
 const Header = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -49,17 +48,6 @@ const Header = () => {
           />
         </div>
       </Link>
-
-      <div className={styles.contenedor}>
-        <div className={styles.searchBar}>
-          <FiSearch className={styles.searchIcon} />
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder="¿Qué estás buscando?"
-          />
-        </div>
-      </div>
 
       <div className={styles.contenedor}>
         {loggedState ? <AccountMenu handleInitials={handleInitials} handleLogout={handleLogout} role={userData.role} username={userData.username} />

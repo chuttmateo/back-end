@@ -105,7 +105,7 @@ function CrearCaracteristica() {
   return (
     <div className="form">
       <Box component="form" onSubmit={handleSubmit}>
-        <h2>Agregar Caracteristica</h2>
+        <h2>Agregar Característica</h2>
         <FormControl sx={{ m: 1, minWidth: 850 }}>
           <TextField
             label="Nombre:"

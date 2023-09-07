@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import { useGlobalState } from "../../utils/Context";
 import { Box, Container, TextField } from "@mui/material";
+import styles from "./login.module.css";
 
 
 const Login = () => {
@@ -93,44 +94,51 @@ const Login = () => {
          return (
           <>
             <div
-              className="container-general"
+              className={styles.containerGeneral}
               style={{
+                // display: "flex",
+                // justifyContent: "flex-end",
                 display: "flex",
                 justifyContent: "flex-end",
-                // backgroundImage: 'url("/avion1.jpeg")',
-                // backgroundRepeat: "no-repeat",
-                // height: "100vh" 
+                alignItems: "center",
+                 
               }}
-            >
-              <img src="/avion1.jpeg" alt="avion" style={{
-                height: "100vh",
-                width:"100%"
-              }}/>
+            > <div className={styles.imgDiv}>
+              <img src="/avion1.jpeg" alt="avion" style={{ width: "100%", height: "100vh", objectFit: "cover" }}
+              />
+              </div>
               <div
-                className="login-container"
+                className={styles.loginContainer}
                 style={{
+                  // display: "flex",
+                  // flexDirection: "column",
+                  // alignItems: "center",
+                  // background: "#3A3A3A",
+                  // padding: "20px",
+                  // boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
+                  // width: "35vw",
+                  // height: "100vh",
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "center",
-                  background: "#3A3A3A",
+                  gap: "15px",
                   padding: "20px",
-                  boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-                  width: "35vw",
+                  backgroundColor: "#3A3A3A",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
                   height: "100vh",
-                  
                 }}
               >
-                <section className="contenedorForm" style={{
+                <section className={styles.contenedorForm}
+                style={{
                   marginTop: "40px",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center"
-                }}>
+                }}> 
+                
                 <Link to={"/home"} onClick={handleLink}> 
                 <img src="/logoazul-degrade.png" alt="logoazul" 
                 style={{
-                  width: "4vw",
-                  marginTop: "25px"
+                  width: "50px", height: "auto", marginTop: "35px"
                 }}/>
                 </Link>
                 
@@ -141,23 +149,24 @@ const Login = () => {
                   <div className="error-message" style={errorMessage}>{loginStates.credentialError}</div>
                 )}
                 <form
-                  className="login-form"
+                  className={styles.form}
                   method="post"
                   style={{
                     display: "flex",
+                    width: "30vw",
                     justifyContent: "center",
                     flexDirection: "column",
                     alignItems: "center",
                     marginTop: "25px",                    
                   }}
-                >
-                  <div className="form-group" style={{ marginBottom: "15px", width: "32vw"}}>
+                >  
+                  <div className={styles.formGroup} style={{ marginBottom: "15px", width: "100%"}}>
                     
                     {loginStates.usernameError && (
                       <div className="error-message" style={errorMessage}>{loginStates.usernameError}</div>
                     )}
                     <input
-                    
+                      className={styles.input1}
                       onChange={(e) =>
                         dispatch({ type: "SET_USERNAME", payload: e.target.value })
                       }
@@ -177,14 +186,14 @@ const Login = () => {
                       placeholder="Ingrese su email" // Placeholder actualizado
                     />
                   </div>
-                  <div className="form-group" style={{ marginBottom: "15px", width: "32vw" }}>
+                  <div className={styles.formGroup} style={{ marginBottom: "15px", width: "100%" }}>
                     
                     {loginStates.passwordError && (
                       <div className="error-message" style={errorMessage}>{loginStates.passwordError}</div>
                     )}
                     <input
                       type="password"
-                      
+                      className={styles.input2}
                       onChange={(e) =>
                         dispatch({ type: "SET_PASSWORD", payload: e.target.value })
                       }
@@ -218,7 +227,7 @@ const Login = () => {
                       borderRadius: "100px",
                       cursor: "pointer",
                       marginTop: "15px",
-                      width: "100%"
+                      width: "95%"
                     }}
                   >
                     Iniciar Sesión

@@ -88,10 +88,10 @@ function PanelAdministracion() {
             Administrar Productos
           </span>
           <span className={styles.item} onClick={ShowCat}>
-            Administrar Categorias
+            Administrar Categorías
           </span>
           <span className={styles.item} onClick={ShowCar}>
-            Administrar Caracteristicas
+            Administrar Características
           </span>
           <span className={styles.item} onClick={ShowUser}>
             Administrar Usuarios
@@ -106,11 +106,11 @@ function PanelAdministracion() {
           {isProd[0] && <BasicTable />}
 
           {isCat[1] && <CrearCategoria />}
-          {isCat[0] && <Button onClick={ShowCatForm} variant="outlined">Nueva Categoria</Button>}
+          {isCat[0] && <Button onClick={ShowCatForm} variant="outlined">Nueva Categoría</Button>}
           {isCat[0] && <ListarCategorias />}
 
           {isCar[1] && <CrearCaracteristica />}
-          {isCar[0] && <Button onClick={ShowCarForm} variant="outlined">Nueva Caracteristica</Button>}
+          {isCar[0] && <Button onClick={ShowCarForm} variant="outlined">Nueva Característica</Button>}
           {isCar[0] && <ListarCaracteristicas />}
 
           {/* {isUser[1] && <CrearCaracteristica />}

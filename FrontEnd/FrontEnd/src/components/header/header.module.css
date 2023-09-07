@@ -65,12 +65,7 @@
   }
 }
 
-@media (min-width: 551px) and (max-width: 971px) {
-  .searchBar {
-    width: 200px; /* Ancho de la barra de búsqueda */
-    font-size: 12px; /* Tamaño de la fuente del input */
-  }
-}
+
 
 @media (max-width: 640px) {
   /* Ocultar la barra de búsqueda en resoluciones menores a 550px */

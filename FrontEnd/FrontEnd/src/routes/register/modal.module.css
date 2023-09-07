@@ -1,3 +1,39 @@
 .ContinuarBtn{
     background-color: grey;
 }
+
+
+ /* @media (max-width: 700px) {
+    .imgDiv{
+        display: none;
+
+    }
+
+    .form{
+        width: 100vw;
+    }
+    
+}
+ */
+
+ .formRegistro {
+    width: 40vw;
+ }
+
+
+ @media (max-width: 700px) {
+    .imgDiv {
+      display: none;
+      
+    }
+  
+    .formRegistro {
+      width: 100vw;
+    }
+  }
+  
+
+
+
+
+

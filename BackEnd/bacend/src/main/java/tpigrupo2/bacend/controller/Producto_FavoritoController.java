@@ -39,7 +39,8 @@ public class Producto_FavoritoController {
            List<Producto_FavoritoDTO> lista= productoFavoritos.stream().map(p -> new Producto_FavoritoDTO(
                    p.getId(),
                    userRep.findById(p.getId_usuario()).get().getUsername(),
-                   p.getProducto().getId()
+                   p.getProducto().getId(),
+                   p.getProducto().getNombre()
            )).toList();
 
            return new ResponseEntity<List<Producto_FavoritoDTO>>( lista, HttpStatus.OK );
@@ -69,7 +70,7 @@ public class Producto_FavoritoController {
         Producto_Favorito productoFavorito = productoFavoritoService.agregarProductoFavorito(pf);
 
         return new ResponseEntity<Producto_FavoritoDTO>( new Producto_FavoritoDTO(productoFavorito.getId(), usuario,
-                id_producto),
+                id_producto, pf.getProducto().getNombre()),
                 HttpStatus.OK);
 
 

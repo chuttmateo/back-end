@@ -12,6 +12,10 @@
 .bg-dark .rmdp-header-values,
 .bg-dark .rmdp-panel-header {
   color: #c4c7ca;
+  
+}
+div .only.rmdp-month-picker{
+  height: 150px;
 }
 
 .bg-dark .rmdp-day.rmdp-range {
@@ -42,3 +46,8 @@
 .rmdp-container .bg-dark.ep-arrow[direction="bottom"] {
   border-top: 1px solid #212529;
 }
+
+.rmdp-range:has(.reserved) {
+  background-color: #8fb4f9;
+}
+

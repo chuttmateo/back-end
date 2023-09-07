@@ -116,7 +116,7 @@ function CrearCategoria() {
   return (
     <div className="form">
       <Box component="form" onSubmit={handleSubmit}>
-        <h2>Agregar Categoria</h2>
+        <h2>Agregar Categoría</h2>
         <FormControl sx={{ m: 1, minWidth: 850 }}>
           <TextField
             label="Nombre:"

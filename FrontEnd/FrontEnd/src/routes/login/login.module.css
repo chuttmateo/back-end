@@ -5,3 +5,42 @@
 .input-hover:hover {
     border-color: white; /* Cambia el color del borde a blanco cuando se hace hover */
   }
+
+  /* .loginContainer {
+    width: 40vw;
+    display: "flex";
+    flex-direction: "column";
+    align-items: "center";
+    background: "#3A3A3A";
+    padding: "20px";
+    box-shadow: "0px 2px 5px rgba(0, 0, 0, 0.1)";
+    width: "35vw";
+    height: "100vh";
+ }
+
+    .contenedorForm {
+        margin-top: "40px";
+        display: "flex";
+        flex-direction: "column";
+        align-items: "center";
+    } */
+
+
+ @media (max-width: 700px) {
+    .imgDiv {
+      display: none;
+     
+    }
+  
+    .loginContainer {
+      width: 100vw;
+    }
+
+    .form {
+      width: 80vw;
+    }
+
+    .formGroup {
+        width: 80vw;
+    }
+  }

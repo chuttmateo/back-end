@@ -29,7 +29,7 @@ export default function BotonGaleria(props) {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Ver mas
+        Ver más
       </Button>
       <BootstrapDialog
         onClose={handleClose}

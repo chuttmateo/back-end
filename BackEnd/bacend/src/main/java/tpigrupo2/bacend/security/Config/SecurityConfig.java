@@ -33,6 +33,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authRequest ->
               authRequest
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/favoritos/**").permitAll()
                 .requestMatchers(HttpMethod.GET).permitAll()
                 .anyRequest().hasAuthority("ADMIN")
                 )

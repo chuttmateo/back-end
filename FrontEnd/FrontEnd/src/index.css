@@ -62,3 +62,7 @@ body{
   cursor: pointer;
   font-size: medium;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
