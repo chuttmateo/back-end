@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./detail.module.css";
 import BotonGaleria from "./BotonGaleria";
@@ -23,26 +23,15 @@ const Detail = () => {
   const [categoria, setCategoria] = useState("");
   const [horas, setHoras] = useState([]);
   const [presupuesto, setPresupuesto] = useState(0);
+  const [reservas, setReservas] = useState([]);
 
   const horasDisp = ["09:00", "10:00", "11:00", "12:00"];
 
-  const reserved = [
-    [
-      new DateObject("2023-09-18").format(),
-      new DateObject("2023-09-21").format(),
-    ],
-    [
-      new DateObject("2023-10-08").format(),
-      new DateObject("2023-10-14").format(),
-    ],
-  ];
-
-  const initialValue = [...reserved];
   function isReserved(strDate) {
-    return reserved.some(([start, end]) => strDate >= start && strDate <= end);
+    return reservas.some(([start, end]) => strDate >= start && strDate <= end);
   }
 
-  const [valores, setValores] = useState(initialValue);
+  const [valores, setValores] = useState([]);
   const months = [
     "Enero",
     "Febrero",
@@ -63,13 +52,6 @@ const Detail = () => {
     months[new Date().getMonth()].toUpperCase()
   );
 
-  const calcularPresupuesto = () => {
-    let precio = 0;
-    detalles.forEach((detalle) => {
-      precio += detalle.precio * detalle.cantidad;
-    });
-    setPresupuesto(precio);
-  };
   useEffect(() => {
     const c = cursos.filter((curso) => dayjs(curso.fechaInicio) >= values);
     if (categoria === "Licencias") {
@@ -79,6 +61,25 @@ const Detail = () => {
     }
   }, [values]);
 
+  function obtenerFechas(res) {
+    let resFechas = [];
+    res.forEach((r) => {
+      resFechas = r.map((f) => [
+        new DateObject(f.fecha_inicio).format(),
+        new DateObject(f.fecha_fin).format(),
+      ]);
+    });
+    setReservas(resFechas);
+  }
+  /*
+  function obtenerHoras(res) {
+    let resultado = [];
+    res.forEach((r) => {
+      resultado = r.map((h) => h.hora_inicio);
+    });
+    console.log(resultado);
+  }
+*/
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userData"))?.token;
     setToken(data ? data : "");
@@ -90,13 +91,23 @@ const Detail = () => {
       setPoliticas(res.data.politicas);
       setCursos(res.data.cursos);
       setCategoria(res.data.categoria.nombre);
+      obtenerFechas(
+        res.data.cursos?.map((c) => c.reservas).filter((r) => r.length > 0)
+      );
       setValues(new Date());
+      let precio = 0;
+      res.data.detalles.forEach((detalle) => {
+        precio += detalle.precio * detalle.cantidad;
+      });
+      //obtenerHoras(res.data.cursos?.map((c) => c.reservas).filter((r) => r.length > 0))
+      setPresupuesto(precio);
     });
   }, []);
 
-  useEffect(() => {
-    calcularPresupuesto();
-  }, [detalles]);
+  function reservar() {
+
+    console.log("Cliked reservar", values?.format()?.length, horas.length);
+  }
 
   function selectHora(event) {
     const { options } = event.target;
@@ -106,7 +117,7 @@ const Detail = () => {
         value.push(options[i].value);
       }
     }
-    console.log(value);
+    //console.log(value);
     setHoras(value);
   }
   /*calendarPosition={"mainPosition: bottom"}*/
@@ -140,6 +151,13 @@ const Detail = () => {
                 className="bg-dark"
                 value={values}
                 onChange={setValues}
+                mapDays={({ date }) => {
+                  const strDate = date.format();
+                  if (isReserved(strDate))
+                    return {
+                      disabled: true,
+                    };
+                }}
                 minDate={new DateObject().add(1, "day")}
               />
               <FormControl>
@@ -181,28 +199,19 @@ const Detail = () => {
               range
               minDate={new Date()}
               maxDate={new Date(cursos[0].fechaFin)}
-              onChange={(ranges) => {
-                const isClickedOutsideUnAvailbleDates = initialValue.every(
-                  ([start, end]) =>
-                    ranges.some(
-                      (range) =>
-                        range[0]?.format?.() === start &&
-                        range[1]?.format?.() === end
-                    )
-                );
-
-                if (!isClickedOutsideUnAvailbleDates) return false;
-                console.log(ranges.map((x) => x.map((y) => y?.format?.())));
-                setValores(ranges);
-              }}
+              onChange={setValores}
               mapDays={({ date }) => {
-                let className;
                 const strDate = date.format();
-
-                if (isReserved(strDate)) className = "reserved";
-                if (className) return { className };
+                if (isReserved(strDate))
+                  return {
+                    disabled: true,
+                  };
               }}
-            />
+            >
+              <button className="button-primary" onClick={() => setValores([])}>
+                Limpiar Selección
+              </button>
+            </Calendar>
           </>
         );
       default:
@@ -211,38 +220,50 @@ const Detail = () => {
   }
 
   function montos() {
-    let titulo = "PRECIO:"
-    let precio = "Debes estar logueado para ver el precio."
+    let titulo = "PRECIO:";
+    let precio = "Debes estar logueado para ver el precio.";
     let mostrarBoton = false;
-    let noLogin = "Debes estar logueado para reservar.";
+    let tituloBoton = "Reservar";
+    let noLogin = "";
     if (token) {
       precio = "$ " + presupuesto;
-      
+
       switch (categoria) {
         case "Licencias":
-          mostrarBoton =true
+          titulo = "VALOR:";
+          noLogin = " ";
           break;
         case "Horas Libres":
-          mostrarBoton=true
-          titulo = "PRECIO POR HORA:"
+          mostrarBoton = true;
+          titulo = "PRECIO POR HORA:";
           break;
         case "Hospedajes":
-          titulo = "PRECIO POR DÍA:"
-          noLogin = "Debes reservar Licencias/horas para poder reservar hospedaje"
+          mostrarBoton = true;  // quitar despues
+          titulo = "PRECIO POR DÍA:";
+          //noLogin ="Debes reservar Licencias/horas para poder reservar hospedaje";
           break;
         default:
+          mostrarBoton = true;
+          titulo = "PRECIO:";
+          tituloBoton = "Comprar";
           break;
       }
-    } 
+    }
 
     return (
       <>
         <p>{titulo}</p>
         <p>{precio}</p>
         {mostrarBoton ? (
-          <button className="button-primary">Reservar</button>
-        ) : (
+          <button className="button-primary" onClick={reservar}>
+            {tituloBoton}
+          </button>
+        ) : noLogin ? (
           noLogin
+        ) : (
+          <Link className="button-primary" to={"/login"}>
+            Iniciar sesión
+          </Link>
         )}
       </>
     );
@@ -259,6 +280,7 @@ const Detail = () => {
 
   return (
     <>
+      {/*console.log("Render")*/}
       <div className={styles.barra}>
         {imagenes.slice(1, 5).map((im) => (
           <div key={im?.ruta} className={styles.cont_min}>
@@ -342,7 +364,15 @@ const Detail = () => {
                   <span>{curso.modalidad}</span>
                 </div>
                 <div className={styles.resultados}>
-                  <button className="button-primary">Inscribirme</button>
+                  {token ? (
+                    <button onClick={reservar} className="button-primary">
+                      Inscribirme
+                    </button>
+                  ) : (
+                    <Link className="button-primary" to={"/login"}>
+                      Iniciar sesión
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}

@@ -8,7 +8,7 @@ useEffect(() => {
     console.log(data)
 },[])
     return(
-        <div className="main">
+        <div style={{minHeight:'85vh'}}>
             
             
             {data?.role=="ADMIN"?

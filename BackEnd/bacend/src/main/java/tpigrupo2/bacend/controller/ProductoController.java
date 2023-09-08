@@ -51,7 +51,6 @@ public class ProductoController {
                                     curso.getCupos(),
                                     curso.getReservas().size(),
                                     curso.getCupos() - curso.getReservas().size()))
-                                    .filter(cursoDTO -> cursoDTO.getDisponibles() > 0)
                                     .toList() :
                             List.of()
             );

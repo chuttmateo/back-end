@@ -6,13 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tpigrupo2.bacend.dto.UserDTO;
-import tpigrupo2.bacend.model.Producto;
+
 import tpigrupo2.bacend.security.User.User;
 import tpigrupo2.bacend.service.IUserService;
 
 
 import java.util.Collection;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("/users")

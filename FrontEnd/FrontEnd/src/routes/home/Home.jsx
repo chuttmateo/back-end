@@ -29,25 +29,29 @@ const Home = () => {
   const [allFavorites, setAllFavorites] = useState(null);
   const [username, setUsername] = useState("");
   const [esCategoriaReservable, setCategoriaReservable] = useState(true)
+  //con este estado manejo la disponibilidad de la funcion handleFavorito
+  const [procesandoFetch, setProcesandoFetch] = useState(false)
 
   const [idFavoritos, setIdFavoritos] = useState([])
 
   const handleFavorito = (id) => {
-
+    //chequeo que no haya un fetch en proceso
+    if (procesandoFetch) return;
+    
     const actualizado = idFavoritos.filter(item => item !== id)
 
     if (actualizado.length < idFavoritos.length) {
-      
       const idFavorito = allFavorites.filter(item => item.producto === id)[0].id
-      
+
+      setProcesandoFetch(true)
       axios.delete('http://3.144.46.39:8080/favoritos/' + idFavorito)
-      .then(response => {
+        .then(response => {
+          setProcesandoFetch(false)
           setIdFavoritos(actualizado)
           setAllFavorites(allFavorites.filter(favorito => favorito.producto !== id))
-          console.log(`Deleted post with ID ${id}`);
-          console.log(idFavorito);
         })
         .catch(error => {
+          setProcesandoFetch(false)
           console.error(error);
         });
 
@@ -56,9 +60,9 @@ const Home = () => {
         usuario: username,
         producto: id
       }
-      
+
       let urlFavs = 'http://3.144.46.39:8080/favoritos'
-      
+      setProcesandoFetch(true)
       const response = fetch(urlFavs, {
         method: "POST",
         headers: {
@@ -66,12 +70,13 @@ const Home = () => {
         },
         body: JSON.stringify(objeto),
       }).then(response => response.json())
-      .then(favorito => {
-        console.log("Agregar Favoritos", favorito);
-        setIdFavoritos([...idFavoritos, id])
-        setAllFavorites([...allFavorites, favorito])
+        .then(favorito => {
+          setProcesandoFetch(false)
+          setIdFavoritos([...idFavoritos, id])
+          setAllFavorites([...allFavorites, favorito])
         })
         .catch(error => {
+          setProcesandoFetch(false)
           console.error(error);
         });
     }

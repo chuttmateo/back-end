@@ -207,42 +207,27 @@ function Register() {
     //     </Link>
     //       <h4 style={{ fontSize: "40px"}}>Panel de Registro</h4>
     //     </Container>
-    <div className="main" style={{
-      display: "flex",
-      justifyContent: "flex-end",
-      alignItems: "center", // Centrar verticalmente los elementos
-    }}>
+    <div className={styles.main}>
       <div className={styles.imgDiv} >
-        <img src="/avion1.jpeg" alt="avión" style={{ width: "100%", height: "100vh", objectFit: "cover" }} />
+        <img src="/avion1.jpeg" alt="avión" className={styles.imgAvion} />
       </div>
       <Box
         component="form"
         ref={form}
         onSubmit={submit}
         className={styles.formRegistro}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "15px",
-          padding: "20px",
-          backgroundColor: "#3A3A3A",
-          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-          height: "100vh",
-        }}
         noValidate
         autoComplete="off"
       >
-        <Container sx={{
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}>
+        <Container className={styles.conct}>
           <Link to={"/home"} onClick={handleLink}> 
-            <img src="logoazul-degrade.png" style={{ width: "50px", height: "auto", marginTop: "35px" }} alt="logo" />
+            <img src="logoazul-degrade.png" className={styles.logo} alt="logo" />
           </Link>
-          <h4 style={{ fontSize: "40px"}}>Registrate aqui!</h4>
+          <h4 className={styles.titulo}>Registrate aqui!</h4>
         </Container>
+        <div className={styles.formulario}>
         <TextField
+         className={styles.imputs}
           id="username"
           label="Email"
           //variant="standard"
@@ -256,6 +241,7 @@ function Register() {
           }}
         />
         <TextField
+          className={styles.imputs}
           id="firstname"
           label="Nombre"
           //variant="standard"
@@ -269,6 +255,7 @@ function Register() {
           }}
         />
         <TextField
+          className={styles.imputs}
           id="lastname"
           label="Apellido"
           //variant="standard"
@@ -281,6 +268,7 @@ function Register() {
           }}
         />
         <TextField
+          className={styles.imputs}
           id="password"
           value={password}
           error={passwordError !== ""}
@@ -293,12 +281,17 @@ function Register() {
           //variant="standard"
           type="password"
         />
-        <button type="submit" className="button-primary">
+        </div>
+        <div className={styles.btnLogin}>
+        <button type="submit" className="button-primary" style={{
+          height: "auto"
+        }}>
           Crear cuenta
         </button>
-        <Link to={"/login"} style={{
+        <Link to={"/login"} className={styles.login} style={{
           fontSize: "13px"
         }}>¿Ya tienes una cuenta? Inicia sesión aquí</Link>
+        </div>
       </Box>
     </div>
   );

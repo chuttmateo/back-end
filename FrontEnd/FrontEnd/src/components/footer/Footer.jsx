@@ -47,9 +47,13 @@ function Footer() {
         <div >
 <Button sx={style1}
  onClick={handleOpen}>
+
 <img src="/icono_compartir.png" alt="icono" style={{
-          height: "300%",
-          width:"300%"
+          height: "70%",
+          width:"70%"
+
+
+
         }}/>
   </Button>
 <Modal 

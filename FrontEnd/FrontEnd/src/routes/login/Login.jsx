@@ -94,38 +94,13 @@ const Login = () => {
          return (
           <>
             <div
-              className={styles.containerGeneral}
-              style={{
-                // display: "flex",
-                // justifyContent: "flex-end",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-                 
-              }}
-            > <div className={styles.imgDiv}>
-              <img src="/avion1.jpeg" alt="avion" style={{ width: "100%", height: "100vh", objectFit: "cover" }}
-              />
+              className={styles.containerGeneral}> 
+              <div className={styles.imgDiv}>
+              <img src="/avion1.jpeg" alt="avion" className={styles.imgAvion} />
               </div>
               <div
                 className={styles.loginContainer}
-                style={{
-                  // display: "flex",
-                  // flexDirection: "column",
-                  // alignItems: "center",
-                  // background: "#3A3A3A",
-                  // padding: "20px",
-                  // boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-                  // width: "35vw",
-                  // height: "100vh",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "15px",
-                  padding: "20px",
-                  backgroundColor: "#3A3A3A",
-                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-                  height: "100vh",
-                }}
+             
               >
                 <section className={styles.contenedorForm}
                 style={{
@@ -136,13 +111,11 @@ const Login = () => {
                 }}> 
                 
                 <Link to={"/home"} onClick={handleLink}> 
-                <img src="/logoazul-degrade.png" alt="logoazul" 
-                style={{
-                  width: "50px", height: "auto", marginTop: "35px"
-                }}/>
+                <img src="/logoazul-degrade.png" alt="logoazul" className={styles.logoAzul}
+                />
                 </Link>
                 
-                <h2 style={{ marginBottom: "10px", fontSize: "40px", color: "white", textAlign: 'center', marginTop: "30px" }}>
+                <h2 className={styles.nose}>
                   Iniciar Sesion
                 </h2>
                 {loginStates.credentialError && (
@@ -151,16 +124,9 @@ const Login = () => {
                 <form
                   className={styles.form}
                   method="post"
-                  style={{
-                    display: "flex",
-                    width: "30vw",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    marginTop: "25px",                    
-                  }}
+                  
                 >  
-                  <div className={styles.formGroup} style={{ marginBottom: "15px", width: "100%"}}>
+                  <div className={styles.formGroup}>
                     
                     {loginStates.usernameError && (
                       <div className="error-message" style={errorMessage}>{loginStates.usernameError}</div>
@@ -170,23 +136,11 @@ const Login = () => {
                       onChange={(e) =>
                         dispatch({ type: "SET_USERNAME", payload: e.target.value })
                       }
-                      style={{
-                        width: "100%",
-                        padding: "10px",
-                        border: "0.5px solid #BFC0C1",
-                        backgroundColor: "#3A3A3A",
-                        borderRadius: "3px",
-                        fontSize: "20px",
-                        color: "white",
-                        transition: "border-color 0.3s, box-shadow 0.3s",
-                        outline: "none",
-                        cursor: "pointer",
-                       
-                      }}
+      
                       placeholder="Ingrese su email" // Placeholder actualizado
                     />
                   </div>
-                  <div className={styles.formGroup} style={{ marginBottom: "15px", width: "100%" }}>
+                  <div className={styles.formGroup} >
                     
                     {loginStates.passwordError && (
                       <div className="error-message" style={errorMessage}>{loginStates.passwordError}</div>
@@ -197,50 +151,21 @@ const Login = () => {
                       onChange={(e) =>
                         dispatch({ type: "SET_PASSWORD", payload: e.target.value })
                       }
-                      style={{
-                        width: "100%",
-                        padding: "10px",
-                        border: "0.5px solid #BFC0C1",
-                        borderRadius: "3px",
-                        backgroundColor: "#3A3A3A",
-                        fontSize: "20px",
-                        color: "white",
-                        transition: "border-color 0.3s, box-shadow 0.3s",
-                        outline: "none",
-                        cursor: "pointer",
-                        
-                        
-                      }}
+                      
                       placeholder="Ingrese su contraseña"
   
                     />
                   </div>
                   <button
                     onClick={handleSubmit}
-                    className="login-btn"
-                    style={{
-                      fontSize: "12px",
-                      background: "#007bff",
-                      color: "#fff",
-                      border: "none",
-                      padding: "10px 15px",
-                      borderRadius: "100px",
-                      cursor: "pointer",
-                      marginTop: "15px",
-                      width: "95%"
-                    }}
+                    className={styles.loginbtn}
                   >
                     Iniciar Sesión
                   </button>
                 </form>
-                <Link
+                <Link className={styles.sinCuenta}
                   to={"/register"}
-                  style={{
-                    textDecoration: "none",
-                    padding: "50px",
-                    
-                    fontSize: "12px"
-                  }}
+                  
                 >
                   ¿No tienes una cuenta? Regístrate aquí
                 </Link>
