@@ -153,7 +153,6 @@ const Login = () => {
                       }
                       
                       placeholder="Ingrese su contraseña"
-  
                     />
                   </div>
                   <button

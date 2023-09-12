@@ -44,7 +44,8 @@ function Footer() {
       <div className={styles.contenedor}>
         <img className={styles.img} src="/logoblanco.png" alt="iso logotipo" />
         <p>© InFlight 2023</p>
-        <div >
+        </div>
+        <div className={styles.compartir}>
 <Button sx={style1}
  onClick={handleOpen}>
 
@@ -90,7 +91,7 @@ function Footer() {
 </Modal>
 </div>
 
-      </div>
+      {/* </div> */}
     </div>
 
 

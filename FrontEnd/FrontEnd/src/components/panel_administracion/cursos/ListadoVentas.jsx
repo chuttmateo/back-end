@@ -201,7 +201,7 @@ export default function ListadoVentas() {
                 <TableCell align="left">{row.cupos}</TableCell>
                 <TableCell align="left">{row.inicio}</TableCell>
                 <TableCell align="left">{row.fin}</TableCell>
-                <TableCell align="left">{row.reservadas}</TableCell>
+                <TableCell align="left">{row.reservas}</TableCell>
               </TableRow>
             ))}
           </TableBody>

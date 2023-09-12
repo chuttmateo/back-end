@@ -108,6 +108,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { redirect } from "react-router";
+import { Link } from "react-router-dom";
 //import { ThemeProvider, createTheme, useTheme } from "@mui/material";
 
 const ProfileDetail = () => {
@@ -227,15 +228,20 @@ const ProfileDetail = () => {
                   <TableCell align="left">{row.producto}</TableCell>
                   <TableCell align="left">{row.nombreproducto}</TableCell>
 
-                  <TableCell align="right" sx={{ display: "flex", gap: "3px" }}>
+                  <TableCell align="right" sx={{ display: "flex", gap: "1rem" }}>
                     <button
                       className="eliminate-btn"
                       onClick={() => {
                         eliminar(row.id, row.nombreproducto);
                       }}
                     >
-                      Eliminar
+                      Eliminar de favoritos
                     </button>
+                    <Link to={`/productos/${row.producto}`}>
+                  <button className="edit-btn">
+                      Ver producto
+                    </button>
+                </Link>
                   </TableCell>
                 </TableRow>
               ))}

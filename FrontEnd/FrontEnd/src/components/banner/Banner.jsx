@@ -10,6 +10,18 @@ export default function BannerWithInput() {
 
   const images = [
     {
+      image: "banner4.jpg",
+      title: "Horas de vuelo libres",
+      button: "Reservar",
+      url: "/productos/153"
+    },
+    {
+      image: "banner3.jpg",
+      title: "Uniforme de Invierno",
+      button: "¡Lo quiero!",
+      url: "/productos/159"
+    },
+    {
       image: "banner1.png",
       title: "HABILITACIÓN AIRBUS A320",
       button: "¡Últimos cupos!",
@@ -21,6 +33,7 @@ export default function BannerWithInput() {
       button: "¡Quiero inscribirme!",
       url: "/productos/67"
     }
+    
   ];
 
   const handlePrevImage = () => {

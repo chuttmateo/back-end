@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, redirect, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./detail.module.css";
 import BotonGaleria from "./BotonGaleria";
@@ -81,7 +81,7 @@ const Detail = () => {
   }
 */
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("userData"))?.token;
+    const data = JSON.parse(localStorage.getItem("userData"));
     setToken(data ? data : "");
     axios.get("http://3.144.46.39:8080/productos/" + params.id).then((res) => {
       setProducto(res.data);
@@ -94,6 +94,10 @@ const Detail = () => {
       obtenerFechas(
         res.data.cursos?.map((c) => c.reservas).filter((r) => r.length > 0)
       );
+
+
+
+
       setValues(new Date());
       let precio = 0;
       res.data.detalles.forEach((detalle) => {
@@ -102,11 +106,91 @@ const Detail = () => {
       //obtenerHoras(res.data.cursos?.map((c) => c.reservas).filter((r) => r.length > 0))
       setPresupuesto(precio);
     });
+
+    /*axios.get("http://3.144.46.39:8080/reservas").then((res) => {
+        console.log(res.data)
+    });*/
   }, []);
 
-  function reservar() {
 
-    console.log("Cliked reservar", values?.format()?.length, horas.length);
+/*
+{
+    "user": "mauricio@gmail.com",
+    "id_curso": 50,
+    "fecha_inicio": "2023-10-15",
+    "fecha_fin": "2023-10-15",
+    "hora_inicio": "09:00:00",
+    "hora_fin": "10:00:00",
+    "precio": 95.0
+}
+
+*/
+
+
+
+  async function reservar(id,fechaInicio, fechaFin) {
+    if(categoria === "Hospedajes"){
+      let msj=""
+      //console.log("Cliked reservar", valores?.length) 
+      valores?.map(x => {
+        const data = {
+          "user": token.username,
+          "id_curso": cursos[0].id,
+          "fecha_inicio": x[0].format("YYYY-MM-DD"),
+          "fecha_fin": x[1].format("YYYY-MM-DD"),
+          "precio": presupuesto
+        }
+        axios.post("http://3.144.46.39:8080/reservas",data).then( res=>
+
+          msj = res.data
+      
+        );  
+      })
+      alert("Reserva realizada", msj)
+      location.reload()
+    }
+    if(categoria ==="Horas Libres"){
+      //console.log("Cliked reservar", values?.format());
+      let msj =""
+      const data = {
+        "user": token.username,
+        "id_curso": cursos[0].id,
+        "fecha_inicio": values.format("YYYY-MM-DD"),
+        "fecha_fin": values.format("YYYY-MM-DD"),
+
+        "precio": presupuesto
+      }
+      axios.post("http://3.144.46.39:8080/reservas",data).then( res=>
+
+        msj = res.data
+    
+      );  
+      alert("Reserva realizada", msj)
+      location.reload()
+    }
+    if(categoria==="Licencias"){
+      let msj =""
+      const data = {
+        "user": token.username,
+        "id_curso": id,
+        "fecha_inicio": fechaInicio,
+        "fecha_fin": fechaFin,
+
+        "precio": presupuesto
+      }
+      axios.post("http://3.144.46.39:8080/reservas",data).then( res=>
+
+        msj = res.data
+    
+      );  
+      alert("Reserva realizada", msj)
+      location.reload()
+
+    }
+
+
+
+
   }
 
   function selectHora(event) {
@@ -284,7 +368,7 @@ const Detail = () => {
       <div className={styles.barra}>
         {imagenes.slice(1, 5).map((im) => (
           <div key={im?.ruta} className={styles.cont_min}>
-            <img src={im?.ruta} alt="" className={styles.imagen_min} />
+            <img src={im?.ruta+"_tn.jpg"} alt="" className={styles.imagen_min} />
           </div>
         ))}
         <BotonGaleria images={imagenes} />
@@ -365,7 +449,7 @@ const Detail = () => {
                 </div>
                 <div className={styles.resultados}>
                   {token ? (
-                    <button onClick={reservar} className="button-primary">
+                    <button onClick={(e)=>reservar(curso.id,curso.fechaInicio, curso.fechaFin)} className="button-primary">
                       Inscribirme
                     </button>
                   ) : (

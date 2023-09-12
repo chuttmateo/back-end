@@ -18,6 +18,8 @@ export default function ScrollableTabsButtonAuto({
   return (
     <Box sx={{ width: "100%", display: "flex", justifyContent: "center", borderRadius: "120% 10% 10% 0%"}}>
       <Tabs
+        textColor="secondary"
+        indicatorColor="secondary"
         sx={{ display: "flex", justifyContent: "space-evenly", borderRadius: "10px 10px 10px 10px"}}
         value={value}
         onChange={handleChange}

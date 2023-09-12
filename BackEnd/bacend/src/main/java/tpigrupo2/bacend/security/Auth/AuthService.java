@@ -43,6 +43,7 @@ public class AuthService {
                 .firstname(data.getFirstname())
                 .lastname(data.getLastname())
                 .role(data.getRole().toString())
+                .id(data.getId().toString())
             .build();
 
     }

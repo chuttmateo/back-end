@@ -5,7 +5,6 @@ function Administracion(){
 const [data, setData] = useState([])
 useEffect(() => {
     setData( JSON.parse(localStorage.getItem("userData")))
-    console.log(data)
 },[])
     return(
         <div style={{minHeight:'85vh'}}>

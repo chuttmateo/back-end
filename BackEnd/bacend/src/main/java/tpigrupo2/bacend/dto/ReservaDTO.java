@@ -2,6 +2,7 @@ package tpigrupo2.bacend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tpigrupo2.bacend.security.User.User;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ReservaDTO implements Serializable {
     private String user;
     private LocalDate fecha_inicio;

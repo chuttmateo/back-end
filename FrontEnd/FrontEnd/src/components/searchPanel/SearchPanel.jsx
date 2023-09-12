@@ -16,7 +16,7 @@ const SearchPanel = ({categories,
             </section>
             {esCategoriaReservable &&
             <section className={styles.dateSection}>
-                <label className={styles.dateLabel}><h2 className={styles.labelH2}>BUSCAR POR FECHA</h2></label>
+                {/* <label className={styles.dateLabel}><h2 className={styles.labelH2}>BUSCAR POR FECHA</h2></label> */}
                 {<CustomDatePicker />}
                 <button onClick={handleSearch} className={styles.searchBtn}><FiSearch className={styles.searchIcon} /></button>
             </section>

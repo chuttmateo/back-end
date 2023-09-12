@@ -4,6 +4,7 @@ import tpigrupo2.bacend.model.Reserva;
 import tpigrupo2.bacend.security.User.User;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface IReservaService {
     public Reserva crearReserva(Reserva reserva);

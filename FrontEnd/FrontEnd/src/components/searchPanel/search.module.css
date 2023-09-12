@@ -6,18 +6,20 @@ h2 {
   display: flex;
   justify-content:center;
   align-items: center;
+  background-color: #212529;
   margin: 1rem;
-  background-color: #273c91ea;
-  border-radius: 8px;
   font-family: 'Nunito', sans-serif;
   font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  
 }
 
 .tituloCategorias {
   font-family: "Nunito Sans", sans-serif;
   font-size: 1rem;
   font-weight: 600;
-
 }
 .categories {
   display: flex;
@@ -27,7 +29,6 @@ h2 {
   align-items: center;
   border-radius: 25px;
   font-size: small;
-  /* background-color: rgba(30, 30, 30, 0.9); */
   padding: 0.55rem;
 
 }
@@ -35,25 +36,21 @@ h2 {
 .categories h2 {
   color: #e8e5e5ef;
   font-size: 15px;
-
 }
 
 .dateSection {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  /* margin: 2rem; */
-  /* height: 90%; */
   width: 200px;
-  border-radius: 5%;
-  padding: 0.3rem;
-  border: 1px solid #9e9fa0;
-
+  gap: 10px;
 }
 
 .searchIcon {
   color: #fffdfd;
   font-size: 23px;
+}
+.searchIcon:hover{
+  color: rgb(0, 137, 254);
 }
 
 .searchInput {
@@ -66,7 +63,6 @@ h2 {
   width: 100%;
 
 }
-
 
 .dateLabel {
   margin-bottom: 5%;
@@ -82,15 +78,12 @@ h2 {
 }
 
 .searchBtn {
-  text-decoration: none;
-  background: rgba(0, 137, 254, 1) 100%;
   color: white;
   border: none;
-  border-radius: 18%;
+  background-color: #212529;
+  border-radius: 5px;
   cursor: pointer;
   padding: 9px;
-  align-items: center;
-  margin-top: 10px;
 }
 
 .searchInput::placeholder {
@@ -117,5 +110,10 @@ h2 {
   .dateLabel {
     margin-top: 1%;
     margin-bottom: 1%;
+  }
+  .dateSection{
+    width: 75%;
+    max-width: 600px;
+    margin: 10px 0;
   }
 }

@@ -16,9 +16,21 @@ function App() {
   const theme = createTheme({
     palette: {
       mode: 'dark',
+      primary: {
+        light: '#757ce8',
+        main: '#3f50b5',
+        dark: '#002884',
+        contrastText: '#fff',
+      },
+      secondary: {
+        light: 'rgba(255, 255, 255, 0.7)',
+        main: 'rgba(255, 255, 255, 0.7)',
+        dark: 'rgba(255, 255, 255, 0.7)',
+        contrastText: 'rgba(255, 255, 255, 0.7)',
+      }
     },
-  });
-
+  })
+  
   const location = useLocation()
 
   return (

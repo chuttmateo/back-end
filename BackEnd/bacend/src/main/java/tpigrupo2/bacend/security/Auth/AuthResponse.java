@@ -15,4 +15,5 @@ public class AuthResponse {
     String firstname;
     String lastname;
     String role;
+    String id;
 }

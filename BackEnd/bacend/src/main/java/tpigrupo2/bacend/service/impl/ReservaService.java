@@ -7,6 +7,7 @@ import tpigrupo2.bacend.repository.IReservaRepository;
 import tpigrupo2.bacend.service.IReservaService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,4 +60,5 @@ public class ReservaService implements IReservaService {
 
         return iReservaRepository.findAll();
     }
+
 }
