@@ -28,12 +28,13 @@ export default function AccountMenu({ handleLogout, role, username, handleInitia
                     <IconButton
                         onClick={handleClick}
                         size="small"
-                        sx={{ ml: 2 }}
+                        sx={{ ml: 2}}
                         aria-controls={open ? 'account-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                        <Avatar sx={{ width: 32, height: 32 }}>{handleInitials()}</Avatar>
+                        <Avatar sx={{ width: 40, height: 40, border: '1px solid rgb(0, 137, 254)',
+                        color: 'white' }}>{handleInitials()}</Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -46,6 +47,10 @@ export default function AccountMenu({ handleLogout, role, username, handleInitia
                 PaperProps={{
                     elevation: 0,
                     sx: {
+                        backgroundColor: '#212529',
+                        boxShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
+                        border: '1px solid rgba(255, 255, 255, 0.5)',
+                        borderRadius: '8px',
                         overflow: 'visible',
                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                         mt: 1.5,

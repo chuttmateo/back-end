@@ -1,3 +1,7 @@
+.div {
+  background-color: #212529;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
 @media (min-width: 551px) {
   .div {
     position: sticky;
@@ -12,9 +16,7 @@
     align-items: center;
     height: 65px;
     color: #1e1e1e;
-    background-color: rgba(53, 56, 56, 255);
     font-weight: 100;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   .isologotipo {
     max-width: 115px;
@@ -86,9 +88,7 @@
     align-items: center;
     height: 65px;
     color: #1e1e1e;
-    background-color: rgba(53, 56, 56, 255);
     font-weight: 100;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   .isologotipo {
     display: none;
@@ -120,9 +120,7 @@
     justify-content: space-evenly;
     height: 65px;
     color: #1e1e1e;
-    background-color: rgba(53, 56, 56, 255);
     font-weight: 100;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   .isologotipo {
     display: none;
@@ -198,36 +196,3 @@ ul li a {
 .visible {
   display: block; /* Mostrar cuando la clase 'visible' está presente */
 }
-/* 
-.searchBar {
-  display: flex;
-  align-items: center;
-  background-color: #6a6969;
-  border-radius: 25px;
-  padding: 8px;
-  margin-left: 20px;
-  width: 500px;
-  font-size: 10px;
-  padding: 3px;
-}
-
-.searchIcon {
-  margin-right: 8px;
-  margin-left: 5px;
-  color: #c3c2c2;
-}
-
-.searchInput {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  width: 200px;
-  font-size: 14px;
-  color: white;
-}
-
-.searchInput::placeholder {
-  color: rgb(189, 187, 187); 
-  font-size: 10px;
-} */
-

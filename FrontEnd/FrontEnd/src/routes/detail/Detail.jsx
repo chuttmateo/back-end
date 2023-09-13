@@ -3,10 +3,11 @@ import { Link, redirect, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./detail.module.css";
 import BotonGaleria from "./BotonGaleria";
-import { Calendar, DateObject } from "react-multi-date-picker";
+import DatePicker, { Calendar, DateObject } from "react-multi-date-picker";
 import "./bg-dark.css";
 import dayjs from "dayjs";
 import { FormControl, InputLabel, Select } from "@mui/material";
+import { FaCalendar } from "react-icons/fa";
 
 const Detail = () => {
   const params = useParams();
@@ -95,9 +96,6 @@ const Detail = () => {
         res.data.cursos?.map((c) => c.reservas).filter((r) => r.length > 0)
       );
 
-
-
-
       setValues(new Date());
       let precio = 0;
       res.data.detalles.forEach((detalle) => {
@@ -112,8 +110,7 @@ const Detail = () => {
     });*/
   }, []);
 
-
-/*
+  /*
 {
     "user": "mauricio@gmail.com",
     "id_curso": 50,
@@ -126,71 +123,58 @@ const Detail = () => {
 
 */
 
-
-
-  async function reservar(id,fechaInicio, fechaFin) {
-    if(categoria === "Hospedajes"){
-      let msj=""
-      //console.log("Cliked reservar", valores?.length) 
-      valores?.map(x => {
+  async function reservar(id, fechaInicio, fechaFin) {
+    if (categoria === "Hospedajes") {
+      let msj = "";
+      //console.log("Cliked reservar", valores?.length)
+      valores?.map((x) => {
         const data = {
-          "user": token.username,
-          "id_curso": cursos[0].id,
-          "fecha_inicio": x[0].format("YYYY-MM-DD"),
-          "fecha_fin": x[1].format("YYYY-MM-DD"),
-          "precio": presupuesto
-        }
-        axios.post("http://3.144.46.39:8080/reservas",data).then( res=>
-
-          msj = res.data
-      
-        );  
-      })
-      alert("Reserva realizada", msj)
-      location.reload()
+          user: token.username,
+          id_curso: cursos[0].id,
+          fecha_inicio: x[0].format("YYYY-MM-DD"),
+          fecha_fin: x[1].format("YYYY-MM-DD"),
+          precio: presupuesto,
+        };
+        axios
+          .post("http://3.144.46.39:8080/reservas", data)
+          .then((res) => (msj = res.data));
+      });
+      alert("Reserva realizada", msj);
+      location.reload();
     }
-    if(categoria ==="Horas Libres"){
+    if (categoria === "Horas Libres") {
       //console.log("Cliked reservar", values?.format());
-      let msj =""
+      let msj = "";
       const data = {
-        "user": token.username,
-        "id_curso": cursos[0].id,
-        "fecha_inicio": values.format("YYYY-MM-DD"),
-        "fecha_fin": values.format("YYYY-MM-DD"),
+        user: token.username,
+        id_curso: cursos[0].id,
+        fecha_inicio: values.format("YYYY-MM-DD"),
+        fecha_fin: values.format("YYYY-MM-DD"),
 
-        "precio": presupuesto
-      }
-      axios.post("http://3.144.46.39:8080/reservas",data).then( res=>
-
-        msj = res.data
-    
-      );  
-      alert("Reserva realizada", msj)
-      location.reload()
+        precio: presupuesto,
+      };
+      axios
+        .post("http://3.144.46.39:8080/reservas", data)
+        .then((res) => (msj = res.data));
+      alert("Reserva realizada", msj);
+      location.reload();
     }
-    if(categoria==="Licencias"){
-      let msj =""
+    if (categoria === "Licencias") {
+      let msj = "";
       const data = {
-        "user": token.username,
-        "id_curso": id,
-        "fecha_inicio": fechaInicio,
-        "fecha_fin": fechaFin,
+        user: token.username,
+        id_curso: id,
+        fecha_inicio: fechaInicio,
+        fecha_fin: fechaFin,
 
-        "precio": presupuesto
-      }
-      axios.post("http://3.144.46.39:8080/reservas",data).then( res=>
-
-        msj = res.data
-    
-      );  
-      alert("Reserva realizada", msj)
-      location.reload()
-
+        precio: presupuesto,
+      };
+      axios
+        .post("http://3.144.46.39:8080/reservas", data)
+        .then((res) => (msj = res.data));
+      alert("Reserva realizada", msj);
+      location.reload();
     }
-
-
-
-
   }
 
   function selectHora(event) {
@@ -209,31 +193,56 @@ const Detail = () => {
     switch (categoria) {
       case "Licencias":
         return (
-          <>
-            <h5> Buscar por mes de inicio:</h5>
-            <Calendar
+        <>
+        <h5> Buscar por mes de inicio:</h5>
+          <div style={{ position: "relative", width: "100%" }}>
+            
+            <DatePicker
+              placeholder="Buscar por mes de inicio:"
               months={months}
               month="hide"
-              ma
               className="bg-dark"
               onlyMonthPicker
               value={values}
               onChange={setValues}
               minDate={new Date()}
+              style={{
+                background: "transparent",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                fontSize: "15px",// Ajusta el tamaño de fuente según tu preferencia
+                color: "white", 
+                width: "100%",
+                height: "2rem",
+                paddingLeft: "35px", // Espacio para el icono
+              }}
             />
+            <FaCalendar
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "15px", // Ajusta la posición del icono según tus preferencias
+                transform: "translateY(-50%)",
+                fontSize: "1rem", // Ajusta el tamaño del icono según tus preferencias
+              }}
+            />
+          </div>
           </>
         );
 
       case "Horas Libres":
         return (
           <>
+
             <h5> Selecciona el día y la hora de comienzo de la práctica:</h5>
             <div className={styles.calendarioHoras}>
-              <Calendar
+            <div style={{ position: "relative"}}>
+              <DatePicker
                 weekDays={weekDays}
                 months={months}
                 className="bg-dark"
                 value={values}
+                format="DD/MM/YYYY"
                 onChange={setValues}
                 mapDays={({ date }) => {
                   const strDate = date.format();
@@ -243,7 +252,27 @@ const Detail = () => {
                     };
                 }}
                 minDate={new DateObject().add(1, "day")}
+                style={{
+                  background: "transparent",
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                  fontSize: "15px",// Ajusta el tamaño de fuente según tu preferencia
+                  color: "white", 
+                  width: "100%",
+                  height: "2rem",
+                  paddingLeft: "35px", // Espacio para el icono
+                }}
               />
+              <FaCalendar
+              style={{
+                position: "absolute",
+                top: "14%",
+                left: "15px", // Ajusta la posición del icono según tus preferencias
+                transform: "translateY(-50%)",
+                fontSize: "1rem", // Ajusta el tamaño del icono según tus preferencias
+              }}
+            />
+            </div>
               <FormControl>
                 <InputLabel shrink htmlFor="selecthoras">
                   Hora
@@ -272,8 +301,9 @@ const Detail = () => {
       case "Hospedajes":
         return (
           <>
-            <h5> Selecciona las fechas de inicio y fin del hospedaje:</h5>
-            <Calendar
+            <h5> Selecciona las fechas del hospedaje:</h5>
+            <div style={{ position: "relative", width: "100%" }}>
+            <DatePicker
               numberOfMonths={2}
               weekDays={weekDays}
               months={months}
@@ -281,6 +311,7 @@ const Detail = () => {
               value={valores}
               multiple
               range
+              format="DD/MM/YYYY"
               minDate={new Date()}
               maxDate={new Date(cursos[0].fechaFin)}
               onChange={setValores}
@@ -291,11 +322,32 @@ const Detail = () => {
                     disabled: true,
                   };
               }}
+              style={{
+                background: "transparent",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                fontSize: "15px",// Ajusta el tamaño de fuente según tu preferencia
+                color: "white", 
+                width: "230px",
+                height: "2rem",
+                paddingLeft: "35px", // Espacio para el icono
+              }}
             >
               <button className="button-primary" onClick={() => setValores([])}>
                 Limpiar Selección
               </button>
-            </Calendar>
+            </DatePicker>
+
+            <FaCalendar
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "15px", // Ajusta la posición del icono según tus preferencias
+                transform: "translateY(-50%)",
+                fontSize: "1rem", // Ajusta el tamaño del icono según tus preferencias
+              }}
+            />
+            </div>
           </>
         );
       default:
@@ -305,7 +357,7 @@ const Detail = () => {
 
   function montos() {
     let titulo = "PRECIO:";
-    let precio = "Debes estar logueado para ver el precio.";
+    let precio = "Debes estar logueado para ver el precio y reservar.";
     let mostrarBoton = false;
     let tituloBoton = "Reservar";
     let noLogin = "";
@@ -322,7 +374,7 @@ const Detail = () => {
           titulo = "PRECIO POR HORA:";
           break;
         case "Hospedajes":
-          mostrarBoton = true;  // quitar despues
+          mostrarBoton = true; // quitar despues
           titulo = "PRECIO POR DÍA:";
           //noLogin ="Debes reservar Licencias/horas para poder reservar hospedaje";
           break;
@@ -368,7 +420,11 @@ const Detail = () => {
       <div className={styles.barra}>
         {imagenes.slice(1, 5).map((im) => (
           <div key={im?.ruta} className={styles.cont_min}>
-            <img src={im?.ruta+"_tn.jpg"} alt="" className={styles.imagen_min} />
+            <img
+              src={im?.ruta + "_tn.jpg"}
+              alt=""
+              className={styles.imagen_min}
+            />
           </div>
         ))}
         <BotonGaleria images={imagenes} />
@@ -428,7 +484,10 @@ const Detail = () => {
 
         <div className={styles.inicioCursos}>
           {categoria == "Licencias" && (
+            cursosf.length> 0?
             <h4>PROXIMOS INICIOS DESDE {mesSeleccionado}:</h4>
+            :
+            <h4>NO HAY INICIOS A PARTIR DE LA FECHA SELECCIONADA</h4>
           )}
           {categoria == "Licencias" &&
             cursosf?.map((curso) => (
@@ -449,7 +508,12 @@ const Detail = () => {
                 </div>
                 <div className={styles.resultados}>
                   {token ? (
-                    <button onClick={(e)=>reservar(curso.id,curso.fechaInicio, curso.fechaFin)} className="button-primary">
+                    <button
+                      onClick={(e) =>
+                        reservar(curso.id, curso.fechaInicio, curso.fechaFin)
+                      }
+                      className="button-primary"
+                    >
                       Inscribirme
                     </button>
                   ) : (

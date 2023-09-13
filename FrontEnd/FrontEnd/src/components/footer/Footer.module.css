@@ -4,8 +4,9 @@
   color: #fdfcfc;
   min-height: 50px;
   width: 100%;
-  background-color: rgba(53, 56, 56, 255);
-
+  /* background-color: rgba(53, 56, 56, 255); */
+  background-color: #212529;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 .contenedor{
   display: flex;
