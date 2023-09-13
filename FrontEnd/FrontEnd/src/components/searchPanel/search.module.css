@@ -1,6 +1,9 @@
 h2 {
   font-size: 20px;
 }
+.MuiTabs-scrollButtons.Mui-disabled {
+  opacity: 0.3;
+}
 
 .mainSearch {
   display: flex;
@@ -26,6 +29,7 @@ h2 {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: calc(100% - 300px);
   align-items: center;
   border-radius: 25px;
   font-size: small;
@@ -41,7 +45,7 @@ h2 {
 .dateSection {
   display: flex;
   align-items: center;
-  width: 200px;
+  width: 250px;
   gap: 10px;
 }
 

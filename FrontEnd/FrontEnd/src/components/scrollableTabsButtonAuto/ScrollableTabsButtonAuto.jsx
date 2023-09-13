@@ -2,7 +2,7 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { Avatar } from "@mui/material";
+import { Avatar, useMediaQuery } from "@mui/material";
 
 export default function ScrollableTabsButtonAuto({
   categories,
@@ -10,6 +10,7 @@ export default function ScrollableTabsButtonAuto({
 }) {
   const [value, setValue] = React.useState(0);
   
+  const isMobile = useMediaQuery('(max-width:550px)');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -29,13 +30,13 @@ export default function ScrollableTabsButtonAuto({
         aria-label="scrollable force tabs example"
       >
         <Tab
-              sx={{}}
+              sx={{padding: isMobile ? '5px 15px' :'10px 30px'}}
               icon={
                 <Avatar
-                  sx={{ width: 90, height: 90}}
+                sx={{ width: isMobile ? 70 : 90, 
+                  height: isMobile ? 70 : 90}}
                   alt="logo"
                   src='./logoblanco.png'
-                 
                 />
               }
 
@@ -46,10 +47,11 @@ export default function ScrollableTabsButtonAuto({
         {categories?.map((item) => {
           return (
             <Tab
-              sx={{padding:'10px 30px'}}
+              sx={{padding: isMobile ? '5px 15px' :'10px 30px'}}
               icon={
                 <Avatar
-                  sx={{ width: 100, height: 100}}
+                  sx={{ width: isMobile ? 70 : 90, 
+                    height: isMobile ? 70 : 90}}
                   alt={item.nombre}
                   src={item.image}
                  
@@ -62,17 +64,6 @@ export default function ScrollableTabsButtonAuto({
             />
           );
         })}
-        {/*{categories?.map(item => {
-                    return (<Tab key={item.id} label="asdf" value={item.id} />)
-                })}*/}
-
-        {/*{categories?.map(item => <div key={item.id} className={styles.contenedorCategoriaIndividual}>
-              <button onClick={handleCategoryButton} value={item.nombre} className={`${styles.defaultButton} ${categorySelected === item && styles.selectedButton
-                }`} style={{ backgroundImage: `url(${item.image})` }}>
-              </button>
-              <p style={{ paddingTop: '2px' }}>{item.nombre}</p>
-
-            </div>)}*/}
       </Tabs>
     </Box>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, redirect, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./detail.module.css";
 import BotonGaleria from "./BotonGaleria";
@@ -8,6 +8,7 @@ import "./bg-dark.css";
 import dayjs from "dayjs";
 import { FormControl, InputLabel, Select } from "@mui/material";
 import { FaCalendar } from "react-icons/fa";
+import { useGlobalState } from "../../utils/Context";
 
 const Detail = () => {
   const params = useParams();
@@ -25,6 +26,7 @@ const Detail = () => {
   const [horas, setHoras] = useState([]);
   const [presupuesto, setPresupuesto] = useState(0);
   const [reservas, setReservas] = useState([]);
+  const {redirectProduct, setRedirectProduct} = useGlobalState()
 
   const horasDisp = ["09:00", "10:00", "11:00", "12:00"];
 
@@ -397,7 +399,7 @@ const Detail = () => {
         ) : noLogin ? (
           noLogin
         ) : (
-          <Link className="button-primary" to={"/login"}>
+          <Link className="button-primary" to={"/login"} onClick={() => setRedirectProduct(producto.id)}>
             Iniciar sesión
           </Link>
         )}

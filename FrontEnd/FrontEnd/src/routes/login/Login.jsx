@@ -9,7 +9,7 @@ import styles from "./login.module.css";
 
 const Login = () => {
   
-  const {setCategorySelected} = useGlobalState()
+  const {setCategorySelected, redirectProduct} = useGlobalState()
   const apiUsers = "http://3.144.46.39:8080/auth/login";
 
   const initialLoginStates = {
@@ -68,7 +68,7 @@ const Login = () => {
                    });
              if (response.status === 200) {
                localStorage.setItem('userData', JSON.stringify(response.data))
-               window.location.href = "/home";
+               redirectProduct ? window.location.href = `/productos/${redirectProduct}`: window.location.href = "/home"
              } 
            } catch (error) {
             if(error.response.status === 403){
