@@ -7,7 +7,7 @@ import { Box, Container, TextField } from "@mui/material";
 import styles from "./login.module.css";
 
 
-const Login = () => {
+const Login = (props) => {
   
   const {setCategorySelected, redirectProduct} = useGlobalState()
   const apiUsers = "http://3.144.46.39:8080/auth/login";

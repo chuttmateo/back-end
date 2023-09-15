@@ -38,7 +38,10 @@ public class User implements UserDetails {
     private List<Producto_Favorito> favorites;
     @Enumerated(EnumType.STRING) 
     Role role;
-
+    private String pais;
+    private String localidad;
+    private String telefono;
+    private String dni;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
       return List.of(new SimpleGrantedAuthority((role.name())));

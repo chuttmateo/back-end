@@ -2,6 +2,7 @@ import { FiSearch } from 'react-icons/fi'
 import styles from "./search.module.css";
 import CustomDatePicker from './CustomDatePicker';
 import ScrollableTabsButtonAuto from '../scrollableTabsButtonAuto/ScrollableTabsButtonAuto';
+import DatePicker from 'react-multi-date-picker';
 
 const SearchPanel = ({categories,
   handleCategoryButton, handleSearch, setStartIndex, esCategoriaReservable}) => {
@@ -16,8 +17,12 @@ const SearchPanel = ({categories,
             </section>
             {esCategoriaReservable &&
             <section className={styles.dateSection}>
+              <p className={styles.textFecha}>Fecha desde</p>
                 {/* <label className={styles.dateLabel}><h2 className={styles.labelH2}>BUSCAR POR FECHA</h2></label> */}
-                {<CustomDatePicker />}
+                {/* {<CustomDatePicker />} */}
+                {<DatePicker placeholder='seleccione una fecha'/>}
+                <p className={styles.textFecha}>Fecha hasta</p>
+                {<DatePicker placeholder='seleccione una fecha'/>}
                 <button onClick={handleSearch} className={styles.searchBtn}><FiSearch className={styles.searchIcon} /></button>
             </section>
             }

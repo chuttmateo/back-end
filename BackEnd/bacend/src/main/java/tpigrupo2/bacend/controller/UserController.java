@@ -30,7 +30,7 @@ public class UserController {
 
     @CrossOrigin("*")
     @PutMapping("/modrol")
-    public ResponseEntity<String> ModificarProducto(@RequestBody User userRequest) {
+    public ResponseEntity<String> ModificarRol(@RequestBody User userRequest) {
         User u = userService.buscarUsuario(userRequest.getUsername());
         if(u == null){
             return ResponseEntity.badRequest().body("El Usuario no existe");
@@ -43,6 +43,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al modificar el usuario."+ e.getMessage());
         }
     }
+
+
 
 }
 

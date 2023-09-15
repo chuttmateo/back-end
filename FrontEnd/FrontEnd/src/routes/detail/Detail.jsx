@@ -255,6 +255,7 @@ const Detail = () => {
                 }}
                 minDate={new DateObject().add(1, "day")}
                 style={{
+                  
                   background: "transparent",
                   border: "1px solid #ccc",
                   borderRadius: "8px",
@@ -519,7 +520,7 @@ const Detail = () => {
                       Inscribirme
                     </button>
                   ) : (
-                    <Link className="button-primary" to={"/login"}>
+                    <Link className="button-primary" to={"/login"} onClick={() => setRedirectProduct(producto.id)}>
                       Iniciar sesión
                     </Link>
                   )}
