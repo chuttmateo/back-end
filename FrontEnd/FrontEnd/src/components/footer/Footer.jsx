@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {FacebookShareButton,WhatsappShareButton,WhatsappIcon, FacebookIcon, LinkedinShareButton, LinkedinIcon, TwitterShareButton, TwitterIcon, PinterestShareButton, PinterestIcon } from "react-share";
-
+import Stack from '@mui/material/Stack';
 
 function Footer() {
 
@@ -14,9 +14,9 @@ function Footer() {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 200,
+    width: 300,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    border: '8px solid #000',
     boxShadow: 20,
     p: 1,
   };
@@ -47,6 +47,7 @@ function Footer() {
         </div>
         <div className={styles.compartir}>
 <Button sx={style1}
+className={style.compartirBtn}
  onClick={handleOpen}>
 
 <img src="/icono_compartir.png" alt="icono" style={{
@@ -64,7 +65,7 @@ function Footer() {
   aria-describedby="modal-modal-description"
 >
   <Box sx={style}>
-    <Typography id="modal-modal-title" variant="h6" component="h2">
+  <Stack spacing={2} direction="row">
     <FacebookShareButton url={window.location}>
   <FacebookIcon size= {40} round= {true}/>
   </FacebookShareButton>
@@ -85,7 +86,7 @@ function Footer() {
   <PinterestIcon size= {40} round= {true}/>
   </PinterestShareButton>
 
-    </Typography>
+  </Stack>
     
   </Box>
 </Modal>

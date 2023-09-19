@@ -7,6 +7,7 @@ import { useGlobalState } from "../../utils/Context";
 import ImgMediaSkeleton from '../../components/cardStyled/ImgMediaSkeleton'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import SearchPanel from "../../components/searchPanel/SearchPanel";
+import { FaFacebook } from "react-icons/fa";
 
 const apiUrl = "http://3.144.46.39:8080/productos";
 const apiUrlCat = "http://3.144.46.39:8080/categorias";
@@ -111,6 +112,14 @@ const Home = () => {
     );
   };
 
+  function formatDateToYYYYMMDD(date) {
+    const year = date.getFullYear(); 
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+
   async function findCategories() {
     const response = await axios.get(apiUrlCat);
     const data = response.data;
@@ -128,7 +137,18 @@ const Home = () => {
         return item.cursos.some((cursada) => {
           return (
             cursada.fechaInicio >= valueDate[0]
-
+          );
+        });
+      }));
+      setIsSearched(true)
+    }
+    else if(valueDate.length === 2 && valueDate[0] === "") {
+      const currentDate = new Date()
+      setBuscado(filtrado.filter((item) => {
+        return item.cursos.some((cursada) => {
+          return (
+            cursada.fechaInicio >= formatDateToYYYYMMDD(currentDate) &&
+            cursada.fechaFin <= valueDate[1]
           );
         });
       }));
@@ -140,7 +160,7 @@ const Home = () => {
         return item.cursos.some((cursada) => {
           return (
             cursada.fechaInicio >= valueDate[0] &&
-            cursada.fechaInicio <= valueDate[1]
+            cursada.fechaFin <= valueDate[1]
             //cursada.fechaFin <= valueDate[1]
           );
         });
@@ -227,7 +247,7 @@ const Home = () => {
 
   return (
 
-    <main className="main">
+    <main className={styles.main}>
       <Banner />
       <SearchPanel esCategoriaReservable={esCategoriaReservable} categories={categories} handleCategoryButton={handleCategoryButton} categorySelected={categorySelected} handleSearch={handleSearch} setStartIndex={setStartIndex} />
       <div className={styles.contenedor}>

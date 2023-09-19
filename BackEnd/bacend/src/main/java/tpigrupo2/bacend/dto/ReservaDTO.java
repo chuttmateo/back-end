@@ -7,6 +7,7 @@ import tpigrupo2.bacend.security.User.User;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -20,4 +21,7 @@ public class ReservaDTO implements Serializable {
     private LocalTime hora_fin;
     private Double precio;
     private int id_curso;
+    private String nombre_producto;
+    private String pdf;
+    private LocalDateTime fecha_reserva;
 }

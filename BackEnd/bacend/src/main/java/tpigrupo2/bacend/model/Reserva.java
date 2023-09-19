@@ -1,13 +1,16 @@
 package tpigrupo2.bacend.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import tpigrupo2.bacend.security.User.User;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Builder
@@ -30,5 +33,11 @@ public class Reserva implements Serializable{
     private LocalTime hora_fin;
     private Double precio;
     private int id_curso;
+    private String nombre_producto;
+    private String pdf;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_reserva")
+    private LocalDateTime fecha_reserva;
 
 }

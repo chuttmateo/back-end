@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Home from "./routes/home/Home";
+import Reserva from "./routes/reserva/Reserva"
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Administracion from "./routes/administracion/Administracion";
@@ -10,6 +11,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import Login from "./routes/login/Login";
 import ProfileDetail from "./routes/profileDetail/ProfileDetail";
 import Register from "./routes/register/Register";
+
 
 
 function App() {
@@ -44,6 +46,7 @@ function App() {
           <Route path="/administracion" element={<Administracion />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:username" element={<ProfileDetail/>} />
+          <Route path="/reserva" element={<Reserva />} />
           <Route path="/register" element={<Register/>}/>
           <Route path="*" element={<PaginaNoEncontrada />} />
         </Routes>

@@ -1,5 +1,6 @@
 package tpigrupo2.bacend.security.User;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tpigrupo2.bacend.model.Calificaciones_Producto;
 import tpigrupo2.bacend.model.Producto;
 import tpigrupo2.bacend.model.Producto_Favorito;
 
@@ -36,6 +38,9 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToMany( mappedBy = "id_usuario",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Producto_Favorito> favorites;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Calificaciones_Producto> puntuaciones = new ArrayList<>();
     @Enumerated(EnumType.STRING) 
     Role role;
     private String pais;

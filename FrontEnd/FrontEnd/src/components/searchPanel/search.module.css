@@ -63,7 +63,7 @@ h2 {
   display: flex;
   justify-content: center;
   text-align: center;
-
+  margin-bottom: 20px;
 }
 .searchIcon:hover{
   color: rgb(0, 137, 254);
@@ -100,7 +100,7 @@ h2 {
   background-color: #212529;
   border-radius: 5px;
   cursor: pointer;
-  padding-top: 9px;
+  padding-top: 5px;
   padding-bottom: 9px;
   display: flex;
   flex-direction:column;
@@ -128,15 +128,20 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 1rem;
+    margin: 0;
+    margin-top: 10px;
   }
 
   .categories {
-    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    padding: 0%;
   }
 
   .categories h2 {
     font-size: medium;
+    margin-top: 5px;
   }
   .dateLabel {
     margin-top: 1%;
@@ -147,4 +152,9 @@ h2 {
     max-width: 600px;
     margin: 10px 0;
   }
+}
+@media (max-width: 768px) {
+ .mainSearch{
+  margin-right: 10px;
+ }
 }

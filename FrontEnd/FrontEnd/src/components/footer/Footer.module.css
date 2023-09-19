@@ -12,6 +12,9 @@
   display: flex;
   justify-content: space-between;
 }
+.compartirBtn{
+  margin-left: 100px;
+}
 
 
 

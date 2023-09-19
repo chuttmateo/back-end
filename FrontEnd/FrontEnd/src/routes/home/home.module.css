@@ -12,6 +12,7 @@
   align-content:center; 
   align-items:center
 }*/
+
 .Categories {
   display: flex;
   flex-direction: column;

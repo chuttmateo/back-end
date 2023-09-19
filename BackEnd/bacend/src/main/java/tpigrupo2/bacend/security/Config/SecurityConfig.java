@@ -34,8 +34,9 @@ public class SecurityConfig {
               authRequest
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/favoritos/**").permitAll()
-                .requestMatchers("/reservas/**").permitAll()
-                .requestMatchers("/usuario/**").authenticated()
+                .requestMatchers("/reservas/**").hasAnyAuthority("ADMIN","USER")
+                .requestMatchers("/usuario/**").hasAnyAuthority("ADMIN","USER")
+                .requestMatchers("/puntuaciones/**").permitAll()
                 .requestMatchers(HttpMethod.GET).permitAll()
                 .anyRequest().hasAuthority("ADMIN")
                 )

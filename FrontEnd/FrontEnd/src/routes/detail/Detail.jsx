@@ -3,12 +3,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./detail.module.css";
 import BotonGaleria from "./BotonGaleria";
-import DatePicker, { Calendar, DateObject } from "react-multi-date-picker";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 import "./bg-dark.css";
 import dayjs from "dayjs";
 import { FormControl, InputLabel, Select } from "@mui/material";
 import { FaCalendar } from "react-icons/fa";
 import { useGlobalState } from "../../utils/Context";
+//import emailjs from "@emailjs/browser";
+import ListaRating from "./rating/ListaRating";
 
 const Detail = () => {
   const params = useParams();
@@ -26,13 +28,80 @@ const Detail = () => {
   const [horas, setHoras] = useState([]);
   const [presupuesto, setPresupuesto] = useState(0);
   const [reservas, setReservas] = useState([]);
-  const {redirectProduct, setRedirectProduct} = useGlobalState()
+  const [puntuado, setPuntuado] = useState(false);
+  const [rating, setRating] = useState(0);
+
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const { setRedirectProduct, setReserva } = useGlobalState();
 
   const horasDisp = ["09:00", "10:00", "11:00", "12:00"];
+
+  /* MODAL */
+  const [listaPuntuaciones, setListaPuntuaciones] = useState([]);
+
+  const url = "http://3.144.46.39:8080/puntuaciones";
+
+  function promediar(lista) {
+    let sumatoria = 0;
+    lista.forEach((element) => {
+      sumatoria += element.calificacion;
+    });
+    return lista.length > 0 ? (sumatoria / lista.length).toFixed(1) : 0;
+  }
+
+  async function fetchDataModal() {
+    const response = await axios.get(url);
+    const data = response.data;
+    const filtradoPorProducto = data.filter(
+      (element) => element.idProducto == params.id
+    );
+    setPuntuado(
+      filtradoPorProducto.some(
+        (puntuacion) =>
+          puntuacion.username ===
+          JSON.parse(localStorage.getItem("userData"))?.username
+      )
+    );
+    setListaPuntuaciones(filtradoPorProducto);
+    setRating(promediar(filtradoPorProducto));
+  }
+
+  /* MODAL */
 
   function isReserved(strDate) {
     return reservas.some(([start, end]) => strDate >= start && strDate <= end);
   }
+  /* const form = useRef();
+
+  const sendEmail = (serviceId) => {
+    emailjs
+      .sendForm(
+        serviceId,
+        "template_uqu2sgv",
+        form.current,
+        "ZGHqjA6dS6ZEt59AV",
+        {
+          user_name: localStorage.getItem("userData").firstname,
+          user_email: localStorage.getItem("userData").username,
+          product_name: producto.nombre,
+          precio: presupuesto,
+        }
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };*/
+
+  const roundedRating = Math.round(rating);
+
+  const closePopup = () => {
+    setPopupOpen(false);
+  };
 
   const [valores, setValores] = useState([]);
   const months = [
@@ -56,10 +125,12 @@ const Detail = () => {
   );
 
   useEffect(() => {
+    /* lista de puntuaciones */
+    fetchDataModal();
+
     const c = cursos.filter((curso) => dayjs(curso.fechaInicio) >= values);
     if (categoria === "Licencias") {
       setMes(months[new Date(values).getMonth()].toUpperCase());
-
       setCursosf(c);
     }
   }, [values]);
@@ -72,17 +143,10 @@ const Detail = () => {
         new DateObject(f.fecha_fin).format(),
       ]);
     });
+
     setReservas(resFechas);
   }
-  /*
-  function obtenerHoras(res) {
-    let resultado = [];
-    res.forEach((r) => {
-      resultado = r.map((h) => h.hora_inicio);
-    });
-    console.log(resultado);
-  }
-*/
+  
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userData"));
     setToken(data ? data : "");
@@ -103,80 +167,54 @@ const Detail = () => {
       res.data.detalles.forEach((detalle) => {
         precio += detalle.precio * detalle.cantidad;
       });
-      //obtenerHoras(res.data.cursos?.map((c) => c.reservas).filter((r) => r.length > 0))
       setPresupuesto(precio);
     });
 
-    /*axios.get("http://3.144.46.39:8080/reservas").then((res) => {
-        console.log(res.data)
-    });*/
+
   }, []);
 
-  /*
-{
-    "user": "mauricio@gmail.com",
-    "id_curso": 50,
-    "fecha_inicio": "2023-10-15",
-    "fecha_fin": "2023-10-15",
-    "hora_inicio": "09:00:00",
-    "hora_fin": "10:00:00",
-    "precio": 95.0
-}
+  function reservar(id, fechaInicio, fechaFin) {
+    const data = {
+      user: token.username,
+      producto: producto.id,
+      nombre_producto: producto.nombre,
+      id_curso: cursos[0]?.id ? cursos[0].id : "",
+      fecha_inicio: "",
+      fecha_fin: "",
+      hora_inicio: "",
+      hora_fin: "",
+      precio: presupuesto,
+    };
 
-*/
-
-  async function reservar(id, fechaInicio, fechaFin) {
     if (categoria === "Hospedajes") {
-      let msj = "";
-      //console.log("Cliked reservar", valores?.length)
+      if (valores.length == 0) {
+        alert("debes seleccionar las fechas de ChekIn checkOut");
+        return;
+      }
+
       valores?.map((x) => {
-        const data = {
-          user: token.username,
-          id_curso: cursos[0].id,
-          fecha_inicio: x[0].format("YYYY-MM-DD"),
-          fecha_fin: x[1].format("YYYY-MM-DD"),
-          precio: presupuesto,
-        };
-        axios
-          .post("http://3.144.46.39:8080/reservas", data)
-          .then((res) => (msj = res.data));
+        data.fecha_inicio = x[0].format("YYYY-MM-DD");
+        data.fecha_fin = x[1].format("YYYY-MM-DD");
       });
-      alert("Reserva realizada", msj);
-      location.reload();
     }
+
     if (categoria === "Horas Libres") {
-      //console.log("Cliked reservar", values?.format());
-      let msj = "";
-      const data = {
-        user: token.username,
-        id_curso: cursos[0].id,
-        fecha_inicio: values.format("YYYY-MM-DD"),
-        fecha_fin: values.format("YYYY-MM-DD"),
-
-        precio: presupuesto,
-      };
-      axios
-        .post("http://3.144.46.39:8080/reservas", data)
-        .then((res) => (msj = res.data));
-      alert("Reserva realizada", msj);
-      location.reload();
+      if (values.length == 0 || horas.length == 0) {
+        alert("Debes seleccionar las fecha y hora para reservar");
+        return;
+      }
+      data.fecha_inicio = values.format("YYYY-MM-DD");
+      data.fecha_fin = values.format("YYYY-MM-DD");
+      data.hora_inicio = horas
     }
+
     if (categoria === "Licencias") {
-      let msj = "";
-      const data = {
-        user: token.username,
-        id_curso: id,
-        fecha_inicio: fechaInicio,
-        fecha_fin: fechaFin,
-
-        precio: presupuesto,
-      };
-      axios
-        .post("http://3.144.46.39:8080/reservas", data)
-        .then((res) => (msj = res.data));
-      alert("Reserva realizada", msj);
-      location.reload();
+      data.fecha_inicio = fechaInicio;
+      data.fecha_fin = fechaFin;
     }
+
+    setReserva(data);
+    navigate("/reserva");
   }
 
   function selectHora(event) {
@@ -195,93 +233,103 @@ const Detail = () => {
     switch (categoria) {
       case "Licencias":
         return (
-        <>
-        <h5> Buscar por mes de inicio:</h5>
-          <div style={{ position: "relative", width: "100%" }}>
-            
-            <DatePicker
-              placeholder="Buscar por mes de inicio:"
-              months={months}
-              month="hide"
-              className="bg-dark"
-              onlyMonthPicker
-              value={values}
-              onChange={setValues}
-              minDate={new Date()}
-              style={{
-                background: "transparent",
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                fontSize: "15px",// Ajusta el tamaño de fuente según tu preferencia
-                color: "white", 
-                width: "100%",
-                height: "2rem",
-                paddingLeft: "35px", // Espacio para el icono
-              }}
-            />
-            <FaCalendar
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "15px", // Ajusta la posición del icono según tus preferencias
-                transform: "translateY(-50%)",
-                fontSize: "1rem", // Ajusta el tamaño del icono según tus preferencias
-              }}
-            />
-          </div>
-          </>
-        );
-
-      case "Horas Libres":
-        return (
           <>
-
-            <h5> Selecciona el día y la hora de comienzo de la práctica:</h5>
-            <div className={styles.calendarioHoras}>
-            <div style={{ position: "relative"}}>
+            <h4 style={{ marginTop: "20px" }}> BUSCAR POR MES DE INICIO:</h4>
+            <div style={{ position: "relative", width: "100%" }}>
               <DatePicker
-                weekDays={weekDays}
+                placeholder="BUSCAR POR MES DE INICIO:"
                 months={months}
+                month="hide"
                 className="bg-dark"
+                onlyMonthPicker
                 value={values}
-                format="DD/MM/YYYY"
                 onChange={setValues}
-                mapDays={({ date }) => {
-                  const strDate = date.format();
-                  if (isReserved(strDate))
-                    return {
-                      disabled: true,
-                    };
-                }}
-                minDate={new DateObject().add(1, "day")}
+                minDate={new Date()}
                 style={{
-                  
                   background: "transparent",
                   border: "1px solid #ccc",
                   borderRadius: "8px",
-                  fontSize: "15px",// Ajusta el tamaño de fuente según tu preferencia
-                  color: "white", 
+                  fontSize: "15px", // Ajusta el tamaño de fuente según tu preferencia
+                  color: "white",
                   width: "100%",
                   height: "2rem",
                   paddingLeft: "35px", // Espacio para el icono
                 }}
               />
               <FaCalendar
-              style={{
-                position: "absolute",
-                top: "14%",
-                left: "15px", // Ajusta la posición del icono según tus preferencias
-                transform: "translateY(-50%)",
-                fontSize: "1rem", // Ajusta el tamaño del icono según tus preferencias
-              }}
-            />
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "15px", // Ajusta la posición del icono según tus preferencias
+                  transform: "translateY(-50%)",
+                  fontSize: "1rem", // Ajusta el tamaño del icono según tus preferencias
+                }}
+              />
             </div>
+          </>
+        );
+
+      case "Horas Libres":
+        return (
+          <>
+            <h5 style={{ marginTop: "40px" }}>
+              {" "}
+              SELECCIONA EL DIA Y LA HORA DE COMIENZO DE LA PRACTICA:
+            </h5>
+            <div className={styles.diayhora}>
+              <div className={styles.calendarioHoras}>
+                <div style={{ position: "relative" }}>
+                  <DatePicker
+                    weekDays={weekDays}
+                    months={months}
+                    className="bg-dark"
+                    value={values}
+                    onChange={setValues}
+                    minDate={new DateObject().add(1, "day")}
+                    //maxDate={new Date(cursos[0].fechaFin)}
+                    mapDays={({ date }) => {
+                      const strDate = date.format();
+                      if (isReserved(strDate))
+                        return {
+                          disabled: true,
+                        };
+                    }}
+                    style={{
+                      background: "transparent",
+                      border: "1px solid #ccc",
+                      borderRadius: "8px",
+                      fontSize: "15px", // Ajusta el tamaño de fuente según tu preferencia
+                      color: "white",
+                      width: "100%",
+                      height: "2rem",
+                      paddingLeft: "35px", // Espacio para el icono
+                    }}
+                  />
+                  <FaCalendar
+                    style={{
+                      position: "absolute",
+                      top: "45%",
+                      left: "15px", // Ajusta la posición del icono según tus preferencias
+                      transform: "translateY(-50%)",
+                      fontSize: "1rem", // Ajusta el tamaño del icono según tus preferencias
+                    }}
+                  />
+                </div>
+              </div>
               <FormControl>
-                <InputLabel shrink htmlFor="selecthoras">
+                <InputLabel
+                  shrink
+                  htmlFor="selecthoras"
+                  sx={{ marginTop: "20px" }}
+                >
                   Hora
                 </InputLabel>
                 <Select
-                  sx={{ width: 90, backgroundColor: "#212529" }}
+                  sx={{
+                    width: 90,
+                    backgroundColor: "#212529",
+                    marginTop: "20px",
+                  }}
                   multiple
                   native
                   value={horas}
@@ -304,52 +352,59 @@ const Detail = () => {
       case "Hospedajes":
         return (
           <>
-            <h5> Selecciona las fechas del hospedaje:</h5>
+            <h4 style={{ marginTop: "30px" }}>
+              {" "}
+              SELECCIONA LAS FECHAS DEL HOSPEDAJE:
+            </h4>
             <div style={{ position: "relative", width: "100%" }}>
-            <DatePicker
-              numberOfMonths={2}
-              weekDays={weekDays}
-              months={months}
-              className="bg-dark"
-              value={valores}
-              multiple
-              range
-              format="DD/MM/YYYY"
-              minDate={new Date()}
-              maxDate={new Date(cursos[0].fechaFin)}
-              onChange={setValores}
-              mapDays={({ date }) => {
-                const strDate = date.format();
-                if (isReserved(strDate))
-                  return {
-                    disabled: true,
-                  };
-              }}
-              style={{
-                background: "transparent",
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                fontSize: "15px",// Ajusta el tamaño de fuente según tu preferencia
-                color: "white", 
-                width: "230px",
-                height: "2rem",
-                paddingLeft: "35px", // Espacio para el icono
-              }}
-            >
-              <button className="button-primary" onClick={() => setValores([])}>
-                Limpiar Selección
-              </button>
-            </DatePicker>
+              <DatePicker
+                numberOfMonths={2}
+                weekDays={weekDays}
+                months={months}
+                className="bg-dark"
+                value={valores}
+                multiple
+                range
+                placeholder="ChekIn-CheckOut"
+                minDate={new Date()}
+                maxDate={new Date(cursos[0].fechaFin)}
+                onChange={setValores}
+                mapDays={({ date }) => {
+                  const strDate = date.format();
+                  //console.log(strDate)
+                  if (isReserved(strDate))
+                    return {
+                      disabled: true,
+                    };
+                }}
+                style={{
+                  background: "transparent",
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                  fontSize: "15px", // Ajusta el tamaño de fuente según tu preferencia
+                  color: "white",
+                  width: "230px",
+                  height: "2rem",
+                  paddingLeft: "35px", // Espacio para el icono
+                }}
+              >
+                <button
+                  className="button-primary"
+                  onClick={() => setValores([])}
+                >
+                  Limpiar Selección
+                </button>
+              </DatePicker>
 
-            <FaCalendar
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "15px", // Ajusta la posición del icono según tus preferencias
-                transform: "translateY(-50%)",
-                fontSize: "1rem", // Ajusta el tamaño del icono según tus preferencias
-              }}
-            />
+              <FaCalendar
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "15px", // Ajusta la posición del icono según tus preferencias
+                  transform: "translateY(-50%)",
+                  fontSize: "1rem", // Ajusta el tamaño del icono según tus preferencias
+                }}
+              />
             </div>
           </>
         );
@@ -394,13 +449,21 @@ const Detail = () => {
         <p>{titulo}</p>
         <p>{precio}</p>
         {mostrarBoton ? (
-          <button className="button-primary" onClick={reservar}>
+          <button
+            className="button-primary"
+            to={"/reserva"}
+            onClick={() => reservar()}
+          >
             {tituloBoton}
           </button>
         ) : noLogin ? (
           noLogin
         ) : (
-          <Link className="button-primary" to={"/login"} onClick={() => setRedirectProduct(producto.id)}>
+          <Link
+            className="button-primary"
+            to={"/login"}
+            onClick={() => setRedirectProduct(producto.id)}
+          >
             Iniciar sesión
           </Link>
         )}
@@ -443,6 +506,26 @@ const Detail = () => {
           </span>
         </div>
         <div className={styles.caracteristicasdescripcion}>
+          {/* <div className={styles.ratingBox}>
+            <div className={styles.stars}>
+              {[1, 2, 3, 4, 5].map((starIndex) => (
+                <span
+                  key={starIndex}
+
+                  className={styles.starProduct}
+                  disabled
+                >
+                  {starIndex <= roundedRating ? <AiFillStar /> : <AiOutlineStar />}
+                </span>
+              ))}
+            </div>
+            {rating > 0 ? <p>Puntuación: {rating} estrellas</p> : <p>Sin calificación</p>}
+            <button onClick={openPopup} className="button-primary">
+              {rating > 0 ? "Mostrar Calificaciones" : "Calificar"}
+            </button> */}
+          {/* <Modal puntuado={puntuado} listaPuntuaciones={listaPuntuaciones} isOpen={isPopupOpen} onClose={closePopup} idProducto={params.id} /> 
+          </div>*/}
+
           <div className={styles.caracteristicas}>
             <div className={styles.detalles}>
               <h5 className={styles.textcaract}>CARACTERISTICAS </h5>
@@ -486,12 +569,12 @@ const Detail = () => {
         </div>
 
         <div className={styles.inicioCursos}>
-          {categoria == "Licencias" && (
-            cursosf.length> 0?
-            <h4>PROXIMOS INICIOS DESDE {mesSeleccionado}:</h4>
-            :
-            <h4>NO HAY INICIOS A PARTIR DE LA FECHA SELECCIONADA</h4>
-          )}
+          {categoria == "Licencias" &&
+            (cursosf.length > 0 ? (
+              <h4>PROXIMOS INICIOS DESDE {mesSeleccionado}:</h4>
+            ) : (
+              <h4>NO HAY INICIOS A PARTIR DE LA FECHA SELECCIONADA</h4>
+            ))}
           {categoria == "Licencias" &&
             cursosf?.map((curso) => (
               <div key={curso.id} className={styles.contenedorResultados}>
@@ -512,15 +595,20 @@ const Detail = () => {
                 <div className={styles.resultados}>
                   {token ? (
                     <button
-                      onClick={(e) =>
+                      className="button-primary"
+                      to={"/reserva"}
+                      onClick={() =>
                         reservar(curso.id, curso.fechaInicio, curso.fechaFin)
                       }
-                      className="button-primary"
                     >
                       Inscribirme
                     </button>
                   ) : (
-                    <Link className="button-primary" to={"/login"} onClick={() => setRedirectProduct(producto.id)}>
+                    <Link
+                      className="button-primary"
+                      to={"/login"}
+                      onClick={() => setRedirectProduct(producto.id)}
+                    >
                       Iniciar sesión
                     </Link>
                   )}
@@ -528,6 +616,17 @@ const Detail = () => {
               </div>
             ))}
         </div>
+      </div>
+      <div>
+        <ListaRating
+          promedio={rating}
+          roundedRating={roundedRating}
+          puntuado={puntuado}
+          listaPuntuaciones={listaPuntuaciones}
+          isOpen={isPopupOpen}
+          onClose={closePopup}
+          idProducto={params.id}
+        />
 
         <div className={styles.contenedorPoliticas}>
           {politicas?.map((politica) => (
