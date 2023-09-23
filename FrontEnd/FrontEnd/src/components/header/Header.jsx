@@ -50,7 +50,7 @@ const Header = () => {
       </Link>
 
       <div className={styles.contenedor}>
-        {loggedState ? <AccountMenu handleInitials={handleInitials} handleLogout={handleLogout} role={userData.role} username={userData.username} />
+        {loggedState ? <AccountMenu handleInitials={handleInitials} handleLogout={handleLogout} role={userData.role} userId={userData.id} />
           : (
             <div>
               <Link className="button-primary-distinto" to={"/register"}>

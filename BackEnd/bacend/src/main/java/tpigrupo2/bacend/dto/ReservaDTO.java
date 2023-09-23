@@ -3,6 +3,7 @@ package tpigrupo2.bacend.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 import tpigrupo2.bacend.security.User.User;
 
 import java.io.Serializable;
@@ -23,5 +24,6 @@ public class ReservaDTO implements Serializable {
     private int id_curso;
     private String nombre_producto;
     private String pdf;
+    private int cantidad;
     private LocalDateTime fecha_reserva;
 }

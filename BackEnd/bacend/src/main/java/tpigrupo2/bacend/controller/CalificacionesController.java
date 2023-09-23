@@ -5,20 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tpigrupo2.bacend.dto.CalificacionDTO;
-import tpigrupo2.bacend.dto.Producto_FavoritoDTO;
 import tpigrupo2.bacend.model.Calificaciones_Producto;
-import tpigrupo2.bacend.model.Categoria;
 import tpigrupo2.bacend.model.Producto;
-import tpigrupo2.bacend.model.Producto_Favorito;
 import tpigrupo2.bacend.security.User.User;
 import tpigrupo2.bacend.service.ICalificaciones_ProductoService;
-import tpigrupo2.bacend.service.ICaracteristicaService;
 import tpigrupo2.bacend.service.IProductoService;
 import tpigrupo2.bacend.service.IUserService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/puntuaciones")
@@ -71,5 +65,11 @@ public class CalificacionesController {
             return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    @CrossOrigin("*")
+    @GetMapping("/promedio")
+    public List<Map<String, Object>> listarPuntuacionesPromedio(){
+        return calificaciones_service.listarPuntuacionesPromedio();
     }
 }

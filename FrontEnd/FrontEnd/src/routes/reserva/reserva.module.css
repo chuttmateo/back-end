@@ -1,9 +1,70 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,900&display=swap");
 
-.cuerpo{
-  background-color: #3A3A3A;
+.raiz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #212529;
+  color: #cecccc;
+}
+.cuerpo {
+  width: 90%;
+  
+  /* SI EN MONITORES GRANDES SE ROMPE BORREN EL max-width: ; */
+  max-width: 1300px;
 }
 
+.encabezado {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+.textos {
+  padding: 1.5rem;
+}
+.titulo {
+  font-family: "Nunito Sans 900", sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+
+}
+
+.botonTotal{
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.pp {
+  padding: 0;
+  margin-right: 100px;
+}
+
+.presupuesto {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.montos {
+  display: flex;
+  display: inline-block;
+  text-align: left;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.calendario {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  width: 60%;
+  margin-top: 30px;
+}
+
+.galeria {
+  margin: 15px 0px;
+  padding: 25px 0px;
+  width: 50%;
+}
 .botonatras {
   position: fixed;
   background-color: transparent;
@@ -13,44 +74,19 @@
   margin-right: 10px;
 }
 .imagen {
-  /*margin-top: 65px;*/
-  display: flex;
-  height: 500px;
-  width: 40vw;
-}
-
-.bg_dark{
-  background-color: #212529;
-}
-
-.encabezado{
-  display: flex;
-}
-
-.titulo {
-  font-family: "Nunito Sans 900", sans-serif;
-  font-size: 36px;
-  font-weight: 600;
-  margin-left: 20px;
-  margin-top: 0px;
-  margin-bottom: 60px;
-}
-
-.caracteristicasdescripcion {
-  display: flex;
   width: 100%;
-  justify-content: space-between;
-}
-.caracteristicas {
-  display: flex;
-  display: inline-block;
-  margin-left: 20px;
 }
 
-.textcaract {
-  font-size: 25px;
-  margin-bottom: 20px;
+.caracteristicas {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-right: 20%;
+  margin-bottom: 80px;
+
 }
+
+
 .iconos {
   display: flex;
   font-size: 20px;
@@ -61,121 +97,105 @@
   margin-top: 20px;
 }
 
-.presupuesto {
-  display:flex;
-  justify-content: space-between;
-}
-
-.montos {
-  display: flex;
-  display: inline-block;
-  margin-left: 20px;
-  font-size: 25px;
-
-}
-
-.calendario{
-  display: flex;
-  flex-direction: column;
-  font-size: 18px;
-  width: 40%;
-
-}
-
-.inicioCursos{
-  padding: 20px;
-  margin: 15px 0px;
-}
-
-
-.calendarioHoras{
-  padding: 20px;
-}
-
-.diayhora{
-  display: flex;
-  justify-content: flex-start;
-}
-
-.contenedorResultados{
+.contenedorResultados {
   border: 1px solid gray;
-  display:flex;
+  display: flex;
   justify-content: space-between;
   border-radius: 10px;
   padding: 20px;
   margin: 15px 0px;
 }
 
-.resultadoSeleccionado{
+.resultadoSeleccionado {
   border: 1px solid rgb(113, 205, 244);
   background-color: rgba(255, 255, 255, 0.1);
-  display:flex;
+  display: flex;
   justify-content: space-between;
   border-radius: 10px;
   padding: 20px;
   margin: 15px 0px;
 }
 
-.resultados{
+.resultados {
   display: flex;
   align-items: center;
   flex-direction: column;
   font-size: 20px;
   width: 20%;
-  
 }
 
-.contenedorPoliticas{
+.info{
+  padding: 25px 0px;
+}
+
+.formulario {
   border: 1px solid gray;
-  display:flex;
-  justify-content: space-between;
-  padding: 20px;
+  border-radius: 5px;
   margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.politica{
-  display: flex;
+  padding: 20px;
+  display:grid;
   align-items: center;
-  flex-direction: column;
-  font-size: 14px;
-  width: 25%;
+  width: 100%;
+  color: #636767;
+  grid-template-columns: repeat(2, 1fr);
+  gap:20px
 }
-
-.boton-abajo {
-  position: fixed;
+.inputs {
+  margin: 10px;
+  width: 100%;
+  padding: 20px;
+  color: #636767;
 }
-
-.p {
-  margin-top: 25px;
-  padding-right: 25px;
+.inicioCursos {
+  padding: 20px;
+  margin: 15px 0px;
 }
-.detalles {
-  /*toma desde caracyteristicas*/
+.montoTotal {
+  width: 100%;
+  font-size: 20px;
   display: flex;
-  display: inline-block;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pCaracteristicas{
+  font-size: 20px;
+}
+
+/* .detalles{
+  background-color: red;
+} */
+/*----------------------------------------------------*/
+
+.calendarioHoras {
+  padding: 20px;
+}
+
+.diayhora {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.detalles {
+  display: flex;
   vertical-align: middle;
   margin-right: 10px;
+  
 }
 
 .barra {
   display: flex;
+  width: 100%;
   justify-content: space-between;
- 
-   backdrop-filter: blur(10px); 
-   background: rgba(0, 0, 0, 0.6);
-  background-color: rgba(19, 19, 19, 0.6); 
-  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.75);
+  padding: 15px 0px;
 }
 
-
 .cont_min {
-  
   margin: 10px 0px;
-  width: 170px;
+  padding: 10px;
+  width: 160px;
   height: 160px;
+  
 }
 
 .imagen_min {
@@ -184,69 +204,132 @@
   max-width: 100%;
 }
 
-.formulario{
-  display:inline-flexbox;
-  width: 800px;
-}
-.inputs{
-  width: 400px;
- padding: 20px;
-}
+/*----------------------------------------------------*/
 
-@media (max-width: 1200px) {
-  .barra {
-    width: 130px;
+@media (max-width: 1000px) {
+  .encabezado {
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  .cont_min {
-    max-width: 130px;
+  .formulario{
+    display: flex;
+    flex-direction: column;
   }
-  .calendario{
-    width: 60%;
+  .galeria {
+    width: 80%;
   }
 }
 
 @media (max-width: 768px) {
-  .barra {
-    width: 110px;
-  }
-  .cont_min {
-    max-width: 110px;
-  }
-  .imagen {
-    border: none;
-  }
-  .presupuesto{
+  .encabezado {
     flex-direction: column;
     align-items: center;
   }
-  .calendario{
+  .textos {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    width: 100%;
   }
-  .caracteristicasdescripcion {
-    flex-direction:column-reverse;
-    width: 100%;
+  .titulo {
+    font-size: 25px;
   }
-  .descripcion, .caracteristicas, .detalles{
-    width: 100%;
-  }
-  
 
-  
+  .presupuesto {
+    flex-direction: column;
+    /* NO PUEDO ARREGLAR Y CENTRAR EL CALENDARIO XDXD */
+    /* align-items: center; */
+  }
+  .montos {
+    display: flex;
+    display: inline-block;
+    font-size: 10px;
+    text-align: center;
+    /*     margin-left: 20px;
+    font-size: 25px; */
+  }
+
+  .calendario {
+    /* no pude alinear el calendario al centro */
+  }
+  .galeria {
+    width: 90%;
+  }
+  .caracteristicas {
+    justify-content: center;
+    
+  }
+  .iconos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 14px;
+  }
+  .iconos2 {
+    margin: 0;
+    padding: 0;
+    height: 25px;
+    width: 25px;
+  }
+  .pCaracteristicas {
+    margin: 0;
+    padding: 0;
+    
+  }
+  .formulario {
+    flex-direction: column;
+    width: auto;
+  }
+
+  .inputs {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
 }
-@media (max-width: 580px) {
-  .barra {
-    /* flex-direction: column-reverse;*/
-    width: 110px;
-    backdrop-filter: none;
-    background: transparent;
-    background-color: transparent;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
+@media (max-width: 500px) {
+  .caracteristicas {
+    align-items: center;
   }
-  .cont_min {
-    display: none;
+  .pp {
+    padding: 0;
+    margin-right: 0px;
+  }
+  .contenedorResultados,
+  .resultadoSeleccionado {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
   }
 
+  .contenedorResultados p,
+  .resultadoSeleccionado p {
+    flex-grow: 1;
+    margin: 0;
+    padding: 10px;
+  }
+
+  .contenedorResultados {
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 15px 0px;
+    width: 90%;
+  }
+
+
+  .resultadoSeleccionado {
+    border: 1px solid rgb(113, 205, 244);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 15px 0px;
+    width: 90%;
+  }
+  .inicioCursos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

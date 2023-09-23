@@ -11,7 +11,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 
-export default function AccountMenu({ handleLogout, role, username, handleInitials }) {
+export default function AccountMenu({ handleLogout, role, userId, handleInitials }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -81,7 +81,7 @@ export default function AccountMenu({ handleLogout, role, username, handleInitia
                 }
                 <MenuItem onClick={() => {
                     handleClose()
-                    navigate(`/profile/${username}`)
+                    navigate(`/profile/${userId}`)
                 }}>
                     <Avatar /> Perfil
                 </MenuItem>

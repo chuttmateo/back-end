@@ -3,12 +3,13 @@ import { useState } from "react";
 import styles from "./ListaRating.module.css";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import axios from "axios";
+import { useGlobalState } from "../../../utils/Context";
 
 
 function ListaRating({ listaPuntuaciones, idProducto, puntuado, roundedRating, promedio }) {
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
-
+    const {loggedState} = useGlobalState();
 
 
 
@@ -62,8 +63,8 @@ function ListaRating({ listaPuntuaciones, idProducto, puntuado, roundedRating, p
             <div className={styles.modalContent}>
                 <div className={styles.starsPromedio}>
                     {listaPuntuaciones.length != 0 ?
-                        <h3>Calificaciones de los usuarios</h3>
-                        : <h3>Calificar</h3>}
+                        <h4 className={styles.calificacionesTittle}>CALIFICACIONES DE LOS USUARIOS</h4>
+                        : <h4>CALIFICAR</h4>}
                     <div className={styles.contenedor}>
                         {[1, 2, 3, 4, 5].map((starIndex) => (
                             <span
@@ -103,7 +104,7 @@ function ListaRating({ listaPuntuaciones, idProducto, puntuado, roundedRating, p
                     ))}
                 </ul>
 
-                <div className={styles.formulario}>
+                {loggedState&&(<div className={styles.formulario}>
                     {!puntuado ?
                         <form className={styles.stars}>
                             <h3>Deja tu comentario</h3>
@@ -126,7 +127,7 @@ function ListaRating({ listaPuntuaciones, idProducto, puntuado, roundedRating, p
                         <h2>Ya has puntuado</h2>
                     }
 
-                </div>
+                </div>)}
             </div>
         </div>
     );

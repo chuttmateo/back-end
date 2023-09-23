@@ -49,8 +49,8 @@ public class UsuarioController {
         try {
 
             org.json.JSONObject obj = new org.json.JSONObject();
-            obj.put("fisrtname", u.getFirstname());
-            obj.put("lastname:",u.getLastname());
+            obj.put("firstname", u.getFirstname());
+            obj.put("lastname",u.getLastname());
             obj.put("pais",u.getPais());
             obj.put("localidad", u.getLocalidad());
             obj.put("telefono",u.getTelefono());

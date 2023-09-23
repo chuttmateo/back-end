@@ -9,6 +9,8 @@
     top: 0;
     left: 0;
 
+
+
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
@@ -117,7 +119,8 @@
     left: 0;
 
     width: 100%;
-    justify-content: space-evenly;
+    padding: 9px;
+    /* justify-content: space-evenly; */
     height: 65px;
     color: #1e1e1e;
     font-weight: 100;

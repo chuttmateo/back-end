@@ -1,7 +1,7 @@
 
 import DatePicker from "react-multi-date-picker";
 import { FaCalendar } from 'react-icons/fa'; // Importa el icono de calendario de la biblioteca de iconos de React
-
+import styles from "./search.module.css";
 import { useGlobalState } from "../../utils/Context";
 
 const CustomDatePicker = () => {
@@ -95,7 +95,7 @@ const CustomDatePicker = () => {
 return (
   
 <div style={{ position: 'relative', width: '100%' }}>
-    <p>Fecha desde</p>
+    <p className={styles.fecha1}>Fecha desde</p>
     <DatePicker
       className="bg-dark" // fondo oscuro para el calendario
       style={{
@@ -107,7 +107,8 @@ return (
         width: "100%",
         height: "2rem",
         paddingLeft: "35px", // Espacio para el icono
-        marginBottom: "2.5%"
+        
+        // marginBottom: "2.5%"
       }}
       containerStyle={{
         width: "100%",
@@ -119,7 +120,7 @@ return (
       format="DD/MM/YYYY"
       minDate={new Date()}
     />
-    <p>Fecha hasta</p>
+    <p className={styles.fecha1}>Fecha hasta</p>
     <DatePicker
       className="bg-dark" // fondo oscuro para el calendario
       style={{
@@ -131,7 +132,7 @@ return (
         width: "100%",
         height: "2rem",
         paddingLeft: "35px", // Espacio para el icono
-        marginTop: "2.5%"
+        marginBottom: "21px"
       }}
       containerStyle={{
         width: "100%",
@@ -148,16 +149,16 @@ return (
         position: 'absolute',
         bottom: '1%',
         left: '15px', // Ajusta la posición del icono según tus preferencias
-        transform: 'translateY(-50%)',
+        transform: 'translateY(-170%)',
         fontSize: '1rem', // Ajusta el tamaño del icono según tus preferencias
       }}
     />
     <FaCalendar
       style={{
         position: 'absolute',
-        top: '23%',
+        top: '29%',
         left: '15px', // Ajusta la posición del icono según tus preferencias
-        transform: 'translateY(50%)',
+        transform: 'translateY(5%)',
         fontSize: '1rem', // Ajusta el tamaño del icono según tus preferencias
       }}
     />

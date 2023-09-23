@@ -7,10 +7,10 @@ import { useGlobalState } from "../../utils/Context";
 import ImgMediaSkeleton from '../../components/cardStyled/ImgMediaSkeleton'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import SearchPanel from "../../components/searchPanel/SearchPanel";
-import { FaFacebook } from "react-icons/fa";
 
 const apiUrl = "http://3.144.46.39:8080/productos";
 const apiUrlCat = "http://3.144.46.39:8080/categorias";
+const apiUrlPunt = "http://3.144.46.39:8080/puntuaciones/promedio";
 
 const Home = () => {
   const { categorySelected, setCategorySelected } = useGlobalState();
@@ -34,7 +34,7 @@ const Home = () => {
   const [procesandoFetch, setProcesandoFetch] = useState(false)
 
   const [idFavoritos, setIdFavoritos] = useState([])
-
+  const [puntuaciones, setPuntuaciones] = useState([])
   const handleFavorito = (id) => {
     //chequeo que no haya un fetch en proceso
     if (procesandoFetch) return;
@@ -169,35 +169,43 @@ const Home = () => {
       setIsSearched(true)
     }
   }
+  
+  // eslint-disable-next-line no-inner-declarations
+  async function fetchData() {
+    const response = await axios.get(apiUrl);
+    const data = response.data;
 
+    const user = localStorage.getItem("userData") ?
+      JSON.parse(localStorage.getItem("userData")).username :
+      "";
+    setUsername(user);
+
+    if (user !== "") {
+      const response2 = await axios.get('http://3.144.46.39:8080/favoritos/' + user);
+      setAllFavorites(response2.data);
+      setIdFavoritos(response2.data.map(item => item.producto))
+    }
+
+    setProductState(aleatorizeProducts(response.data));
+    setFiltrado(aleatorizeProducts(data));
+    aleatorizeProducts(data);
+
+    setCategorySelected("TODOS")
+  }
+
+  async function fetchPuntuaciones() {
+    const response = await axios.get(apiUrlPunt);
+    const data = response.data;
+
+    setPuntuaciones(data)
+    
+  }
   useEffect(() => {
 
     try {
-
-      // eslint-disable-next-line no-inner-declarations
-      async function fetchData() {
-        const response = await axios.get(apiUrl);
-        const data = response.data;
-
-        const user = localStorage.getItem("userData") ?
-          JSON.parse(localStorage.getItem("userData")).username :
-          "";
-        setUsername(user);
-
-        if (user !== "") {
-          const response2 = await axios.get('http://3.144.46.39:8080/favoritos/' + user);
-          setAllFavorites(response2.data);
-          setIdFavoritos(response2.data.map(item => item.producto))
-        }
-
-        setProductState(aleatorizeProducts(response.data));
-        setFiltrado(aleatorizeProducts(data));
-        aleatorizeProducts(data);
-
-        setCategorySelected("TODOS")
-      }
       findCategories();
       fetchData();
+      fetchPuntuaciones();
     } catch (error) {
       console.log(error);
     }
@@ -264,18 +272,18 @@ const Home = () => {
           <h2> LO SIENTO, NO HEMOS ENCONTRADO NINGÚN RESULTADO : </h2>
         </div> : <div className={styles.SectionProductCard}>
           {limitedViewProducts[startIndex]?.map((item) => (
-            <ImgMediaCard logueado={allFavorites !== null} item={item} key={item.id} favorito={idFavoritos.includes(item.id)} handleFavorito={handleFavorito} />
+            <ImgMediaCard puntuacion={puntuaciones.find(puntuacion => puntuacion.producto_id === item.id)} logueado={allFavorites !== null} item={item} key={item.id} favorito={idFavoritos.includes(item.id)} handleFavorito={handleFavorito} />
           ))}
         </div>)}
         {categorySelected === "TODOS" && loading === false && isSearched === false && <div className={styles.SectionProductCard}>
           {limitedViewProducts[startIndex]?.map((item) => (
-            <ImgMediaCard logueado={allFavorites !== null} item={item} key={item.id} favorito={idFavoritos.includes(item.id)} handleFavorito={handleFavorito} />
+            <ImgMediaCard puntuacion={puntuaciones.find(puntuacion => puntuacion.producto_id === item.id)} logueado={allFavorites !== null} item={item} key={item.id} favorito={idFavoritos.includes(item.id)} handleFavorito={handleFavorito} />
           ))}
         </div>}
         {categorySelected != "TODOS" && loading === false && isSearched === false && (
           <div className={styles.SectionProductCard}>
             {limitedViewProducts[startIndex]?.map((item) => (
-              <ImgMediaCard logueado={allFavorites !== null} item={item} key={item.id} favorito={idFavoritos.includes(item.id)} handleFavorito={handleFavorito} />
+              <ImgMediaCard puntuacion={puntuaciones.find(puntuacion => puntuacion.producto_id === item.id)} logueado={allFavorites !== null} item={item} key={item.id} favorito={idFavoritos.includes(item.id)} handleFavorito={handleFavorito} />
             ))}
           </div>
         )}

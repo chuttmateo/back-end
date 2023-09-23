@@ -9,8 +9,9 @@ import dayjs from "dayjs";
 import { FormControl, InputLabel, Select } from "@mui/material";
 import { FaCalendar } from "react-icons/fa";
 import { useGlobalState } from "../../utils/Context";
-//import emailjs from "@emailjs/browser";
+
 import ListaRating from "./rating/ListaRating";
+import { useRef } from "react";
 
 const Detail = () => {
   const params = useParams();
@@ -32,8 +33,8 @@ const Detail = () => {
   const [rating, setRating] = useState(0);
 
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const { setRedirectProduct, setReserva } = useGlobalState();
-
+  const { setRedirectProduct} = useGlobalState();
+  const datePickerRef = useRef();
   const horasDisp = ["09:00", "10:00", "11:00", "12:00"];
 
   /* MODAL */
@@ -146,9 +147,10 @@ const Detail = () => {
 
     setReservas(resFechas);
   }
-  
+
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userData"));
+    localStorage.removeItem("productData");
     setToken(data ? data : "");
     axios.get("http://3.144.46.39:8080/productos/" + params.id).then((res) => {
       setProducto(res.data);
@@ -169,8 +171,6 @@ const Detail = () => {
       });
       setPresupuesto(precio);
     });
-
-
   }, []);
 
   function reservar(id, fechaInicio, fechaFin) {
@@ -184,6 +184,9 @@ const Detail = () => {
       hora_inicio: "",
       hora_fin: "",
       precio: presupuesto,
+      cantidad: 1,
+      pdf:"",
+      archivo:""
     };
 
     if (categoria === "Hospedajes") {
@@ -205,15 +208,15 @@ const Detail = () => {
       }
       data.fecha_inicio = values.format("YYYY-MM-DD");
       data.fecha_fin = values.format("YYYY-MM-DD");
-      data.hora_inicio = horas
+      data.hora_inicio = horas;
     }
 
     if (categoria === "Licencias") {
       data.fecha_inicio = fechaInicio;
       data.fecha_fin = fechaFin;
     }
-
-    setReserva(data);
+    localStorage.setItem('productData', JSON.stringify(data))
+    
     navigate("/reserva");
   }
 
@@ -280,6 +283,7 @@ const Detail = () => {
               <div className={styles.calendarioHoras}>
                 <div style={{ position: "relative" }}>
                   <DatePicker
+                    ref={datePickerRef}
                     weekDays={weekDays}
                     months={months}
                     className="bg-dark"
@@ -304,7 +308,20 @@ const Detail = () => {
                       height: "2rem",
                       paddingLeft: "35px", // Espacio para el icono
                     }}
-                  />
+                  >
+                    <button
+                      className="button-primary-distinto"
+                      onClick={() => setValues()}
+                    >
+                      Clear
+                    </button>
+                    <button
+                      className="button-primary"
+                      onClick={() => datePickerRef.current.closeCalendar()}
+                    >
+                      Close
+                    </button>
+                  </DatePicker>
                   <FaCalendar
                     style={{
                       position: "absolute",
@@ -358,6 +375,7 @@ const Detail = () => {
             </h4>
             <div style={{ position: "relative", width: "100%" }}>
               <DatePicker
+                ref={datePickerRef}
                 numberOfMonths={2}
                 weekDays={weekDays}
                 months={months}
@@ -389,10 +407,16 @@ const Detail = () => {
                 }}
               >
                 <button
-                  className="button-primary"
+                  className="button-primary-distinto"
                   onClick={() => setValores([])}
                 >
-                  Limpiar Selección
+                  Clear
+                </button>
+                <button
+                  className="button-primary"
+                  onClick={() => datePickerRef.current.closeCalendar()}
+                >
+                  Close
                 </button>
               </DatePicker>
 
@@ -418,21 +442,19 @@ const Detail = () => {
     let precio = "Debes estar logueado para ver el precio y reservar.";
     let mostrarBoton = false;
     let tituloBoton = "Reservar";
-    let noLogin = "";
+    let mostrarLogin = true;
     if (token) {
       precio = "$ " + presupuesto;
-
+      mostrarLogin = false;
       switch (categoria) {
         case "Licencias":
           titulo = "VALOR:";
-          noLogin = " ";
+          //noLogin = " ";
           break;
         case "Horas Libres":
-          mostrarBoton = true;
           titulo = "PRECIO POR HORA:";
           break;
         case "Hospedajes":
-          mostrarBoton = true; // quitar despues
           titulo = "PRECIO POR DÍA:";
           //noLogin ="Debes reservar Licencias/horas para poder reservar hospedaje";
           break;
@@ -448,7 +470,7 @@ const Detail = () => {
       <>
         <p>{titulo}</p>
         <p>{precio}</p>
-        {mostrarBoton ? (
+        {mostrarBoton && (
           <button
             className="button-primary"
             to={"/reserva"}
@@ -456,9 +478,8 @@ const Detail = () => {
           >
             {tituloBoton}
           </button>
-        ) : noLogin ? (
-          noLogin
-        ) : (
+        )}
+        {mostrarLogin && (
           <Link
             className="button-primary"
             to={"/login"}
@@ -506,26 +527,6 @@ const Detail = () => {
           </span>
         </div>
         <div className={styles.caracteristicasdescripcion}>
-          {/* <div className={styles.ratingBox}>
-            <div className={styles.stars}>
-              {[1, 2, 3, 4, 5].map((starIndex) => (
-                <span
-                  key={starIndex}
-
-                  className={styles.starProduct}
-                  disabled
-                >
-                  {starIndex <= roundedRating ? <AiFillStar /> : <AiOutlineStar />}
-                </span>
-              ))}
-            </div>
-            {rating > 0 ? <p>Puntuación: {rating} estrellas</p> : <p>Sin calificación</p>}
-            <button onClick={openPopup} className="button-primary">
-              {rating > 0 ? "Mostrar Calificaciones" : "Calificar"}
-            </button> */}
-          {/* <Modal puntuado={puntuado} listaPuntuaciones={listaPuntuaciones} isOpen={isPopupOpen} onClose={closePopup} idProducto={params.id} /> 
-          </div>*/}
-
           <div className={styles.caracteristicas}>
             <div className={styles.detalles}>
               <h5 className={styles.textcaract}>CARACTERISTICAS </h5>
@@ -565,6 +566,16 @@ const Detail = () => {
               // Seccion calendario
               calendario()
             }
+            {token &&
+              (categoria == "Horas Libres" || categoria == "Hospedajes") && (
+                <button
+                  className="button-primary"
+                  to={"/reserva"}
+                  onClick={() => reservar()}
+                >
+                  Iniciar reserva
+                </button>
+              )}
           </div>
         </div>
 
@@ -601,7 +612,7 @@ const Detail = () => {
                         reservar(curso.id, curso.fechaInicio, curso.fechaFin)
                       }
                     >
-                      Inscribirme
+                      Reservar
                     </button>
                   ) : (
                     <Link

@@ -11,6 +11,9 @@
   z-index: 9999;
 }
 
+.calificacionesTittle{
+  margin-top: 40px;
+}
 
 .modalContent {
   background-color: #1E1E1E;
@@ -51,7 +54,7 @@
 
 .starProduct {
   font-size: 2rem;
-  color: gold;
+  color: rgb(242, 215, 62);
 }
 
 .stars {

@@ -17,6 +17,9 @@ import tpigrupo2.bacend.service.IUserService;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -62,12 +65,20 @@ public class ReservaController {
     public ResponseEntity<String> crearReserva(@RequestBody ReservaDTO reservaRequest) {
 
          try{
+             /*byte[] pdfBytes = java.util.Base64.getDecoder().decode(reservaRequest.getPdf());
+             String fileName = UUID.randomUUID().toString() + ".pdf";
+             File file = new File("/var/www/html/images/" + fileName);
+             file.createNewFile();
+             FileOutputStream fos = new FileOutputStream(file);
+             fos.write(pdfBytes);
+             fos.close();
+             reservaRequest.setPdf("http://3.144.46.39/images/"+fileName);*/
              User u = userService.buscarUsuario(reservaRequest.getUser());
                 Reserva r = new Reserva(0,u,reservaRequest.getFecha_inicio(),
                         reservaRequest.getFecha_fin(),reservaRequest.getHora_inicio(),
                         reservaRequest.getHora_fin(),reservaRequest.getPrecio(),
                         reservaRequest.getId_curso(), reservaRequest.getNombre_producto(),
-                        reservaRequest.getPdf(), LocalDateTime.now());
+                        reservaRequest.getPdf(),reservaRequest.getCantidad(), LocalDateTime.now());
 
              reservaService.crearReserva(r);
 

@@ -35,6 +35,7 @@ public class Reserva implements Serializable{
     private int id_curso;
     private String nombre_producto;
     private String pdf;
+    private int cantidad;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "fecha_reserva")

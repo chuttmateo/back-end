@@ -9,7 +9,6 @@ const Context = ({ children }) => {
   const [valueDate, setValueDate] = useState([]);
   const [redirectProduct, setRedirectProduct] = useState(undefined);
   const [allFavorites, setAllFavorites] = useState([]);
-  const [reserva, setReserva] = useState([]);
 
   return (
     <GlobalState.Provider
@@ -26,8 +25,6 @@ const Context = ({ children }) => {
         setAllFavorites,
         redirectProduct,
         setRedirectProduct,
-        reserva, 
-        setReserva
       }}
     >
       {children}
